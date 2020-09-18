@@ -47,6 +47,10 @@ export default new Vuex.Store({
           ctx.commit('SIGN_IN', res.data.user);
           localStorage.setItem('accessToken', JSON.stringify(res.data.accessToken));
           console.log(res.data);
+          resolve(res)
+        })
+        .catch(err => {
+          reject(err);
           alert('Your username was wrong! Please re-try');
         })
       })

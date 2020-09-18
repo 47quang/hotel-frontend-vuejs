@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <template>
   <div class="row">
     <div class="footer-bottom col-sm-12">
