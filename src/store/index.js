@@ -2,9 +2,12 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 Vue.use(Vuex)
-console.log({'process.env': process.env})
+console.log({'process.env': JSON.stringify(process.env)})
+console.log('XXX', process.env.API_BASE_URL)
 
-const BASE_URL= process.env.BASE_URL || "http://hotel.eyeteam.vn:3456";
+
+const BASE_URL= process.env.API_BASE_URL;
+console.log({BASE_URL});
 
 const client = axios.create({
   baseURL : BASE_URL,
