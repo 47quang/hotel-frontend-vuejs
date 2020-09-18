@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="cus-homepage">
     <Nav></Nav>
     <Carousel></Carousel>
     <div class="extend">
@@ -61,6 +61,9 @@ import Footer from '../components/Footer'
 </script>
 
 <style scoped>
+  .cus-homepage {
+    text-align: center;
+  }
   .extend{
     padding: 50px 0;
   }
@@ -82,4 +85,5 @@ import Footer from '../components/Footer'
     padding: 10px 0;
     background-color: #f9fafc;
   }
+
 </style>
