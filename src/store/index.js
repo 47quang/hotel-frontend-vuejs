@@ -12,6 +12,8 @@ const client = axios.create({
 })
 export default new Vuex.Store({
   state: {
+    BASE_URL,
+    curOwner: {},
     customer: {
       username: '',
       password: '',
@@ -27,6 +29,10 @@ export default new Vuex.Store({
   mutations: {
     SIGN_IN(state, payload){
       state.myCustomer = payload
+    },
+    OWNER_SIGN_IN(state, payload) {
+      state.curOwner = payload;
+      console.log('CurUser:', state.curOwner);
     }
   },
   actions: {
@@ -39,13 +45,27 @@ export default new Vuex.Store({
         .post(`${BASE_URL}/api.customer/login`, payload)
         .then( res => {
           ctx.commit('SIGN_IN', res.data.user);
-          localStorage.setItem('accessToken', JSON.stringify(res.data.accessToken))
-          console.log(res.data)
+          localStorage.setItem('accessToken', JSON.stringify(res.data.accessToken));
+          console.log(res.data);
+          alert('Your username was wrong! Please re-try');
+        })
+      })
+    },
+    async ownerSignUp(ctx, payload) {
+      await axios.post(`${BASE_URL}/api.user/register`, payload)
+    },
+    ownerSignIn(ctx, payload) {
+      return new Promise((resolve, reject) => {
+        client
+        .post(`${BASE_URL}/api.user/login`, payload)
+        .then(res => {
+          ctx.commit('OWNER_SIGN_IN', res.data.user);
+          localStorage.setItem('accessToken', JSON.stringify(res.data.accessToken));
+          localStorage.setItem('user', JSON.stringify(res.data.user));
           resolve(res);
         })
         .catch(err => {
           reject(err);
-          alert('Your username was wrong! Please re-try')
         })
       })
     }
