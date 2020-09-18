@@ -16,7 +16,7 @@
                     <el-date-picker
                     v-model="date"
                     type="daterange"
-                    range-separator="To"
+                    range-separator="TO"
                     start-placeholder="Start date"
                     end-placeholder="End date">
                     </el-date-picker>
