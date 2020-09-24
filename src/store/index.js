@@ -22,9 +22,8 @@ export default new Vuex.Store({
       email: '',
       fullname: ''
     },
-    myCustomer:{
-    
-    }
+    myCustomer:{},
+    hotel: {}
   },
   mutations: {
     SIGN_IN(state, payload){
@@ -33,6 +32,9 @@ export default new Vuex.Store({
     OWNER_SIGN_IN(state, payload) {
       state.curOwner = payload;
       console.log('CurUser:', state.curOwner);
+    },
+    SEARCH_HOTEL(state, payload) {
+      state.hotel= payload
     }
   },
   actions: {
@@ -73,6 +75,10 @@ export default new Vuex.Store({
           alert("Something went wrong! Please check your username or password!")
         })
       })
+    },
+    searchHotel(ctx,payload){
+      ctx.commit('SEARCH_HOTEL', payload);
+      console.log(payload)
     }
   },
   modules: {
