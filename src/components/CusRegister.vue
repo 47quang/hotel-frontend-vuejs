@@ -57,6 +57,7 @@ export default {
      methods: {
       submit(){
         this.$store.dispatch('register', this.form)
+        
       }
     }
 }

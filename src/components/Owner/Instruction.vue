@@ -2,8 +2,8 @@
   <el-container class="instruct">
     <div style="padding: 0 20%">
       <h1 class="instruct-title">Tất cả những gì bạn cần làm là</h1>
-      <el-row :gutter="20">
-        <el-col :span="6" v-for="instruct in instructions" :key="instruct.content">
+      <el-row :gutter="20" >
+        <el-col class="instruct-info" :span="6" v-for="instruct in instructions" :key="instruct.content">
           <el-image
             style="width: 120px; height: 120px; background-color: #fff"
             :src="instruct.url"
@@ -64,5 +64,17 @@ export default {
 .el-row {
   margin-left: 0 !important;
   margin-right: 0 !important;
+}
+
+@media (max-width: 1000px) {
+  .instruct-info {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .instruct-content {
+    width: max-content;
+  }
 }
 </style>

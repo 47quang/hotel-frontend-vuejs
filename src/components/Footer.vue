@@ -6,9 +6,9 @@
           <div class="container">
             <p>All material herein © 2005–2018 Agoda Company Pte. Ltd., All Rights Reserved.</p>
             <p
-              class="hidden-sm hidden-xs"
+              class="hidden-sm-and-down hidden-xs-and-down"
             >Agoda is part of Booking Holdings Inc., the world leader in online travel &amp; related services.</p>
-            <ul class="pg-brand-list hidden-sm hidden-xs">
+            <ul class="pg-brand-list hidden-sm-and-down hidden-xs-and-down">
               <li class="pg-brand-list-item">
                 <i class="pg-brand pg-brand-01"></i>
               </li>
