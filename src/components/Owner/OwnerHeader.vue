@@ -4,7 +4,7 @@
     <el-header class="navbar">
       <el-menu mode="horizontal" active-text-color="transparent" class="header-menu">
         <el-menu-item class="header-menu-item" index="1">
-          <el-image :src="url" />
+          <el-image class="navbar-brand" :src="url" />
         </el-menu-item>
         <el-menu-item class="header-menu-item" index="2">
           <el-button-group>
@@ -13,10 +13,10 @@
             <el-dialog class="signin-dialog" title="Đăng Nhập" :visible.sync="dialogSignInVisible">
               <el-form class="signin-dialog-content" :label-position="labelPosition" label-width="100px" :model="form" >
                 <el-form-item class="form-item" label="Email">
-                  <el-input v-model="form.username"></el-input>
+                  <el-input v-model="form.username" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item class="form-item" label="Mật Khẩu">
-                  <el-input type="password" v-model="form.password"></el-input>
+                  <el-input type="password" v-model="form.password" autocomplete="off"  @keyup.enter.native="signin"></el-input>
                 </el-form-item>
                 <el-form-item>
                   <a href="/forget-password">Quên Mật Khẩu</a>
@@ -36,24 +36,24 @@
                 <el-row :gutter="24">
                   <el-col :span="12">
                     <el-form-item  class="form-item" label="Họ Tên">
-                      <el-input v-model="formSignUp.fullname"></el-input>
+                      <el-input v-model="formSignUp.fullname" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item class="form-item" label="Username">
-                      <el-input v-model="formSignUp.username"></el-input>
+                      <el-input v-model="formSignUp.username" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item class="form-item" label="Số Điện Thoại">
-                      <el-input v-model="formSignUp.phone"></el-input>
+                      <el-input v-model="formSignUp.phone" autocomplete="off"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="12">
                     <el-form-item class="form-item" label="Email">
-                      <el-input type="email" v-model="formSignUp.email"></el-input>
+                      <el-input type="email" v-model="formSignUp.email" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item class="form-item" label="Mật Khẩu">
-                      <el-input type="password" v-model="formSignUp.password"></el-input>
+                      <el-input type="password" v-model="formSignUp.password" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item class="form-item" label="Địa Chỉ">
-                      <el-input v-model="formSignUp.address"></el-input>
+                      <el-input v-model="formSignUp.address" autocomplete="off" @keyup.enter.native="signup"></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -293,4 +293,99 @@ a {
   font-weight: 700;
 }
 
+/* Responsive */
+@media (min-width: 992px){
+  .register-hotel{
+    height: 534px;
+  }
+}
+@media (min-width: 1200px) {
+  .navbar-brand {
+    padding-top: 8px;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px){
+  .navbar-brand {
+    width: 60%;
+    height: 40%;
+    vertical-align: middle;
+  }
+  #signin, #signup {
+    padding: 4px;
+    min-height: 26px!important;
+    min-width: 80px;
+    font-size: 10px;
+  }
+  .box-card {
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+    padding: 20px;
+    border-radius: 3px;
+    background-color: hsla(0,0%,100%,.9);
+    
+  }
+  .box-card .text-section-title {
+    font-size: 28px;
+  }
+  .box-card .text-section-description {
+    font-size: 18px;
+    width: 90%;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .navbar-brand {
+    width: 80%;
+    height: 60%;
+    vertical-align: middle;
+  }
+  #signin, #signup {
+    padding: 4px;
+    min-height: 30px!important;
+    min-width: 100px;
+    font-size: 10px;
+  }
+
+  .box-card {
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+    padding: 20px;
+    border-radius: 3px;
+    background-color: hsla(0,0%,100%,.9);
+  }
+
+  .box-card .text-section-title {
+    font-size: 35px;
+    margin: 0 0 10px;
+  }
+  .box-card .text-section-description {
+    width: 520px;
+    font-size: 18px;
+    line-height: 1.4;
+    margin-bottom: 20px;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1319px) {
+  #signin, #signup {
+    padding: 4px;
+    min-height: 32px!important;
+    min-width: 120px;
+    font-size: 12px;
+  }
+  .box-card .text-section-title {
+    font-size: 32px;
+  }
+  .box-card .text-section-description {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 1320px) and (max-width: 1480px) {
+  .box-card .text-section-title {
+    font-size: 35px;
+  }
+}
 </style>

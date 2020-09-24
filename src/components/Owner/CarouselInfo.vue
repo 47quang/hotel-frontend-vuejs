@@ -90,4 +90,43 @@ export default {
   line-height: 32px;
   font-weight: 600;
 }
+
+/* Responsive */
+@media (min-width: 768px) and (max-width: 992px) {
+  .info-title {
+    font-size: 22px;
+  }
+  .info-content {
+    font-size: 14px;
+    line-height: 25px;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .info-title {
+    font-size: 24px;
+  }
+  .info-content {
+    font-size: 15px;
+    line-height: 28px;
+  }
+}
+@media (min-width: 1200px) and (max-width: 1480px) {
+  .info-title {
+    font-size: 25px;
+  }
+  .info-content {
+    font-size: 16px;
+    line-height: 28px;
+  }
+}
+@media (min-width: 1320px) and (max-width: 1480px) {
+  .info-title {
+    font-size: 28px;
+    line-height: 1.25;
+  }
+  .info-content {
+    font-size: 18px;
+    line-height: 30px;
+  }
+}
 </style>
