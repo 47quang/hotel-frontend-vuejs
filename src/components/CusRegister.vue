@@ -24,10 +24,13 @@
               <el-input type="address" v-model="form.address" autocomplete="off"></el-input>
             </el-form-item>
             <el-button class="modal-register" type="primary" @click="submit()">Tạo tài khoản</el-button>
-            <div class="da-co-tai-khoan">
+            <div class="da-co-tai-khoan-position">
+               <div class="da-co-tai-khoan">
               <p>Bạn đã có tài khoản</p>
               <el-button class="modal-login" type="primary">Đăng nhập</el-button>
             </div>
+            </div>
+           
           </el-form>
           <div class="bg-form">
             <img src="../assets/form.svg" alt="">
@@ -103,10 +106,24 @@ export default {
     width: 80%;
     margin: 0 auto;
   }
+  /* .el-form{
+    position: relative;
+  }
+  .da-co-tai-khoan-position{
+    position: absolute;
+    bottom: 0;
+  } */
  
 </style>
 
 <style>
+  .register-component .el-dialog__wrapper{
+    overflow: hidden;
+    
+  }
+  .register-component .el-dialog{
+    margin: 30px auto 0 !important;
+  }
     .dialog-register .el-dialog__header{
     display:none;
   }
@@ -118,9 +135,9 @@ export default {
     padding:0;
     height:100%
   }
-  .dialog-register .el-dialog{
+  /* .dialog-register .el-dialog{
     height: 100% 
-  }
+  } */
   .dialog-register .el-dialog__body .el-form{
     width: 50% !important;
   }
