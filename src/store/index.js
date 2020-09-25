@@ -9,7 +9,19 @@ const client = axios.create({
   baseURL : BASE_URL,
   timeout: 10000,
   withCredentials: false
-})
+});
+
+client.interceptors.request.use((config) => {
+  Object.assign(config.headers, getDefaultHeader());
+  return config;
+});
+
+function getDefaultHeader() {
+  return {
+    'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+  };
+}
+
 export default new Vuex.Store({
   state: {
     BASE_URL,
@@ -67,7 +79,7 @@ export default new Vuex.Store({
         .post(`${BASE_URL}/api.user/login`, payload)
         .then(res => {
           ctx.commit('OWNER_SIGN_IN', res.data.user);
-          localStorage.setItem('accessToken', JSON.stringify(res.data.accessToken));
+          localStorage.setItem('accessToken', res.data.accessToken);
           localStorage.setItem('user', JSON.stringify(res.data.user));
           resolve(res);
         })

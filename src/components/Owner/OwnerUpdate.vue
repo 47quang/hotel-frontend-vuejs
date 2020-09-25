@@ -82,15 +82,13 @@ export default {
         }
     },
     created(){
-        console.log('created' ,this.$route.params)
+        console.log('created' ,this.$route.params.id)
     },
     mounted(){
-        console.log('mounted', this.$store.state.curOwner.fullname)
+        console.log('mounted', this.$store.state.curOwner)
     },
     computed: {
-        // fullName(){
-        //     return this.$store.state.curOwner.fullname
-        // } 
+       
     },
     methods: {
          async saveInfo() {
