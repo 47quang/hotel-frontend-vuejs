@@ -23,7 +23,7 @@
         <el-menu-item index="3"><i class="el-icon-s-home"> Chỗ ở</i></el-menu-item>
         <el-menu-item index="4"><i class="el-icon-s-promotion"> Tin nhắn</i></el-menu-item>
         <el-menu-item index="5">
-          <router-link to="/owner/update"><i class="el-icon-s-custom"> Hồ sơ</i></router-link>
+          <router-link  :to="'/dashboard/'+curOwner.id"><i class="el-icon-s-custom"> Hồ sơ</i></router-link>
         </el-menu-item>
         <el-menu-item class="user-info">
           <div>
@@ -31,7 +31,7 @@
           </div>
           <el-dropdown>
             <span class="el-dropdown-link">
-              {{curOwner.fullname}}<i class="el-icon-arrow-down el-icon--right"></i>
+              {{curOwner.fullName}}<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>Sign Out</el-dropdown-item>
@@ -166,10 +166,14 @@ export default {
         
     };
   },
+ 
   computed: {
     curOwner() {
       return this.$store.state.curOwner;
-    }
+    },
+    // idOwner(){
+    //   return this.$store.state.curOwner.id;
+    // }
   }
 };
 </script>

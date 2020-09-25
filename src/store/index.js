@@ -35,7 +35,8 @@ export default new Vuex.Store({
     },
     SEARCH_HOTEL(state, payload) {
       state.hotel= payload
-    }
+    },
+   
   },
   actions: {
     async register(ctx, payload){
@@ -76,9 +77,24 @@ export default new Vuex.Store({
         })
       })
     },
-    searchHotel(ctx,payload){
+    searchHotel(ctx,payload) {
       ctx.commit('SEARCH_HOTEL', payload);
       console.log(payload)
+    },
+    saveInfo(ctx,payload) {
+      return new Promise((resolve, reject) => {
+        
+        client
+        .put(`${BASE_URL}/api.user/${payload.id}`, payload.owner)
+        .then(res => {
+          ctx.commit('OWNER_UPDATE', res.data)
+          console.log(res.data)
+          resolve(res);
+        })
+        .catch(err => {
+          reject(err);
+        })
+      })
     }
   },
   modules: {
