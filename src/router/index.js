@@ -8,6 +8,7 @@ import HotelBooking from '../views/HotelBooking.vue'
 import HotelDetail from '../views/HotelDetail.vue'
 import HotelRegister from '../views/HotelRegister.vue'
 import Product from '../views/Product.vue'
+import OwnerUpdate from '../components/Owner/OwnerUpdate'
 
 
 Vue.use(VueRouter)
@@ -53,6 +54,11 @@ const routes = [
     name: 'Search',
     component: Search
   },
+  {
+    path: '/dashboard/:id',
+    name: 'OwnerUpdate',
+    component: OwnerUpdate
+  }
 
 ]
 

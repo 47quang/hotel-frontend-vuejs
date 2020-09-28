@@ -9,7 +9,19 @@ const client = axios.create({
   baseURL : BASE_URL,
   timeout: 10000,
   withCredentials: false
-})
+});
+
+client.interceptors.request.use((config) => {
+  Object.assign(config.headers, getDefaultHeader());
+  return config;
+});
+
+function getDefaultHeader() {
+  return {
+    'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+  };
+}
+
 export default new Vuex.Store({
   state: {
     BASE_URL,
@@ -35,7 +47,8 @@ export default new Vuex.Store({
     },
     SEARCH_HOTEL(state, payload) {
       state.hotel= payload
-    }
+    },
+   
   },
   actions: {
     async register(ctx, payload){
@@ -66,7 +79,7 @@ export default new Vuex.Store({
         .post(`${BASE_URL}/api.user/login`, payload)
         .then(res => {
           ctx.commit('OWNER_SIGN_IN', res.data.user);
-          localStorage.setItem('accessToken', JSON.stringify(res.data.accessToken));
+          localStorage.setItem('accessToken', res.data.accessToken);
           localStorage.setItem('user', JSON.stringify(res.data.user));
           resolve(res);
         })
@@ -76,9 +89,24 @@ export default new Vuex.Store({
         })
       })
     },
-    searchHotel(ctx,payload){
+    searchHotel(ctx,payload) {
       ctx.commit('SEARCH_HOTEL', payload);
       console.log(payload)
+    },
+    saveInfo(ctx,payload) {
+      return new Promise((resolve, reject) => {
+        
+        client
+        .put(`${BASE_URL}/api.user/${payload.id}`, payload.owner)
+        .then(res => {
+          ctx.commit('OWNER_UPDATE', res.data)
+          console.log(res.data)
+          resolve(res);
+        })
+        .catch(err => {
+          reject(err);
+        })
+      })
     }
   },
   modules: {
