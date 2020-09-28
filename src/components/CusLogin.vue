@@ -16,7 +16,7 @@
             <el-button class="modal-login" type="primary" @click="signin">Đăng nhập</el-button>
             <div class="chua-co-tai-khoan">
               <p>Bạn chưa có tài khoản</p>
-              <el-button class="modal-login" type="primary" >Đăng ký</el-button>
+              <el-button class="modal-register" type="primary" >Đăng ký</el-button>
             </div>
           </el-form>
           <div class="bg-form">
@@ -89,6 +89,13 @@ export default {
  
 </style>
 <style >
+   .login-component .el-dialog__wrapper{
+    overflow: hidden;
+    
+  }
+  .login-component .el-dialog{
+    margin: 50px auto 0 !important;
+  }
      .dialog-login .el-dialog__header{
     display:none;
   }
@@ -100,9 +107,9 @@ export default {
     padding:0;
     height:100%
   }
-  .dialog-login .el-dialog{
-    height: 100% 
-  }
+  /* .dialog-login .el-dialog{
+    
+  } */
   .dialog-login .el-dialog__body .el-form{
     width: 50% !important;
   }

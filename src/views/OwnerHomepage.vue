@@ -82,4 +82,14 @@ export default {
   margin-left: 10px;
 }
 
+@media (min-width: 768px) and (max-width: 991px) {
+  html {
+    width: 992px;
+  }
+}
+@media (max-width: 768px) {
+  html {
+    width: 768px;
+  }
+}
 </style>

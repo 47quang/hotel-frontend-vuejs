@@ -12,7 +12,6 @@
         <div style="display: inline-block" v-else>
           {{fullName}}
         </div>
-        
 
       </div>
     </div>
@@ -49,6 +48,7 @@
   .nav{
     display: flex;
     justify-content: space-between;
+    padding: 20px !important;
   }
   .owner{
     color: #ff567d;

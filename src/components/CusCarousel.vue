@@ -7,30 +7,31 @@
                 <div class="search">
                     <el-input
                         class="cus-input"
-                        placeholder="Search"
+                        placeholder="Nhập điểm du lịch"
                         suffix-icon="el-icon-search"
-                        v-model="search">
+                        v-model="country">
                     </el-input>
                 </div>
                  <div class="date">
                     <el-date-picker
                     v-model="date"
                     type="daterange"
-                    range-separator="To"
+                    range-separator=""
                     start-placeholder="Start date"
                     end-placeholder="End date">
                     </el-date-picker>
                 </div>
                 <div class="select">
-                    <el-select v-model="value" placeholder="Select">
+                    <el-select   v-model="value" placeholder="Select" >
                         <el-option
                         v-for="item in options"
                         :key="item.value"
                         :label="item.label"
-                        :value="item.value">
+                        :value="item.value"
+                        >
                         </el-option>
                     </el-select>
-                     <router-link class="button-select" to="/search" >TÌM</router-link>
+                     <button  class="button-select"  @click="searchHotel()" >TÌM</button>
                 </div>
                
             </div>
@@ -42,7 +43,7 @@
   export default {
         data() {
             return {
-                search:'',
+                country:'',
                 date: '',
 
                 options: [{
@@ -59,8 +60,13 @@
             };
         },
         methods:{
-            hihi(){
-                console.log(this.number)
+            searchHotel(){
+                 this.$store.dispatch('searchHotel', {
+                    country: this.country,
+                    date: this.date,
+                    number: this.value
+                })
+                this.$router.push('/search')
             }
         }
        
@@ -68,6 +74,7 @@
 </script>
 
 <style scoped>
+    
     .carousel{
         background-image: url(../assets/carousel.png);
         background-position: bottom center;
@@ -97,49 +104,107 @@
         top: 50%;
         right: 50%;
         transform: translate(50%,-50%);
+        border-radius: 5px;
+        max-width: 750px;
     }
     .search{
         margin: 30px auto 10px auto;
         width: 80%;
         cursor: pointer;
+        box-shadow: 0 4px 10px 0 rgba(0,0,0,.3)
     }
     .date{
         margin: 10px auto;
         width: 80%;
-        
+        box-shadow: 0 4px 10px 0 rgba(0,0,0,.3)
     }
     .select{
         display: flex;
-        margin: 10px auto;
+        margin: 10px auto 30px;
         width: 80%;
+        box-shadow: 0 4px 10px 0 rgba(0,0,0,.3)
         
     }
     .button-select{
         color: white;
         background-color: #5392f9;
         text-decoration: none;
-        width: 30%;
+        width: 35%;
         cursor: pointer;
         font-size: 18px;
         line-height: 75px;
         margin-left: 10px;
         border-radius: 5px;
+        box-shadow: 0 4px 10px 0 rgba(0,0,0,.3)
     }
     .button-select:hover{
         color: white;
         background-color: rgb(83, 146, 249, 0.7);
     }
-  
+    
    
     
 </style>
 
 <style >
+    .el-range-separator{
+        position: relative !important;
+    }
+    .el-range-separator::before{    
+        content:"";
+        background-color: #aaa2a2;
+        height: 60px;
+        width: 1px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .search .el-input__inner::-webkit-input-placeholder{
+        color: #898484;
+        font-size: 18px;
+        letter-spacing: 1px;
+        
+    }
+    .search .el-input__inner{
+        font-size: 18px;
+        letter-spacing: 1px;
+    }
+    .search .el-icon-search{
+        color: black;
+        font-size: 25px;
+        padding: 0 20px;
+    }
+
+    .date .el-range-input::-webkit-input-placeholder{
+        color: #898484 !important;
+        font-size: 16px !important;
+        letter-spacing: 1px !important;
+    }
+    .date .el-range-input{
+        color: black !important;
+        font-size: 16px !important;
+        letter-spacing: 1px !important;
+    }
+    .date .el-icon-date{
+        font-size: 25px !important;
+        padding: 0 20px !important;
+        color: black !important;
+    }
+    .select .el-input__inner::-webkit-input-placeholder{
+        color: #898484;
+        font-size: 16px;
+        letter-spacing: 1px;
+    }
+     .select .el-input__inner{
+        color: black;
+        font-size: 16px;
+        letter-spacing: 1px;
+    }
     .select .el-select input{
         height: 80px;
     }
     .select .el-select {
-        width: 70%;
+        width: 65%;
     }
     .date .el-date-editor{
         width: 100% !important;
