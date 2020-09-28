@@ -45,6 +45,9 @@ export default new Vuex.Store({
       state.curOwner = payload;
       console.log('CurUser:', state.curOwner);
     },
+    OWNER_SIGN_OUT(state) {
+      state.curOwner = {}
+    },
     SEARCH_HOTEL(state, payload) {
       state.hotel= payload
     },
@@ -77,11 +80,12 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         client
         .post(`${BASE_URL}/api.user/login`, payload)
-        .then(res => {
-          ctx.commit('OWNER_SIGN_IN', res.data.user);
-          localStorage.setItem('accessToken', res.data.accessToken);
-          localStorage.setItem('user', JSON.stringify(res.data.user));
-          resolve(res);
+        .then(resp => resp.data)
+        .then(body => {
+          ctx.commit('OWNER_SIGN_IN', body.data.user);
+          localStorage.setItem('accessToken', JSON.stringify(body.data.accessToken));
+          localStorage.setItem('user', JSON.stringify(body.data.user));
+          resolve(body);
         })
         .catch(err => {
           reject(err);
@@ -89,7 +93,12 @@ export default new Vuex.Store({
         })
       })
     },
-    searchHotel(ctx,payload) {
+    ownerSignOut(ctx){
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('user');
+      ctx.commit('OWNER_SIGN_OUT');
+    },
+    searchHotel(ctx,payload){
       ctx.commit('SEARCH_HOTEL', payload);
       console.log(payload)
     },

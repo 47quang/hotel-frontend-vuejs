@@ -117,6 +117,11 @@ export default {
       }
     }
   },
+  computed: {
+    curOwner() {
+      return this.$store.state.curOwner;
+    },
+  },
   methods: {
     onChange(event) {
       console.log(event)
@@ -134,7 +139,7 @@ export default {
     async signin(){
       try {
         await this.$store.dispatch("ownerSignIn", this.form);
-        this.$router.push('/dashboard');
+        this.$router.push(`/dashboard/${this.curOwner.id}`);
         this.form.username = '';
         this.form.password = '';
       }
