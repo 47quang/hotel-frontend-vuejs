@@ -2,7 +2,6 @@ import axios from 'axios';
 
 export const BASE_URL = process.env.VUE_APP_API_BASE_URL;
 
-
 const client = axios.create({
   baseURL: BASE_URL,
   timeout: 10000,
@@ -82,5 +81,21 @@ export const actions = {
         });
     });
   },
+  uploadImage(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+        .post(`${BASE_URL}/api.upload/image`, payload, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        .then((resp) => resp.data)
+        .then((body) => {
+          resolve(body);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
 };
-
