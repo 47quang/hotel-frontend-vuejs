@@ -52,8 +52,8 @@ export default {
       this.$router.push(`/dashboard/${this.curOwner.id}/hotels`);
     }
   },
-  created() {
-    this.$store.dispatch('fetchHotels', this.curOwner.id);
+  async mounted() {
+    await this.$store.dispatch('fetchHotels', this.curOwner.id);
   }
 }
 </script>

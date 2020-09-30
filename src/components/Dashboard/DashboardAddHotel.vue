@@ -12,7 +12,7 @@
         <el-row :gutter="24">
           <el-col :span="12">
             <el-form-item label="Thành Phố:">
-              <el-select class="add-hotel__select-info" v-model="hotel.provinceId" clearable placeholder="Vui Lòng Chọn Tỉnh Thành">
+              <el-select class="add-hotel__select-info" v-model="hotel.provinceId" clearable @change="handleSelectProvince" placeholder="Vui Lòng Chọn Tỉnh Thành">
                 <el-option v-for="province in provinces" :key="province.id" :label="province.name" :value="province.id"> </el-option>
               </el-select>
             </el-form-item>
@@ -29,7 +29,7 @@
           <el-input type="textarea" :rows="4" v-model="hotel.description"></el-input>
         </el-form-item>
         <el-form-item label="Hình ảnh">
-          <el-upload accept="image/png, image/jpeg, image/jpg" action="#" list-type="picture-card" :auto-upload="false" ref="upload" :file-list="hotel.images">
+          <el-upload accept="image/png, image/jpeg, image/jpg" action="#" list-type="picture-card" :auto-upload="false" ref="upload">
             <i slot="default" class="el-icon-plus"></i>
             <div slot="file" slot-scope="{ file }">
               <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
@@ -72,6 +72,9 @@ export default {
     };
   },
   methods: {
+    handleSelectProvince(provinceId) {
+      this.$store.dispatch('fetchDistrict', provinceId);
+    },
     handleRemove(file, fileList) {
       console.log('image uploaded: ', file);
       console.log('list images: ', fileList);
@@ -90,16 +93,11 @@ export default {
     },
     async handleUpload(e) {
       e.preventDefault();
-      console.log('this hotel before dispatch: ', this.hotel)
-
       const files = this.$refs.upload.uploadFiles.map((f) => f.raw);
       const formData = this.parseFormData(files);
       const { data } = await this.$store.dispatch('uploadImage', formData);
-      console.log('---- Images URL: ', data);
-      // TODO: đính kèm images url vào request tạo hotel
-      // this.hotel.images = data;
-      // console.log('this hotel before dispatch: ', this.hotel)
-      // this.$store.dispatch('registerHotel', this.hotel)
+      this.hotel.images = data;
+      this.$store.dispatch('registerHotel', this.hotel);
     },
   },
   computed: {

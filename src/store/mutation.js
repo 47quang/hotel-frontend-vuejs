@@ -21,6 +21,6 @@ export const mutations = {
     state.districts = payload;
   },
   FETCH_HOTELS(state, payload) {
-    state.hotels = payload;
+    state.ownerHotels = payload;
   }
 }

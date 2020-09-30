@@ -126,10 +126,10 @@ export const actions = {
       })
     })
   },
-  fetchDistrict(ctx) {
+  fetchDistrict(ctx, payload) {
     return new Promise((resolve, reject) => {
       client
-      .get(`${BASE_URL}/api.district`)
+      .get(`${BASE_URL}/api.district?provinceId=${payload}`)
       .then(resp => resp.data)
       .then(body => {
         ctx.commit('FETCH_DISTRICT', body.data);
@@ -143,7 +143,7 @@ export const actions = {
   fetchHotels(ctx, payload) {
     return new Promise((resolve, reject) => {
       client
-      .get(`${BASE_URL}/api.hotel?${payload}`)
+      .get(`${BASE_URL}/api.hotel?ownerId=${payload}`)
       .then(resp => resp.data)
       .then(body => {
         ctx.commit('FETCH_HOTELS', body.data);
