@@ -62,6 +62,7 @@ export const actions = {
   ownerSignOut(ctx) {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('user');
+    localStorage.removeItem('hotels');
     ctx.commit('OWNER_SIGN_OUT');
   },
   searchHotel(ctx, payload) {
@@ -98,4 +99,60 @@ export const actions = {
         });
     });
   },
+  registerHotel(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .post(`${BASE_URL}/api.hotel`, payload)
+      .then((resp) => resp.data)
+      .then(body => {
+        resolve(body);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },
+  fetchProvince(ctx) {
+    return new Promise((resolve, reject) => {
+      client
+      .get(`${BASE_URL}/api.province`)
+      .then(resp => resp.data)
+      .then(body => {
+        ctx.commit('FETCH_PROVINCE', body.data);
+        resolve(body);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },
+  fetchDistrict(ctx) {
+    return new Promise((resolve, reject) => {
+      client
+      .get(`${BASE_URL}/api.district`)
+      .then(resp => resp.data)
+      .then(body => {
+        ctx.commit('FETCH_DISTRICT', body.data);
+        resolve(body);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },
+  fetchHotels(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .get(`${BASE_URL}/api.hotel?${payload}`)
+      .then(resp => resp.data)
+      .then(body => {
+        ctx.commit('FETCH_HOTELS', body.data);
+        localStorage.setItem('hotels', JSON.stringify(body.data));
+        resolve(body);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  }
 };
