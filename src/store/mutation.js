@@ -22,5 +22,8 @@ export const mutations = {
   },
   FETCH_HOTELS(state, payload) {
     state.ownerHotels = payload;
+  },
+  FETCH_WARDS(state, payload) {
+    state.wards = payload;
   }
 }

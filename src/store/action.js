@@ -101,32 +101,17 @@ export const actions = {
         });
     });
   },
-  uploadImage(ctx, payload) {
-    return new Promise((resolve, reject) => {
-      client
-        .post(`${BASE_URL}/api.upload/image`, payload, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
-        .then((resp) => resp.data)
-        .then((body) => {
-          resolve(body);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
-  },
   registerHotel(ctx, payload) {
     return new Promise((resolve, reject) => {
       client
       .post(`${BASE_URL}/api.hotel`, payload)
       .then((resp) => resp.data)
       .then(body => {
+        alert('Đã Đăng Ký Khách Sạn Thành Công!');
         resolve(body);
       })
       .catch(err => {
+        alert('Đã có lỗi xảy ra!')
         reject(err);
       })
     })
@@ -172,6 +157,21 @@ export const actions = {
       .catch(err => {
         reject(err);
       })
+    })
+  },
+  fetchWards(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .get(`${BASE_URL}/api.ward?districtId=${payload}`)
+      .then(resp => resp.data)
+      .then(body => {
+        ctx.commit('FETCH_WARDS', body.data);
+        resolve(body);
+      })
+      .catch(err => {
+        reject(err);
+      })
+
     })
   }
 };
