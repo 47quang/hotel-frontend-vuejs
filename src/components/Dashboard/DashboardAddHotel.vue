@@ -10,17 +10,24 @@
           <el-input v-model="hotel.address"></el-input>
         </el-form-item>
         <el-row :gutter="24">
-          <el-col :span="12">
+          <el-col :span="8">
             <el-form-item label="Thành Phố:">
               <el-select class="add-hotel__select-info" v-model="hotel.provinceId" clearable @change="handleSelectProvince" placeholder="Vui Lòng Chọn Tỉnh Thành">
-                <el-option v-for="province in provinces" :key="province.id" :label="province.name" :value="province.id"> </el-option>
+                <el-option v-for="province in provinces" :key="province.id" :label="province.name" :value="province.id"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="8">
             <el-form-item label="Quận/Huyện:">
-              <el-select class="add-hotel__select-info" v-model="hotel.districtId" clearable placeholder="Vui Lòng Chọn Quận Huyện">
-                <el-option v-for="district in districts" :key="district.id" :label="district.name" :value="district.id"> </el-option>
+              <el-select class="add-hotel__select-info" v-model="hotel.districtId" clearable @change="handleSelectDistrict" placeholder="Vui Lòng Chọn Quận Huyện">
+                <el-option v-for="district in districts" :key="district.id" :label="district.name" :value="district.id"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="Phường/Xã:">
+              <el-select class="add-hotel__select-info" v-model="hotel.wardId" clearable placeholder="Vui Lòng Chọn Phường Xã">
+                <el-option v-for="ward in wards" :key="ward.id" :label="ward.name" :value="ward.id"> </el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -62,6 +69,7 @@ export default {
         address: '',
         provinceId: '',
         districtId: '',
+        wardId: '',
         description: '',
         images: [],
         ownerId: this.$store.state.curOwner.id,
@@ -74,6 +82,9 @@ export default {
   methods: {
     handleSelectProvince(provinceId) {
       this.$store.dispatch('fetchDistrict', provinceId);
+    },
+    handleSelectDistrict(districtId){
+      this.$store.dispatch('fetchWards', districtId);
     },
     handleRemove(file, fileList) {
       console.log('image uploaded: ', file);
@@ -98,6 +109,7 @@ export default {
       const { data } = await this.$store.dispatch('uploadImage', formData);
       this.hotel.images = data;
       this.$store.dispatch('registerHotel', this.hotel);
+      this.$router.push(`/dashboard/${this.curOwner.id}`)
     },
   },
   computed: {
@@ -107,6 +119,12 @@ export default {
     districts() {
       return this.$store.state.districts;
     },
+    wards() {
+      return this.$store.state.wards;
+    },
+    curOwner() {
+      return this.$store.state.curOwner;
+    }
   },
   created() {
     this.$store.dispatch('fetchProvince');

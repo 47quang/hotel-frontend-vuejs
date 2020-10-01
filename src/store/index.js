@@ -23,6 +23,7 @@ export default new Vuex.Store({
     hotel: {},
     provinces: {},
     districts: {},
+    wards: {},
     ownerHotels: localHotels || []
   },
   mutations,
