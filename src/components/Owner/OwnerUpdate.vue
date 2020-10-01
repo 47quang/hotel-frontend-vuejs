@@ -1,103 +1,204 @@
 <template>
-    <div>
-        <el-container>
-            <el-header>Header</el-header>
-            <el-main>
-                <el-row>
-                    <el-col :span="24">
-                        <div >
-                        <h3>Chọn/ Đổi hình đại diện hình đại diện trong hồ sơ (không bắt buộc)</h3>
-                        <p>Tạo thiện cảm từ cái nhìn đầu tiên! Chúng tôi sẽ thêm hình đại diện vào hồ sơ của bạn và hiển thị cho khách hàng hay chủ nhà khác về sau.</p>
-                        </div></el-col>
-                </el-row>
-                <el-row>
-                     <el-col :span="24">
-                        <div class="avatar">
-                            Avatar
-                        </div>
-                    </el-col>
-                </el-row>
-                  <div style="padding: 20px 0">Chỉnh sửa thông tin</div>
-                 <el-row>
-                   
-                     <el-col :span="12">
-                        <div class="fullName">
-                            Họ tên
-                        </div>
-                        <el-input  v-model="owner.fullname"></el-input>
-                    </el-col>
-                    <el-col :span="12">
-                        <div class="phone">
-                            Số điện thoại
-                        </div>
-                         <el-input  v-model="owner.phone"></el-input>
-                    </el-col>
-                    <el-col :span="12">
-                        <div class="email">
-                            Email
-                        </div>
-                         <el-input  v-model="owner.email"></el-input>
-                    </el-col>
-                    <el-col :span="12">
-                        <div class="address">
-                            Địa chỉ
-                        </div>
-                         <el-input  v-model="owner.address"></el-input>
-                    </el-col>
-                </el-row>
-                <el-button>Hủy</el-button>
-                <el-button @click="saveInfo">Lưu</el-button>
-            </el-main>
-            <el-footer>Footer</el-footer>
-        </el-container>
-    </div>
+  <div>
+    <el-container>
+      <el-main>
+        <el-row>
+          <el-col :span="24">
+            <div>
+              <h3>
+                Chọn/ Đổi hình đại diện hình đại diện trong hồ sơ (không bắt buộc)
+              </h3>
+              <p>
+                Tạo thiện cảm từ cái nhìn đầu tiên! Chúng tôi sẽ thêm hình đại diện vào hồ sơ của
+                bạn và hiển thị cho khách hàng hay chủ nhà khác về sau.
+              </p>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <div class="avatar">
+              <el-col class="avatar-content" :span="17">
+                <el-avatar :size="70" :src="owner.preview"></el-avatar>
+
+                <p>
+                  Hình ảnh thật sự có tác dụng. Hãy chọn một bức ảnh rõ ràng và thân thiện để tăng
+                  lượng khách đặt phòng.
+                </p>
+              </el-col>
+              <el-col class="avatar-update" :span="7">
+                <el-upload
+                  class="avatar-uploader"
+                  action="https://hotel.eyeteam.vn/api.upload/image"
+                  name="image"
+                  :show-file-list="false"
+                  :on-success="handleAvatarSuccess"
+                  ref="upload"
+                >
+                  CHỌN/ĐỔI HÌNH ĐẠI DIỆN TRONG HỒ SƠ
+                </el-upload>
+              </el-col>
+            </div>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <h3 style="padding: 20px 0">Chỉnh sửa thông tin</h3>
+          <el-col :span="12">
+            <div class="firstName">Tên</div>
+            <el-input v-model="owner.firstname"></el-input>
+          </el-col>
+          <el-col :span="12">
+            <div class="lastName">Họ</div>
+            <el-input v-model="owner.lastname"></el-input>
+          </el-col>
+          <el-col :span="12">
+            <div class="phone">Số điện thoại</div>
+            <el-input v-model="owner.phone"></el-input>
+          </el-col>
+          <el-col :span="12">
+            <div class="email">Email</div>
+            <el-input v-model="owner.email"></el-input>
+          </el-col>
+          <el-col :span="12">
+            <div class="address">Địa chỉ</div>
+            <el-input v-model="owner.address"></el-input>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-button>Hủy</el-button>
+          <el-button class="saveInfo" @click="handleUpdateOwner">Lưu</el-button>
+        </el-row>
+
+        <div v-if="!success"></div>
+
+        <el-alert v-else title="Success update" type="success" show-icon> </el-alert>
+      </el-main>
+    </el-container>
+  </div>
 </template>
 
-
 <style scoped>
-    .el-row{
-        margin-bottom: 20px;
-    }
-    .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-    background-color: burlywood;
-    }
-    .ed-main{
-        background-color: #fcfcfc !important;
-    }
+.saveInfo {
+  color: white;
+  background-color: #1174a6;
+  border: 1px solid #1174a6;
+}
+.el-row {
+  margin-bottom: 20px;
+}
+.grid-content {
+  border-radius: 4px;
+  min-height: 36px;
+  background-color: burlywood;
+}
+.ed-main {
+  background-color: #fcfcfc !important;
+}
+.avatar {
+  border: 1px solid rgb(216, 207, 207, 0.5);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+}
+.avatar-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.avatar-content p {
+  margin: 0 10px;
+}
+.avatar-update {
+  border-radius: 5px;
+  border: 1px solid #1174a6;
+  text-align: center;
+  padding: 10px 0;
+  color: #1174a6;
+  cursor: pointer;
+}
+.avatar-update:hover {
+  color: white;
+  background-color: #1174a6;
+  border: 1px solid #1174a6;
+}
+.el-row {
+  padding: 10px 0;
+  width: 80%;
+  margin: 0 auto;
+}
+.el-col-12 {
+  padding: 0 20px 0 0;
+  font-weight: 600;
+}
+.firstName {
+  padding: 10px 0;
+}
+.lastName {
+  padding: 10px 0;
+}
+.email {
+  padding: 10px 0;
+}
+.phone {
+  padding: 10px 0;
+}
+.address {
+  padding: 10px 0;
+}
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar-plus {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
 </style>
 
 <script>
 export default {
-    data(){
-        return {
-            owner:{
-                    fullname: this.$store.state.curOwner.fullname,
-                    phone:  this.$store.state.curOwner.phone,
-                    address: this.$store.state.curOwner.address,
-                    email: this.$store.state.curOwner.email
-                },
-                
-        }
+  data() {
+    return {
+      owner: {
+        id: this.$store.state.curOwner.id,
+        firstname: this.$store.state.curOwner.firstname,
+        lastname: this.$store.state.curOwner.lastname,
+        phone: this.$store.state.curOwner.phone,
+        address: this.$store.state.curOwner.address,
+        email: this.$store.state.curOwner.email,
+        preview: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+        avatar: '',
+      },
+      success: '',
+    };
+  },
+  computed: {},
+  methods: {
+    handleAvatarSuccess(res, file) {
+      this.owner.preview = URL.createObjectURL(file.raw);
+      console.log('Res: ', res.data[0]);
+      this.owner.avatar = res.data[0];
     },
-    created(){
-        console.log('created' ,this.$route.params.id)
-    },
-    mounted(){
-        console.log('mounted', this.$store.state.curOwner)
-    },
-    computed: {
-       
-    },
-    methods: {
-         async saveInfo() {
-            await this.$store.dispatch('saveInfo', {
-                owner: this.owner,
-                id: this.$route.params.id
-            })
-        }
+    async handleUpdateOwner() {
+      await this.$store.dispatch('updateUser', this.owner);
     }
-    
-}
+  },
+};
 </script>

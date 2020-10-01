@@ -39,6 +39,24 @@ export const actions = {
         });
     });
   },
+  uploadImage(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+        .post(`${BASE_URL}/api.upload/image`, payload, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        .then((resp) => resp.data)
+        .then((body) => {
+          resolve(body);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
+
   async ownerSignUp(ctx, payload) {
     await axios.post(`${BASE_URL}/api.user/register`, payload);
   },
@@ -68,13 +86,14 @@ export const actions = {
   searchHotel(ctx, payload) {
     ctx.commit('SEARCH_HOTEL', payload);
   },
-  saveInfo(ctx, payload) {
+  updateUser(ctx, payload) {
     return new Promise((resolve, reject) => {
       client
-        .put(`${BASE_URL}/api.user/${payload.id}`, payload.owner)
+        .put(`${BASE_URL}/api.user/${payload.id}`, payload)
         .then((resp) => resp.data)
         .then((body) => {
           ctx.commit('OWNER_UPDATE', body.data);
+          localStorage.setItem('user', JSON.stringify(body.data));
           resolve(body);
         })
         .catch((err) => {
