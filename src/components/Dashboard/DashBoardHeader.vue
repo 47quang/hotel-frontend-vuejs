@@ -32,7 +32,7 @@
         <el-avatar icon="el-icon-user-solid" class="hidden-sm-and-down" style="line-height: 32px;"></el-avatar>
         <el-dropdown trigger="click" class="owner-name">
           <span class="el-dropdown-link">
-            {{curOwner.username}}<i class="el-icon-arrow-down el-icon--right"></i>
+            {{`${curOwner.lastname} ${curOwner.firstname}`}}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item @click.native="signout">Đăng Xuất</el-dropdown-item>

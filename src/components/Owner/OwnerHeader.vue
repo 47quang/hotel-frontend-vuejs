@@ -35,8 +35,11 @@
               <el-form class="signin-dialog-content" :label-position="labelPosition" label-width="100px" :model="form">
                 <el-row :gutter="24">
                   <el-col :span="12">
-                    <el-form-item  class="form-item" label="Họ Tên">
-                      <el-input v-model="formSignUp.fullname" autocomplete="off"></el-input>
+                    <el-form-item  class="form-item" label="Tên">
+                      <el-input v-model="formSignUp.firstname" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item  class="form-item" label="Họ">
+                      <el-input v-model="formSignUp.lastname" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item class="form-item" label="Username">
                       <el-input v-model="formSignUp.username" autocomplete="off"></el-input>
@@ -107,7 +110,8 @@ export default {
         password: ''
       },
       formSignUp: {
-        fullname: '',
+        firstname: '',
+        lastname: '',
         username: '',
         email: '',
         password: '',
@@ -129,7 +133,8 @@ export default {
     signup(){
       console.log("Sign Up:",this.formSignUp);
       this.$store.dispatch('ownerSignUp', this.formSignUp);
-      this.formSignUp.fullname = '';
+      this.formSignUp.firstname = '';
+      this.formSignUp.lastname = '';
       this.formSignUp.username = '';
       this.formSignUp.email = '';
       this.formSignUp.password = '';
