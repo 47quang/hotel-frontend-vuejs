@@ -91,4 +91,7 @@ a {
 .el-menu-item .el-avatar .el-avatar--icon .el-avatar--circle i{
   color: #fff;
 }
+.el-menu.el-menu--horizontal {
+  border-bottom: none;
+}
 </style>

@@ -18,9 +18,9 @@
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span class="hotel-card__title">[{{hotel.id}}] {{hotel.name}}</span>
+            <el-button style="float: right; padding: 3px 0" @click="deleteHotel(hotel.id)" class="hotel-card__button" icon="el-icon-close"></el-button>
             <div>
               <el-tag class="hotel-card__tag" :type="'warning'" effect="dark">Chưa Hoàn Tất</el-tag>
-
             </div>
           </div>
           <div>
@@ -36,7 +36,8 @@
 export default {
   data(){
     return {
-      search: ''
+      search: '',
+      targetHotel: ''
     }
   },
   computed: {
@@ -49,11 +50,49 @@ export default {
   },
   methods: {
     addHotel() {
-      this.$router.push(`/dashboard/${this.curOwner.id}/hotels`);
+      try {
+        this.$router.push(`/dashboard/${this.curOwner.id}/hotels`);
+      }
+      catch(err) {
+        this.alertErr();
+      }
+    },
+    deleteHotel(hotelId) {
+      this.$confirm('Xóa vĩnh viễn khách sạn. Tiếp tục?', 'Cảnh Báo', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Hủy bỏ',
+        type: 'warning'
+      })
+      .then(() => {
+        this.$store.dispatch('deleteHotel', hotelId);
+        this.alertSuccess();
+      })
+      .catch(() => {
+        this.alertErr();
+      });
+    }, 
+    alertSuccess() {
+      this.$message({
+        showClose: true,
+        message: 'Đã xóa khách sạn thành công.',
+        type: 'success'
+      });
+    },
+    alertErr() {
+      this.$message({
+        showClose: true,
+        message: 'Đã có lỗi xảy ra, vui lòng thử lại.',
+        type: 'error'
+      });
     }
   },
   async mounted() {
     await this.$store.dispatch('fetchHotels', this.curOwner.id);
+  },
+  watch: {
+    hotels(newHotels, oldHotels) {
+      console.log(`there is: ${newHotels}, old is: ${oldHotels}`);
+    }
   }
 }
 </script>
@@ -145,5 +184,8 @@ export default {
   white-space: nowrap;
   vertical-align: baseline;
   border-radius: .25em;
+}
+.hotel-card__button {
+  border: none;
 }
 </style>

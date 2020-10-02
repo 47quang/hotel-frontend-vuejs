@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="add-hotel">
-      <h2 class="add-hotel__title">Đăng Ký Khách Sạn</h2>
+      <div>
+        <i class="el-icon-back add-hotel__back" @click="backListing"></i>
+        <h2 class="add-hotel__title">Đăng Ký Khách Sạn</h2>
+      </div>
       <el-form ref="form" :model="hotel" label-width="200px">
         <el-form-item label="Tên Khách Sạn Của Bạn:">
           <el-input v-model="hotel.name"></el-input>
@@ -81,6 +84,7 @@ export default {
   },
   methods: {
     handleSelectProvince(provinceId) {
+      if (provinceId == undefined) return;
       this.$store.dispatch('fetchDistrict', provinceId);
     },
     handleSelectDistrict(districtId){
@@ -108,9 +112,43 @@ export default {
       const formData = this.parseFormData(files);
       const { data } = await this.$store.dispatch('uploadImage', formData);
       this.hotel.images = data;
-      this.$store.dispatch('registerHotel', this.hotel);
-      this.$router.push(`/dashboard/${this.curOwner.id}`)
+
+      try {
+        this.$store.dispatch('registerHotel', this.hotel);
+        this.alertSuccess();
+        this.$router.push(`/dashboard/${this.curOwner.id}/listing`);
+      }
+      catch(err) {
+        this.alertErr();
+      }
     },
+    alertSuccess() {
+      this.$message({
+        showClose: true,
+        message: 'Đã thêm khách sạn thành công.',
+        type: 'success'
+      });
+    },
+    alertErr() {
+      this.$message({
+        showClose: true,
+        message: 'Đã có lỗi xảy ra, vui lòng thử lại.',
+        type: 'error'
+      });
+    },
+    backListing() {
+      this.$confirm('Bài đăng vẫn chưa hoàn tất. Tiếp tục?', 'Cảnh Báo', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Hủy bỏ',
+        type: 'warning'
+      })
+      .then(() => {
+        this.$router.push(`/dashboard/${this.curOwner.id}/listing`);
+      })
+      .catch(() => {
+        return;
+      })
+    }
   },
   computed: {
     provinces() {
@@ -128,7 +166,6 @@ export default {
   },
   created() {
     this.$store.dispatch('fetchProvince');
-    this.$store.dispatch('fetchDistrict');
   },
 };
 </script>
@@ -141,5 +178,10 @@ export default {
 }
 .add-hotel__select-info {
   width: 100%;
+}
+.add-hotel__back{
+  float: left;
+  font-size: 25px;
+  padding: 0 20px;
 }
 </style>

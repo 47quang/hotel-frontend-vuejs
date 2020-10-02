@@ -107,11 +107,9 @@ export const actions = {
       .post(`${BASE_URL}/api.hotel`, payload)
       .then((resp) => resp.data)
       .then(body => {
-        alert('Đã Đăng Ký Khách Sạn Thành Công!');
         resolve(body);
       })
       .catch(err => {
-        alert('Đã có lỗi xảy ra!')
         reject(err);
       })
     })
@@ -171,7 +169,19 @@ export const actions = {
       .catch(err => {
         reject(err);
       })
-
+    })
+  },
+  deleteHotel(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .delete(`${BASE_URL}/api.hotel/${payload}`)
+      .then(resp => resp.data)
+      .then(body => {
+        resolve(body);
+      })
+      .catch(err => {
+        reject(err);
+      })
     })
   }
 };
