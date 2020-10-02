@@ -106,13 +106,6 @@ export default {
     width: 80%;
     margin: 0 auto;
   }
-  /* .el-form{
-    position: relative;
-  }
-  .da-co-tai-khoan-position{
-    position: absolute;
-    bottom: 0;
-  } */
  
 </style>
 
@@ -135,9 +128,6 @@ export default {
     padding:0;
     height:100%
   }
-  /* .dialog-register .el-dialog{
-    height: 100% 
-  } */
   .dialog-register .el-dialog__body .el-form{
     width: 50% !important;
   }

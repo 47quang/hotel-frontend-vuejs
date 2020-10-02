@@ -21,16 +21,18 @@
       <el-menu-item index="2">
         <router-link :to="`/dashboard/${curOwner.id}`"><i class="el-icon-odometer"></i> Tổng quan</router-link>
       </el-menu-item>
-      <el-menu-item index="3"><i class="el-icon-s-home"></i> Chỗ ở</el-menu-item>
+      <el-menu-item index="3">
+        <router-link :to="`/dashboard/${curOwner.id}/listing`"><i class="el-icon-s-home"></i> Chỗ ở</router-link>
+      </el-menu-item>
       <el-menu-item index="4"><i class="el-icon-s-promotion"></i> Tin nhắn</el-menu-item>
       <el-menu-item index="5">
         <router-link :to="`/dashboard/${curOwner.id}/profile`"><i class="el-icon-s-custom"></i> Hồ sơ</router-link>
       </el-menu-item>
       <el-menu-item class="user-info">
         <el-avatar icon="el-icon-user-solid" class="hidden-sm-and-down" style="line-height: 32px;"></el-avatar>
-        <el-dropdown class="owner-name">
+        <el-dropdown trigger="click" class="owner-name">
           <span class="el-dropdown-link">
-            {{curOwner.username}}<i class="el-icon-arrow-down el-icon--right"></i>
+            {{`${curOwner.lastname} ${curOwner.firstname}`}}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item @click.native="signout">Đăng Xuất</el-dropdown-item>
@@ -88,5 +90,8 @@ a {
 }
 .el-menu-item .el-avatar .el-avatar--icon .el-avatar--circle i{
   color: #fff;
+}
+.el-menu.el-menu--horizontal {
+  border-bottom: none;
 }
 </style>

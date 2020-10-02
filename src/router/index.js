@@ -10,6 +10,8 @@ import HotelRegister from '../views/HotelRegister.vue'
 import Product from '../views/Product.vue'
 import OwnerUpdate from '../components/Owner/OwnerUpdate'
 import Dashboard from '../components/Dashboard/Dashboard'
+import DashboardHotelListing from '../components/Dashboard/DashboardHotelListing'
+import DashboardAddHotel from '../components/Dashboard/DashboardAddHotel'
 
 
 Vue.use(VueRouter)
@@ -38,6 +40,14 @@ const routes = [
         path: 'profile',
         component: OwnerUpdate
       },
+      {
+        path: 'listing',
+        component: DashboardHotelListing
+      },
+      {
+        path: 'hotels',
+        component: DashboardAddHotel
+      }
     ]
   },
   {

@@ -5,6 +5,7 @@ import { mutations } from './mutation';
 Vue.use(Vuex);
 
 const localUser = JSON.parse(localStorage.getItem('user'));
+const localHotels = JSON.parse(localStorage.getItem('hotels'));
 
 export default new Vuex.Store({
   state: {
@@ -20,6 +21,10 @@ export default new Vuex.Store({
     },
     myCustomer: {},
     hotel: {},
+    provinces: {},
+    districts: {},
+    wards: {},
+    ownerHotels: localHotels || []
   },
   mutations,
   actions,

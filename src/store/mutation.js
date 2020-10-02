@@ -14,4 +14,16 @@ export const mutations = {
   OWNER_UPDATE(state, payload) {
     state.curOwner = payload;
   },
+  FETCH_PROVINCE(state, payload) {
+    state.provinces = payload;
+  },
+  FETCH_DISTRICT(state, payload) {
+    state.districts = payload;
+  },
+  FETCH_HOTELS(state, payload) {
+    state.ownerHotels = payload;
+  },
+  FETCH_WARDS(state, payload) {
+    state.wards = payload;
+  }
 }
