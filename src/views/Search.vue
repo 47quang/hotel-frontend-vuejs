@@ -6,7 +6,8 @@
     <el-main class="filter-main" >
         <el-row class="filter-row">
           <el-col class="filter" :span="18">
-            <h4>Lọc chỗ nghỉ theo </h4>
+            <div class="filter-wrapper">
+               <h4>Lọc chỗ nghỉ theo </h4>
             <el-select class="filter"  v-model="value" clearable placeholder="Giá">
                 <el-option
                   :value="price"
@@ -68,6 +69,8 @@
                     </el-rate>
                 </el-option>
               </el-select>
+            </div>
+           
           </el-col>
           <el-col class="hotelName" :span="6">
              <el-input
@@ -166,10 +169,11 @@ export default {
     
   }
  
-  .filter {
+  .filter-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 80%;
   }
   .filter-row{
     width: 80% !important; 
@@ -211,13 +215,16 @@ export default {
     font-size: 14px;
     letter-spacing: 1px;
   }
-  .filter .el-input {
-    width: 80%;
+  .filter-wrapper .el-input {
+    width: 98%;
   }
-   .filter .el-input__inner::-webkit-input-placeholder{
-        color: white;
-        font-size: 14px;
-        letter-spacing: 1px;
-        
+  .filter .el-input__inner::-webkit-input-placeholder{
+      color: white;
+       font-size: 14px;
+      letter-spacing: 1px;
     }
+  .filter-wrapper .el-input .el-input__inner {
+    text-align: center;
+    font-weight: 600;
+  }
 </style>

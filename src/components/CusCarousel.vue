@@ -213,7 +213,7 @@
      .date .el-date-editor .el-range-separator{
         line-height:70px;
     }
-     .cus-input input{
+    .search .cus-input input{
         height: 80px !important;
         
     }

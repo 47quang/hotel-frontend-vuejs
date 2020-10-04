@@ -46,13 +46,14 @@
                                         <div class="hotelList-district">{{item.district}}</div>
                                     </el-col>
                                 <el-col :span="8" class="content2" >
-                                    <div class="hotelList-price">{{item.minPrice}}</div>
                                     <div class="hotelList-rating">
                                         {{item.rating}}
                                     </div>
-                                    <div class="hotelList-review">
+                                    <div style="font-weight:600" class="hotelList-review">
                                         {{item.review}}
                                     </div>
+                                    
+                                    <div class="hotelList-price">{{item.minPrice}}</div>
                                 </el-col>
                             </div>
                             
@@ -102,6 +103,26 @@ export default {
 </script>
 
 <style scoped>
+    .content2 {
+        height: 100%;
+        text-align: -webkit-right;
+        padding: 10px;
+    }
+    .hotelList-price {
+        color: #e12d2d;
+        font-weight: 600;
+        font-size: 18px;
+    }
+    .hotelList-rating {
+        text-align: center;
+        width: 20%;
+        border: 1px solid cadetblue;
+        background-color: cadetblue;
+        color: white;
+        border-radius: 5px;
+        padding: 5px 0;
+        font-weight: 600;
+    }
     .content1{
         padding: 10px 15px;
         height: 300px;
@@ -179,7 +200,7 @@ export default {
         box-shadow: 2px 2px 4px 0 rgba(0,0,0,.15);
     }
     .hotelList-image{
-        width: 35%;
+        width: 50%;
     }
     .hotelList-image img{
         width: 100%;
