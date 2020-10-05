@@ -17,5 +17,10 @@
 <style scoped>
 .footer {
   padding: 20px 10%;
+  font-size: 10px;
+  font-weight: 700;
+  border-top: 1px solid #dddfe2;
+  background: #fff;
+  display: flex;
 }
 </style>

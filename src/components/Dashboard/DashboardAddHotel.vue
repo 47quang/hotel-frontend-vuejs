@@ -52,7 +52,7 @@
                 </span>
               </span>
             </div>
-            <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 10MB</div>
+            <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 5MB</div>
           </el-upload>
           <el-dialog :visible.sync="dialogVisible">
             <img width="100%" :src="dialogImageUrl" alt="" />

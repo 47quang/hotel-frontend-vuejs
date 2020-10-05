@@ -25,5 +25,17 @@ export const mutations = {
   },
   FETCH_WARDS(state, payload) {
     state.wards = payload;
-  }
+  },
+  FETCH_HOTEL_BY_ID(state, payload) {
+    state.hotelById = payload;
+  },
+  FETCH_WARD_BY_ID(state, payload) {
+    state.wardById = payload;
+  },
+  FETCH_DISTRICT_BY_ID(state, payload) {
+    state.districtById = payload;
+  },
+  FETCH_PROVINCE_BY_ID(state, payload) {
+    state.provinceById = payload;
+  },
 }

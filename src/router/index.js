@@ -12,7 +12,8 @@ import OwnerUpdate from '../components/Owner/OwnerUpdate'
 import Dashboard from '../components/Dashboard/Dashboard'
 import DashboardHotelListing from '../components/Dashboard/DashboardHotelListing'
 import DashboardAddHotel from '../components/Dashboard/DashboardAddHotel'
-
+import DashboardEditHotel from '../components/Dashboard/DashboardEditHotel'
+import DashboardAddRoom from '../components/Dashboard/DashboardAddRoom'
 
 Vue.use(VueRouter)
 
@@ -75,11 +76,16 @@ const routes = [
     name: 'Search',
     component: Search
   },
-  // {
-  //   path: '/dashboard/:id/profile',
-  //   name: 'OwnerUpdate',
-  //   component: OwnerUpdate
-  // }
+  {
+    path: '/hotel/:id/edit',
+    component: DashboardEditHotel,
+    children: [
+      {
+        path: '',
+        component: DashboardAddRoom
+      }
+    ]
+  }
 
 ]
 
