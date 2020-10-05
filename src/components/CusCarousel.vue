@@ -28,7 +28,7 @@
         </div>
         <div class="date">
           <el-date-picker
-            v-model="date"
+            v-model="form.date"
             type="daterange"
             range-separator=""
             start-placeholder="Start date"
@@ -37,7 +37,7 @@
           </el-date-picker>
         </div>
         <div class="select">
-          <el-select v-model="value" placeholder="Select">
+          <el-select v-model="form.value" placeholder="Select">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -134,6 +134,12 @@ p {
   cursor: pointer;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.3);
 }
+
+.search .el-select {
+  width: 100%
+}
+
+
 .date {
   margin: 10px auto;
   width: 80%;
@@ -164,6 +170,9 @@ p {
 </style>
 
 <style>
+.search .el-select input {
+  height: 80px;
+}
 .el-range-separator {
   position: relative !important;
 }
