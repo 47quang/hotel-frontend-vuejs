@@ -24,7 +24,7 @@
       <el-menu-item index="3">
         <router-link :to="`/dashboard/${curOwner.id}/listing`"><i class="el-icon-s-home"></i> Chỗ ở</router-link>
       </el-menu-item>
-      <el-menu-item index="4"><i class="el-icon-s-promotion"></i> Tin nhắn</el-menu-item>
+      <el-menu-item index="4"><i class="el-icon-s-promotion"></i> Đơn Hàng Mới</el-menu-item>
       <el-menu-item index="5">
         <router-link :to="`/dashboard/${curOwner.id}/profile`"><i class="el-icon-s-custom"></i> Hồ sơ</router-link>
       </el-menu-item>

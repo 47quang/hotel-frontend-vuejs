@@ -183,5 +183,74 @@ export const actions = {
         reject(err);
       })
     })
+  },
+  fetchHotelById(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .get(`${BASE_URL}/api.hotel/${payload}`)
+      .then(resp => resp.data)
+      .then(body => {
+        ctx.commit('FETCH_HOTEL_BY_ID', body.data)
+        resolve(body);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },
+  fetchWardById(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .get(`${BASE_URL}/api.ward/${payload}`)
+      .then(resp => resp.data)
+      .then(body => {
+        ctx.commit('FETCH_WARD_BY_ID', body.data)
+        resolve(body);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },
+  fetchDistrictById(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .get(`${BASE_URL}/api.district/${payload}`)
+      .then(resp => resp.data)
+      .then(body => {
+        ctx.commit('FETCH_DISTRICT_BY_ID', body.data)
+        resolve(body);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },
+  fetchProvinceById(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .get(`${BASE_URL}/api.province/${payload}`)
+      .then(resp => resp.data)
+      .then(body => {
+        ctx.commit('FETCH_PROVINCE_BY_ID', body.data)
+        resolve(body);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },
+  createRoom(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .post(`${BASE_URL}/api.room/`, payload)
+      .then(resp => resp.data)
+      .then(body => {
+        resolve(body);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
   }
 };
