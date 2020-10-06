@@ -14,7 +14,8 @@
           <el-select
             class="add-hotel__select-info"
             v-model="form.provinceId"
-            clearable
+            clearable 
+            filterable
             placeholder="Vui Lòng Chọn Tỉnh Thành"
           >
             <el-option

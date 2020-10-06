@@ -114,47 +114,9 @@ export const actions = {
         });
     });
   },
-  registerHotel(ctx, payload) {
-    return new Promise((resolve, reject) => {
-      client
-        .post(`${BASE_URL}/api.hotel`, payload)
-        .then((resp) => resp.data)
-        .then((body) => {
-          resolve(body);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
-  },
-  fetchProvince(ctx) {
-    return new Promise((resolve, reject) => {
-      client
-        .get(`${BASE_URL}/api.province`)
-        .then((resp) => resp.data)
-        .then((body) => {
-          ctx.commit('FETCH_PROVINCE', body.data);
-          resolve(body);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
-  },
-  fetchDistrict(ctx, payload) {
-    return new Promise((resolve, reject) => {
-      client
-        .get(`${BASE_URL}/api.district?provinceId=${payload}`)
-        .then((resp) => resp.data)
-        .then((body) => {
-          ctx.commit('FETCH_DISTRICT', body.data);
-          resolve(body);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
-  },
+ 
+ 
+
   fetchHotels(ctx, payload) {
     return new Promise((resolve, reject) => {
       client
@@ -183,20 +145,8 @@ export const actions = {
       })
     })
   },
-  fetchProvince(ctx) {
-    return new Promise((resolve, reject) => {
-      client
-      .get(`${BASE_URL}/api.province`)
-      .then(resp => resp.data)
-      .then(body => {
-        ctx.commit('FETCH_PROVINCE', body.data);
-        resolve(body);
-      })
-      .catch(err => {
-        reject(err);
-      })
-    })
-  },
+  
+ 
   fetchDistrict(ctx, payload) {
     return new Promise((resolve, reject) => {
       client
@@ -211,21 +161,7 @@ export const actions = {
       })
     })
   },
-  fetchHotels(ctx, payload) {
-    return new Promise((resolve, reject) => {
-      client
-      .get(`${BASE_URL}/api.hotel?ownerId=${payload}`)
-      .then(resp => resp.data)
-      .then(body => {
-        ctx.commit('FETCH_HOTELS', body.data);
-        localStorage.setItem('hotels', JSON.stringify(body.data));
-        resolve(body);
-      })
-      .catch(err => {
-        reject(err);
-      })
-    })
-  },
+ 
   fetchWards(ctx, payload) {
     return new Promise((resolve, reject) => {
       client
@@ -309,6 +245,21 @@ export const actions = {
       })
     })
   },
+   fetchProvince(ctx) {
+    return new Promise((resolve, reject) => {
+      client
+      .get(`${BASE_URL}/api.province`)
+      .then(resp => resp.data)
+      .then(body => {
+        ctx.commit('FETCH_PROVINCE', body.data);
+        resolve(body);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },
+
   createRoom(ctx, payload) {
     return new Promise((resolve, reject) => {
       client
