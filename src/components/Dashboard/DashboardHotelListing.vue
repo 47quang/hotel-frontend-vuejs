@@ -24,7 +24,7 @@
             </div>
           </div>
           <div>
-            <router-link :to="`/suahotel`" class="edit-hotel">Hoàn tất bài đăng</router-link>
+            <router-link :to="`/hotel/${hotel.id}/edit`" class="edit-hotel">Hoàn tất bài đăng</router-link>
           </div>
         </el-card>
       </div>
@@ -63,8 +63,9 @@ export default {
         cancelButtonText: 'Hủy bỏ',
         type: 'warning'
       })
-      .then(() => {
-        this.$store.dispatch('deleteHotel', hotelId);
+      .then(async() => {
+        await this.$store.dispatch('deleteHotel', hotelId);
+        this.$store.dispatch('fetchHotels', this.curOwner.id);
         this.alertSuccess();
       })
       .catch(() => {
@@ -88,11 +89,6 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch('fetchHotels', this.curOwner.id);
-  },
-  watch: {
-    hotels(newHotels, oldHotels) {
-      console.log(`there is: ${newHotels}, old is: ${oldHotels}`);
-    }
   }
 }
 </script>
