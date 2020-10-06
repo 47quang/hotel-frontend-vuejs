@@ -9,48 +9,38 @@
         </el-input>
       </el-col>
       <el-col :span="6" class="add-hotel">
-        <span class="add-hotel-btn" @click="addHotel"><i class="el-icon-plus"></i> Thêm Chỗ Ở Mới</span>
+        <span class="add-hotel-btn" @click="addRoom"><i class="el-icon-plus"></i> Thêm Phòng Mới</span>
       </el-col>
     </el-row>
     <div class="manage-listings">
-      <span class="horizontal-line-text-middle m-b-4"><strong>Khách Sạn</strong></span>
-      <div class="hotel-card" v-for="hotel in hotels" :key="hotel.id">
+      <span class="horizontal-line-text-middle m-b-4"><strong>Danh Sách Phòng</strong></span>
+      <div class="hotel-card" v-for="room in rooms" :key="room.id">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span class="hotel-card__title">[{{hotel.id}}] {{hotel.name}}</span>
-            <el-button style="float: right; padding: 3px 0" @click="deleteHotel(hotel.id)" class="hotel-card__button" icon="el-icon-close"></el-button>
+            <span class="hotel-card__title">[{{room.id}}] {{room.name}}</span>
+            <el-button style="float: right; padding: 3px 0" @click="deleteHotel(room.id)" class="hotel-card__button" icon="el-icon-close"></el-button>
           </div>
           <el-row class="hotel-card__body" :gutter="24">
             <el-col :span="6" class="hidden-sm-and-down">
-              <div v-for="image in hotel.images" :key="image">
+              <div v-for="image in room.images" :key="image">
                 <el-image class="hotel-card__image" :src="image"></el-image>
               </div>
             </el-col>
-            <el-col class="hotel-card__content hidden-sm-and-down" :span="18">
+            <!-- <el-col class="hotel-card__content hidden-sm-and-down" :span="18">
               <div>
                 <span class="hotel-card__content-title">Địa chỉ: </span>
-                <span>{{hotel.address}}</span>
+                <span>{{room.stock}}</span>
               </div>
               <div class="hotel-card__content-description">
                 <span class="hotel-card__content-title">Mô tả: </span>
-                <p class="text-justify">{{hotel.description}}</p>
+                <p class="text-justify">{{room.description}}</p>
               </div>
               <el-tag class="hotel-card__tag" :type="'warning'" effect="dark">Chưa Hoàn Tất</el-tag>
-            </el-col>
+            </el-col> -->
             <!-- For small screens -->
-            <el-col class="hidden-md-and-up hotel-card__content" :span="24">
-              <div>
-                <span class="hotel-card__content-title">Địa chỉ: </span>
-                <span>{{hotel.address}}</span>
-              </div>
-              <div class="hotel-card__content-description">
-                <span class="hotel-card__content-title">Mô tả: </span>
-                <p class="text-justify">{{hotel.description}}</p>
-              </div>
-              <el-tag class="hotel-card__tag" :type="'warning'" effect="dark">Chưa Hoàn Tất</el-tag>
-            </el-col>
+           
           </el-row>
-          <router-link :to="`/hotel/${hotel.id}/room`" class="edit-hotel">Chỉnh Sửa Thông Tin</router-link>
+          <router-link :to="`/hotel/${$route.params.id}/room/${room.id}`" class="edit-hotel">Chỉnh Sửa Thông Tin</router-link>
         </el-card>
       </div>
     </div>
@@ -69,21 +59,21 @@ export default {
     curOwner() {
       return this.$store.state.curOwner;
     },
-    hotels() {
-      return this.$store.state.ownerHotels;
+    rooms() {
+      return this.$store.state.roomsByHotelId;
     }
   },
   methods: {
-    addHotel() {
+    addRoom() {
       try {
-        this.$router.push(`/dashboard/${this.curOwner.id}/hotels`);
+        this.$router.push(`/hotel/${this.$route.params.id}/room/new`);
       }
       catch(err) {
         this.alertErr();
       }
     },
     deleteHotel(hotelId) {
-      this.$confirm('Xóa vĩnh viễn khách sạn. Tiếp tục?', 'Cảnh Báo', {
+      this.$confirm('Xóa vĩnh viễn phòng. Tiếp tục?', 'Cảnh Báo', {
         confirmButtonText: 'OK',
         cancelButtonText: 'Hủy bỏ',
         type: 'warning'
@@ -113,7 +103,9 @@ export default {
     }
   },
   async mounted() {
-    await this.$store.dispatch('fetchHotels', this.curOwner.id);
+    // await this.$store.dispatch('fetchRooms', this.$route.params.id); 
+    console.log('params:', this.$route.params.id)
+    await this.$store.dispatch('fetchRoomsByHotelId'); 
   }
 }
 </script>

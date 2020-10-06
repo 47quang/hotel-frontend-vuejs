@@ -29,6 +29,8 @@ export default new Vuex.Store({
     wardById: {},
     districtById: {},
     provinceById: {},
+    attributes: {},
+    roomsByHotelId: {}
   },
   mutations,
   actions,
