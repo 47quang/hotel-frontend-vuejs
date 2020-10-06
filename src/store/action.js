@@ -259,7 +259,6 @@ export const actions = {
       })
     })
   },
-
   createRoom(ctx, payload) {
     return new Promise((resolve, reject) => {
       client
@@ -267,6 +266,47 @@ export const actions = {
       .then(resp => resp.data)
       .then(body => {
         resolve(body);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },
+  fetchAttributes(ctx) {
+    return new Promise((resolve, reject) => {
+      client
+      .get(`${BASE_URL}/api.attribute`)
+      .then(resp => resp.data)
+      .then(body => {
+        ctx.commit('FETCH_ATTRIBUTES', body.data);
+        resolve(body);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },
+  fetchRoomsByHotelId(ctx) {
+    return new Promise((resolve, reject) => {
+      client
+      .get(`${BASE_URL}/api.room`)
+      .then(resp => resp.data)
+      .then(body => {
+        ctx.commit('FETCH_ROOMS_BY_HOTEL_ID', body.data);
+        resolve(body);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },
+  fetchAttributeOptionById(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .get(`${BASE_URL}/api.attribute-option?attributeId=${payload}`)
+      .then(resp => resp.data)
+      .then(body => {
+        resolve(body.data);
       })
       .catch(err => {
         reject(err);

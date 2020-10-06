@@ -116,6 +116,7 @@ export default {
       try {
         this.$store.dispatch('registerHotel', this.hotel);
         this.alertSuccess();
+        this.$store.dispatch('fetchHotels', this.curOwner.id);
         this.$router.push(`/dashboard/${this.curOwner.id}/listing`);
       }
       catch(err) {

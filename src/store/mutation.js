@@ -38,4 +38,10 @@ export const mutations = {
   FETCH_PROVINCE_BY_ID(state, payload) {
     state.provinceById = payload;
   },
+  FETCH_ATTRIBUTES(state, payload) {
+    state.attributes = payload;
+  },
+  FETCH_ROOMS_BY_HOTEL_ID(state, payload) {
+    state.roomsByHotelId = payload;
+  }
 }
