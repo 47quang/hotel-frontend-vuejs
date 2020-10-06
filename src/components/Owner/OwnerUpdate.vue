@@ -19,7 +19,11 @@
           <el-col :span="24">
             <div class="avatar">
               <el-col class="avatar-content" :span="17">
-                <el-avatar :size="70" :src="owner.preview"></el-avatar>
+               
+                
+                  <el-avatar :size="70" :src="owner.preview"></el-avatar>
+                
+               
 
                 <p>
                   Hình ảnh thật sự có tác dụng. Hãy chọn một bức ảnh rõ ràng và thân thiện để tăng
@@ -128,7 +132,7 @@
   width: 80%;
   margin: 0 auto;
 }
-.el-col-12 {
+.el-col{
   padding: 0 20px 0 0;
   font-weight: 600;
 }
@@ -189,7 +193,11 @@ export default {
       success: '',
     };
   },
-  computed: {},
+  computed: {
+    avatarUpdate() {
+      return this.$store.state.curOwner.avatar
+    }
+  },
   methods: {
     handleAvatarSuccess(res, file) {
       this.owner.preview = URL.createObjectURL(file.raw);
@@ -197,6 +205,7 @@ export default {
       this.owner.avatar = res.data[0];
     },
     async handleUpdateOwner() {
+      console.log(this.owner)
       await this.$store.dispatch('updateUser', this.owner);
     }
   },
