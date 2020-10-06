@@ -299,5 +299,18 @@ export const actions = {
         reject(err);
       })
     })
+  },
+  fetchAttributeOptionById(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .get(`${BASE_URL}/api.attribute-option?attributeId=${payload}`)
+      .then(resp => resp.data)
+      .then(body => {
+        resolve(body.data);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
   }
 };
