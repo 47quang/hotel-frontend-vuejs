@@ -14,6 +14,8 @@ import DashboardHotelListing from '../components/Dashboard/DashboardHotelListing
 import DashboardAddHotel from '../components/Dashboard/DashboardAddHotel'
 import DashboardEditHotel from '../components/Dashboard/DashboardEditHotel'
 import DashboardAddRoom from '../components/Dashboard/DashboardAddRoom'
+import DashboardRoomListing from '../components/Dashboard/DashboardRoomListing'
+import DashboardUpdateRoom from '../components/Dashboard/DashboardUpdateRoom'
 
 Vue.use(VueRouter)
 
@@ -77,12 +79,20 @@ const routes = [
     component: Search
   },
   {
-    path: '/hotel/:id/edit',
+    path: '/hotel/:id/room',
     component: DashboardEditHotel,
     children: [
       {
         path: '',
+        component: DashboardRoomListing
+      },
+      {
+        path: 'new',
         component: DashboardAddRoom
+      },
+      {
+        path: ':roomid',
+        component: DashboardUpdateRoom
       }
     ]
   }

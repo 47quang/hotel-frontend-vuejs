@@ -78,6 +78,29 @@
           </el-input>
         </el-card>
       </el-form-item>
+      <!-- Add Attributes -->
+      <el-form-item>
+        <el-row :gutter="24" class="form__add-attribute">
+          <div>
+            <h4 class="form__description-title">Tiêu chuẩn</h4>
+            <h4 class="form__description-content">Các tiện nghi này có trong hầu hết các chỗ nghỉ thành công của chúng tôi.</h4>
+          </div>
+          <el-col :span="12" class="form__add-attribute-select">
+            <el-form-item label="Thuộc Tính:">
+              <el-select class="attribute-select__selector" v-model="room.attributes.attributeId" clearable @change="handleSelectAttribute" placeholder="Vui Lòng Thuộc Tính của Phòng">
+                <el-option v-for="attribute in attributes" :key="attribute.id" :label="attribute.name" :value="attribute.id"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" class="form__add-attribute-select">
+            <el-form-item label="Thuộc Tính Phụ:">
+              <el-select class="attribute-select__selector" v-model="room.attributes.attributeOptionId" clearable placeholder="Vui Lòng Thuộc Tính Phụ">
+                <el-option v-for="attribute in attributes" :key="attribute.id" :label="attribute.name" :value="attribute.id"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form-item>
       <!-- Upload images -->
       <el-form-item>
         <div>
@@ -93,7 +116,7 @@
               <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
                 <i class="el-icon-zoom-in"></i>
               </span>
-              <span v-if="!disabled" class="el-upload-list__item-delete" :on-remove="handleRemove(file, room.images)">
+              <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove(file, room.images)">
                 <i class="el-icon-delete"></i>
               </span>
             </span>
@@ -121,13 +144,13 @@ export default {
         name: '',
         description: '',
         stock: 0,
-        regularPrice: '',
+        regularPrice: 0,
         salePrice: 0,
         capacity: 0,
         attributes: [
           {
-            attributeId: 1,
-            attributeOptionId: 1
+            attributeId: '',
+            attributeOptionId: ''
           }
         ],
         images: []
@@ -138,8 +161,11 @@ export default {
     }
   },
   computed: {
-    curOwner() {
-      return this.$store.state.curOwner
+    // curOwner() {
+    //   return this.$store.state.curOwner;
+    // },
+    attributes() {
+      return this.$store.state.attributes;
     }
   },
   methods: {
@@ -154,10 +180,10 @@ export default {
           this.$store.dispatch('createRoom', this.room);
           this.$message({
             showClose: true,
-            message: 'Đã cập nhật khách sạn thành công.',
+            message: 'Đã cập nhật phòng thành công.',
             type: 'success'
           });
-          this.$router.push(`/dashboard/${this.curOwner.id}/listing`);
+          this.$router.push(`/hotel/${this.$route.params.id}/room`);
         } 
         else {
           this.$message({
@@ -177,7 +203,7 @@ export default {
       })
       .then(() => {
         this.$refs[formName].resetFields();
-        this.$router.push(`/dashboard/${this.curOwner.id}/listing`);
+        this.$router.push(`/hotel/${this.$route.params.id}/room`);
       })
       .catch(() => {
         return;
@@ -187,6 +213,7 @@ export default {
       console.log('image uploaded: ', file);
       console.log('list images: ', fileList);
       console.log('list hotel images: ', this.room.images);
+      this.$refs.upload.clearFiles();
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
@@ -199,7 +226,15 @@ export default {
       }
       return formData;
     },
-    
+    handleSelectAttribute(attributeId) {
+      if (attributeId == undefined) return;
+      else {
+        // this.$store.dispatch('fetchAttributeOptionById', attributeId);
+      }
+    }
+  },
+  async mounted() {
+    this.$store.dispatch('fetchAttributes');
   }
 }
 </script>
@@ -270,5 +305,16 @@ export default {
   color: #999;
   font-size: 12px;
   margin: 0 0 10px;
+}
+.form__add-attribute {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+.form__add-attribute-select {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+.attribute-select__selector {
+  width: 50%;
 }
 </style>
