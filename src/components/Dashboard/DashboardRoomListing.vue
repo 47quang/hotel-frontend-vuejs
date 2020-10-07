@@ -1,24 +1,26 @@
 <template>
-  <div>
-    <el-row :gutter="12" class="hotel-listing">
-      <el-col :span="6">
-        <el-input
-          placeholder="Search (property ID or name)"
-          suffix-icon="el-icon-search"
-          v-model="search">
-        </el-input>
+  <div class="room-lisiting">
+    <el-row :gutter="24" class="hotel-listing">
+      <el-col :span="12">
+        <i class="el-icon-back add-hotel__back" @click="backHotelListing"></i>
       </el-col>
-      <el-col :span="6" class="add-hotel">
+      <el-col :span="12" class="add-hotel">
         <span class="add-hotel-btn" @click="addRoom"><i class="el-icon-plus"></i> Thêm Phòng Mới</span>
       </el-col>
     </el-row>
+    <el-input
+      placeholder="Search (property ID or name)"
+      suffix-icon="el-icon-search"
+      class="search-room"
+      v-model="search">
+    </el-input>
     <div class="manage-listings">
       <span class="horizontal-line-text-middle m-b-4"><strong>Danh Sách Phòng</strong></span>
       <div class="hotel-card" v-for="room in rooms" :key="room.id">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span class="hotel-card__title">[{{room.id}}] {{room.name}}</span>
-            <el-button style="float: right; padding: 3px 0" @click="deleteHotel(room.id)" class="hotel-card__button" icon="el-icon-close"></el-button>
+            <el-button style="float: right; padding: 3px 0" @click="deleteRoom(room.id)" class="hotel-card__button" icon="el-icon-close"></el-button>
           </div>
           <el-row class="hotel-card__body" :gutter="24">
             <el-col :span="6" class="hidden-sm-and-down">
@@ -26,17 +28,28 @@
                 <el-image class="hotel-card__image" :src="image"></el-image>
               </div>
             </el-col>
-            <!-- <el-col class="hotel-card__content hidden-sm-and-down" :span="18">
-              <div>
-                <span class="hotel-card__content-title">Địa chỉ: </span>
-                <span>{{room.stock}}</span>
-              </div>
+            <el-col class="hotel-card__content hidden-sm-and-down" :span="18">
               <div class="hotel-card__content-description">
                 <span class="hotel-card__content-title">Mô tả: </span>
                 <p class="text-justify">{{room.description}}</p>
               </div>
-              <el-tag class="hotel-card__tag" :type="'warning'" effect="dark">Chưa Hoàn Tất</el-tag>
-            </el-col> -->
+              <div class="hotel-card__content-description">
+                <span class="hotel-card__content-title">Số Lượng Phòng: </span>
+                <span>{{room.stock}}</span>
+              </div>
+              <div class="hotel-card__content-description">
+                <span class="hotel-card__content-title">Sức Chứa Mỗi Phòng: </span>
+                <span>{{room.capacity}}</span>
+              </div>
+              <div class="hotel-card__content-description">
+                <span class="hotel-card__content-title">Giá Gốc: </span>
+                <span>{{room.regularPrice}}</span>
+              </div>
+              <div class="hotel-card__content-description">
+                <span class="hotel-card__content-title">Giá Giảm: </span>
+                <span>{{room.salePrice}}</span>
+              </div>
+            </el-col>
             <!-- For small screens -->
            
           </el-row>
@@ -72,15 +85,15 @@ export default {
         this.alertErr();
       }
     },
-    deleteHotel(hotelId) {
+    deleteRoom(roomId) {
       this.$confirm('Xóa vĩnh viễn phòng. Tiếp tục?', 'Cảnh Báo', {
         confirmButtonText: 'OK',
         cancelButtonText: 'Hủy bỏ',
         type: 'warning'
       })
       .then(async() => {
-        await this.$store.dispatch('deleteHotel', hotelId);
-        this.$store.dispatch('fetchHotels', this.curOwner.id);
+        await this.$store.dispatch('deleteRoom', roomId);
+        this.$store.dispatch('fetchRoomsByHotelId', this.$route.params.id);
         this.alertSuccess();
       })
       .catch(() => {
@@ -90,7 +103,7 @@ export default {
     alertSuccess() {
       this.$message({
         showClose: true,
-        message: 'Đã xóa khách sạn thành công.',
+        message: 'Đã xóa phòng thành công.',
         type: 'success'
       });
     },
@@ -100,19 +113,23 @@ export default {
         message: 'Đã có lỗi xảy ra, vui lòng thử lại.',
         type: 'error'
       });
+    },
+    backHotelListing() {
+      this.$router.push(`/dashboard/${this.curOwner.id}/listing`);
     }
   },
   async mounted() {
-    // await this.$store.dispatch('fetchRooms', this.$route.params.id); 
-    console.log('params:', this.$route.params.id)
-    await this.$store.dispatch('fetchRoomsByHotelId'); 
+    await this.$store.dispatch('fetchRoomsByHotelId', this.$route.params.id); 
   }
 }
 </script>
 
 <style scoped>
+.room-lisiting {
+  padding: 0px 10%;
+}
 .hotel-listing {
-  padding: 30px 10%;
+  padding: 30px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -130,9 +147,6 @@ export default {
 .add-hotel:hover {
   color: #0a4461;
   text-decoration: underline;
-}
-.manage-listings {
-  padding: 0 10%;
 }
 .manage-listings .horizontal-line-text-middle {
   color: #777;
@@ -232,5 +246,11 @@ export default {
     padding-left: 20px !important;
     padding-right: 20px !important;
   }
+}
+.add-hotel__back{
+  font-size: 25px;
+}
+.search-room {
+  margin-bottom: 25px;
 }
 </style>

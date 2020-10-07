@@ -1,5 +1,6 @@
 <template>
-  <div class="location">
+  <div class="room-form">
+    <i class="el-icon-back add-room__back" @click="backRoomListing"></i>
     <el-divider><h3 class="form__title">Thông tin cơ bản</h3></el-divider>
     <el-form ref="form-room" :model="room">
       <!-- Room Name -->
@@ -18,7 +19,7 @@
       <!-- Room Description -->
       <el-form-item>
         <div>
-          <h4 class="form__description-title">Mô tả khách sạn của bạn</h4>
+          <h4 class="form__description-title">Mô tả phòng của bạn</h4>
           <h4 class="form__description-content">
             Những đặc điểm nổi bật của khách sạn để thu hút du khách.
           </h4>
@@ -152,7 +153,8 @@
           </el-row>
         </el-row>
         <el-row>
-          <strong @click="handleAddAttribute">Thêm thuộc tính phòng</strong>
+          <i class="el-icon-circle-plus"></i>
+          <strong class="form__add-attribute-btn" @click="handleAddAttribute"> Thêm thuộc tính phòng</strong>
         </el-row>
       </el-form-item>
       <!-- Upload images -->
@@ -252,13 +254,13 @@ export default {
       this.room.images = data;
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log('this room: ', this.room);
           this.$store.dispatch('createRoom', this.room);
           this.$message({
             showClose: true,
             message: 'Đã cập nhật phòng thành công.',
             type: 'success',
           });
+          this.$store.dispatch('fetchRoomsByHotelId', this.$route.params.id);
           this.$router.push(`/hotel/${this.$route.params.id}/room`);
         } else {
           this.$message({
@@ -296,10 +298,7 @@ export default {
           return;
         });
     },
-    handleRemove(file, fileList) {
-      console.log('image uploaded: ', file);
-      console.log('list images: ', fileList);
-      console.log('list hotel images: ', this.room.images);
+    handleRemove() {
       this.$refs.upload.clearFiles();
     },
     handlePictureCardPreview(file) {
@@ -319,6 +318,9 @@ export default {
       attribute.attributeOptions = await this.$store.dispatch('fetchAttributeOptionById', attribute.attributeId);
       this.$set(this.room.attributes, index, attribute); //Khi thay đổi data là một object trong 1 array thì sẽ không reactive
     },
+    backRoomListing() {
+      this.$router.push(`/hotel/${this.$route.params.id}/room`);
+    }
   },
   async mounted() {
     this.$store.dispatch('fetchAttributes');
@@ -326,9 +328,9 @@ export default {
 };
 </script>
 <style scoped>
-.location {
-  padding: 30px;
+.room-form {
   border-left: 1px solid #dddfe2;
+  padding: 30px 10%;
 }
 .form__description-title {
   font-size: 20px;
@@ -403,5 +405,14 @@ export default {
 }
 .attribute-select__selector {
   width: 50%;
+}
+.form__add-attribute-btn {
+  cursor: pointer;
+  color: #999;
+  font-size: 14px;
+  margin: 0 0 10px;
+}
+.add-room__back{
+  font-size: 25px;
 }
 </style>

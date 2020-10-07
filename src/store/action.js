@@ -84,7 +84,9 @@ export const actions = {
     ctx.commit('OWNER_SIGN_OUT');
   },
   searchHotel(ctx, payload) {
-    const { provinceId } = payload;
+    const {
+      provinceId
+    } = payload;
     return new Promise((resolve, reject) => {
       client
         .get(`${BASE_URL}/api.hotel?provinceId=${provinceId}`)
@@ -114,9 +116,6 @@ export const actions = {
         });
     });
   },
- 
- 
-
   fetchHotels(ctx, payload) {
     return new Promise((resolve, reject) => {
       client
@@ -135,175 +134,215 @@ export const actions = {
   registerHotel(ctx, payload) {
     return new Promise((resolve, reject) => {
       client
-      .post(`${BASE_URL}/api.hotel`, payload)
-      .then((resp) => resp.data)
-      .then(body => {
-        resolve(body);
-      })
-      .catch(err => {
-        reject(err);
-      })
+        .post(`${BASE_URL}/api.hotel`, payload)
+        .then((resp) => resp.data)
+        .then(body => {
+          resolve(body);
+        })
+        .catch(err => {
+          reject(err);
+        })
     })
   },
-  
- 
+
+
   fetchDistrict(ctx, payload) {
     return new Promise((resolve, reject) => {
       client
-      .get(`${BASE_URL}/api.district?provinceId=${payload}`)
-      .then(resp => resp.data)
-      .then(body => {
-        ctx.commit('FETCH_DISTRICT', body.data);
-        resolve(body);
-      })
-      .catch(err => {
-        reject(err);
-      })
+        .get(`${BASE_URL}/api.district?provinceId=${payload}`)
+        .then(resp => resp.data)
+        .then(body => {
+          ctx.commit('FETCH_DISTRICT', body.data);
+          resolve(body);
+        })
+        .catch(err => {
+          reject(err);
+        })
     })
   },
- 
+
   fetchWards(ctx, payload) {
     return new Promise((resolve, reject) => {
       client
-      .get(`${BASE_URL}/api.ward?districtId=${payload}`)
-      .then(resp => resp.data)
-      .then(body => {
-        ctx.commit('FETCH_WARDS', body.data);
-        resolve(body);
-      })
-      .catch(err => {
-        reject(err);
-      })
+        .get(`${BASE_URL}/api.ward?districtId=${payload}`)
+        .then(resp => resp.data)
+        .then(body => {
+          ctx.commit('FETCH_WARDS', body.data);
+          resolve(body);
+        })
+        .catch(err => {
+          reject(err);
+        })
     })
   },
   deleteHotel(ctx, payload) {
     return new Promise((resolve, reject) => {
       client
-      .delete(`${BASE_URL}/api.hotel/${payload}`)
-      .then(resp => resp.data)
-      .then(body => {
-        resolve(body);
-      })
-      .catch(err => {
-        reject(err);
-      })
+        .delete(`${BASE_URL}/api.hotel/${payload}`)
+        .then(resp => resp.data)
+        .then(body => {
+          resolve(body);
+        })
+        .catch(err => {
+          reject(err);
+        })
     })
   },
   fetchHotelById(ctx, payload) {
     return new Promise((resolve, reject) => {
       client
-      .get(`${BASE_URL}/api.hotel/${payload}`)
-      .then(resp => resp.data)
-      .then(body => {
-        ctx.commit('FETCH_HOTEL_BY_ID', body.data)
-        resolve(body);
-      })
-      .catch(err => {
-        reject(err);
-      })
+        .get(`${BASE_URL}/api.hotel/${payload}`)
+        .then(resp => resp.data)
+        .then(body => {
+          ctx.commit('FETCH_HOTEL_BY_ID', body.data)
+          resolve(body);
+        })
+        .catch(err => {
+          reject(err);
+        })
     })
   },
   fetchWardById(ctx, payload) {
     return new Promise((resolve, reject) => {
       client
-      .get(`${BASE_URL}/api.ward/${payload}`)
-      .then(resp => resp.data)
-      .then(body => {
-        ctx.commit('FETCH_WARD_BY_ID', body.data)
-        resolve(body);
-      })
-      .catch(err => {
-        reject(err);
-      })
+        .get(`${BASE_URL}/api.ward/${payload}`)
+        .then(resp => resp.data)
+        .then(body => {
+          ctx.commit('FETCH_WARD_BY_ID', body.data)
+          resolve(body);
+        })
+        .catch(err => {
+          reject(err);
+        })
     })
   },
   fetchDistrictById(ctx, payload) {
     return new Promise((resolve, reject) => {
       client
-      .get(`${BASE_URL}/api.district/${payload}`)
-      .then(resp => resp.data)
-      .then(body => {
-        ctx.commit('FETCH_DISTRICT_BY_ID', body.data)
-        resolve(body);
-      })
-      .catch(err => {
-        reject(err);
-      })
+        .get(`${BASE_URL}/api.district/${payload}`)
+        .then(resp => resp.data)
+        .then(body => {
+          ctx.commit('FETCH_DISTRICT_BY_ID', body.data)
+          resolve(body);
+        })
+        .catch(err => {
+          reject(err);
+        })
     })
   },
   fetchProvinceById(ctx, payload) {
     return new Promise((resolve, reject) => {
       client
-      .get(`${BASE_URL}/api.province/${payload}`)
-      .then(resp => resp.data)
-      .then(body => {
-        ctx.commit('FETCH_PROVINCE_BY_ID', body.data)
-        resolve(body);
-      })
-      .catch(err => {
-        reject(err);
-      })
+        .get(`${BASE_URL}/api.province/${payload}`)
+        .then(resp => resp.data)
+        .then(body => {
+          ctx.commit('FETCH_PROVINCE_BY_ID', body.data)
+          resolve(body);
+        })
+        .catch(err => {
+          reject(err);
+        })
     })
   },
-   fetchProvince(ctx) {
+  fetchProvince(ctx) {
     return new Promise((resolve, reject) => {
       client
-      .get(`${BASE_URL}/api.province`)
-      .then(resp => resp.data)
-      .then(body => {
-        ctx.commit('FETCH_PROVINCE', body.data);
-        resolve(body);
-      })
-      .catch(err => {
-        reject(err);
-      })
+        .get(`${BASE_URL}/api.province`)
+        .then(resp => resp.data)
+        .then(body => {
+          ctx.commit('FETCH_PROVINCE', body.data);
+          resolve(body);
+        })
+        .catch(err => {
+          reject(err);
+        })
     })
   },
   createRoom(ctx, payload) {
     return new Promise((resolve, reject) => {
       client
-      .post(`${BASE_URL}/api.room/`, payload)
-      .then(resp => resp.data)
-      .then(body => {
-        resolve(body);
-      })
-      .catch(err => {
-        reject(err);
-      })
+        .post(`${BASE_URL}/api.room/`, payload)
+        .then(resp => resp.data)
+        .then(body => {
+          resolve(body);
+        })
+        .catch(err => {
+          reject(err);
+        })
     })
   },
   fetchAttributes(ctx) {
     return new Promise((resolve, reject) => {
       client
-      .get(`${BASE_URL}/api.attribute`)
-      .then(resp => resp.data)
-      .then(body => {
-        ctx.commit('FETCH_ATTRIBUTES', body.data);
-        resolve(body);
-      })
-      .catch(err => {
-        reject(err);
-      })
+        .get(`${BASE_URL}/api.attribute`)
+        .then(resp => resp.data)
+        .then(body => {
+          ctx.commit('FETCH_ATTRIBUTES', body.data);
+          resolve(body);
+        })
+        .catch(err => {
+          reject(err);
+        })
     })
   },
-  fetchRoomsByHotelId(ctx) {
+  fetchRoomsByHotelId(ctx, payload) {
     return new Promise((resolve, reject) => {
       client
-      .get(`${BASE_URL}/api.room`)
-      .then(resp => resp.data)
-      .then(body => {
-        ctx.commit('FETCH_ROOMS_BY_HOTEL_ID', body.data);
-        resolve(body);
-      })
-      .catch(err => {
-        reject(err);
-      })
+        .get(`${BASE_URL}/api.room?hotelId=${payload}`)
+        .then(resp => resp.data)
+        .then(body => {
+          ctx.commit('FETCH_ROOMS_BY_HOTEL_ID', body.data);
+          resolve(body);
+        })
+        .catch(err => {
+          reject(err);
+        })
     })
   },
   fetchAttributeOptionById(ctx, payload) {
     return new Promise((resolve, reject) => {
       client
-      .get(`${BASE_URL}/api.attribute-option?attributeId=${payload}`)
+        .get(`${BASE_URL}/api.attribute-option?attributeId=${payload}`)
+        .then(resp => resp.data)
+        .then(body => {
+          resolve(body.data);
+        })
+        .catch(err => {
+          reject(err);
+        })
+    })
+  },
+  fetchRoomById(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+        .get(`${BASE_URL}/api.room/${payload}`)
+        .then(resp => resp.data)
+        .then(body => {
+          ctx.commit('FETCH_ROOM_BY_ID', body.data)
+          resolve(body.data);
+        })
+        .catch(err => {
+          reject(err);
+        })
+    })
+  },
+  updateRoomById(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .put(`${BASE_URL}/api.room/${payload.roomId}`, payload.room)
+      .then(resp => resp.data)
+      .then(body => {
+        resolve(body.data);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },
+  deleteRoom(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .delete(`${BASE_URL}/api.room/${payload}`)
       .then(resp => resp.data)
       .then(body => {
         resolve(body.data);

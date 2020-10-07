@@ -91,7 +91,7 @@ const routes = [
         component: DashboardAddRoom
       },
       {
-        path: ':roomid',
+        path: ':roomId',
         component: DashboardUpdateRoom
       }
     ]
