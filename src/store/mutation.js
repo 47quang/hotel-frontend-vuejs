@@ -43,5 +43,8 @@ export const mutations = {
   },
   FETCH_ROOMS_BY_HOTEL_ID(state, payload) {
     state.roomsByHotelId = payload;
+  },
+  FETCH_ROOM_BY_ID(state, payload) {
+    state.roomById = payload;
   }
 }

@@ -1,9 +1,9 @@
 <template>
   <div>
     <dash-board-header />
-    <div>
-      <el-row :gutter="24">
-        <el-col :span="6" class="step">
+    <!-- <div> -->
+      <!-- <el-row :gutter="24"> -->
+        <!-- <el-col :span="6" class="step"> -->
           <!-- <div style="height: 300px;">
             <el-steps direction="vertical" :active="1">
               <el-step title="Thông tin cơ bản"></el-step>
@@ -16,12 +16,12 @@
               <el-step title="Đăng bài"></el-step> 
             </el-steps>
           </div> -->
-        </el-col>
-        <el-col :span="18" style="padding: 0 10% 0 0 !important;">
+        <!-- </el-col> -->
+        <!-- <el-col :span="18" style="padding: 0 10% 0 0 !important;"> -->
           <router-view />
-        </el-col>
-      </el-row>
-    </div>
+        <!-- </el-col> -->
+      <!-- </el-row> -->
+    <!-- </div> -->
     <dashboard-footer />
   </div>
 </template>
