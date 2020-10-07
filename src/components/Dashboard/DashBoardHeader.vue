@@ -8,17 +8,19 @@
     >
       <el-menu-item index="1">
         <div class="logo">
-          <img
-            class="agoda-logo"
-            srcset="
-              //img.agoda.net/images/agoda-homes/logo/ah-logo-white-2.png    1x,
-              //img.agoda.net/images/agoda-homes/logo/ah-logo-white-2@2x.png 2x
-            "
-            src="//img.agoda.net/images/agoda-homes/logo/ah-logo-white-2.png"
-            width="97"
-            height="32"
-            alt="Agoda"
-          />
+          <router-link :to="`/dashboard/${curOwner.id}`">
+            <img
+              class="agoda-logo"
+              srcset="
+                //img.agoda.net/images/agoda-homes/logo/ah-logo-white-2.png    1x,
+                //img.agoda.net/images/agoda-homes/logo/ah-logo-white-2@2x.png 2x
+              "
+              src="//img.agoda.net/images/agoda-homes/logo/ah-logo-white-2.png"
+              width="97"
+              height="32"
+              alt="Agoda"
+            />
+          </router-link>
         </div>
       </el-menu-item>
       <el-menu-item index="2">
@@ -31,13 +33,13 @@
           ><i class="el-icon-s-home"></i> Chỗ ở</router-link
         >
       </el-menu-item>
-      <el-menu-item index="4"><i class="el-icon-s-promotion"></i> Đơn Hàng Mới</el-menu-item>
-      <el-menu-item index="5">
+      <el-menu-item index="4">
         <router-link :to="`/dashboard/${curOwner.id}/profile`"
           ><i class="el-icon-s-custom"></i> Hồ sơ</router-link
         >
       </el-menu-item>
-      <el-menu-item index="6" @click="telegram.dialogVisible = true">
+      <el-menu-item index="5" @click="telegram.dialogVisible = true">
+        <i class="el-icon-s-promotion"></i>
         Telegram
       </el-menu-item>
       <el-menu-item class="user-info">
