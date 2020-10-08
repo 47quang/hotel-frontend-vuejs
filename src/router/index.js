@@ -16,6 +16,7 @@ import DashboardEditHotel from '../components/Dashboard/DashboardEditHotel'
 import DashboardAddRoom from '../components/Dashboard/DashboardAddRoom'
 import DashboardRoomListing from '../components/Dashboard/DashboardRoomListing'
 import DashboardUpdateRoom from '../components/Dashboard/DashboardUpdateRoom'
+import DashboardUpdateHotel from '../components/Dashboard/DashboardUpdateHotel'
 
 Vue.use(VueRouter)
 
@@ -93,6 +94,16 @@ const routes = [
       {
         path: ':roomId',
         component: DashboardUpdateRoom
+      }
+    ]
+  },
+  {
+    path: '/hotel/:id',
+    component: DashboardEditHotel,
+    children: [
+      {
+        path: 'update',
+        component: DashboardUpdateHotel
       }
     ]
   }

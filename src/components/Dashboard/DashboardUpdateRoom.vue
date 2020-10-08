@@ -1,5 +1,6 @@
 <template>
   <div class="room-form">
+    <i class="el-icon-back add-room__back" @click="backRoomListing"></i>
     <el-divider><h3 class="form__title">Cập Nhật Thông Tin</h3></el-divider>
     <el-form ref="form-room" :model="room">
       <!-- Room Name -->
@@ -12,7 +13,17 @@
           </h4>
         </div>
         <el-card shadow="hover">
-          <el-input v-model="room.name" maxlength="50" show-word-limit></el-input>
+          <el-input v-model="room.name" maxlength="100" show-word-limit></el-input>
+        </el-card>
+      </el-form-item>
+      <!-- Room Des. -->
+      <el-form-item>
+        <h4 class="form__description-title">Mô tả</h4>
+        <h4 class="form__description-content">
+          Những đặc điểm nổi bật của khách sạn để thu hút du khách.
+        </h4>
+        <el-card shadow="hover">
+          <el-input type="textarea" :rows="4" maxlength="5000" show-word-limit v-model="room.description"></el-input>
         </el-card>
       </el-form-item>
       <!-- Room Capacity -->
@@ -212,6 +223,9 @@ export default {
       }
       return formData;
     },
+    backRoomListing() {
+      this.$router.push(`/hotel/${this.$route.params.id}/room`);
+    }
   },
   async mounted() {
     this.$store.dispatch('fetchRoomById', this.$route.params.roomId);
@@ -296,5 +310,9 @@ export default {
 }
 .attribute-select__selector {
   width: 50%;
+}
+.add-room__back{
+  font-size: 25px;
+  cursor: pointer;
 }
 </style>

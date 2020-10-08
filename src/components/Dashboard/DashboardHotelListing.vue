@@ -3,53 +3,49 @@
     <el-row :gutter="12" class="hotel-listing">
       <el-col :span="6">
         <el-input
-          placeholder="Search (property ID or name)"
+          placeholder="Tìm Theo Tên Khách Sạn"
           suffix-icon="el-icon-search"
           v-model="search">
         </el-input>
       </el-col>
       <el-col :span="6" class="add-hotel">
-        <span class="add-hotel-btn" @click="addHotel"><i class="el-icon-plus"></i> Thêm Chỗ Ở Mới</span>
+        <span class="add-hotel-btn hidden-sm-and-down" @click="addHotel"><i class="el-icon-plus"></i> Thêm Khách Sạn</span>
+        <span class="add-hotel-btn hidden-md-and-up" @click="addHotel"><i class="el-icon-plus"></i> Khách Sạn</span>
       </el-col>
     </el-row>
     <div class="manage-listings">
       <span class="horizontal-line-text-middle m-b-4"><strong>Khách Sạn</strong></span>
-      <div class="hotel-card" v-for="hotel in hotels" :key="hotel.id">
+      <div v-if="isHotelEmpty()" class="handle-empty-hotel">
+        <el-image style="width: 50%; height: 50%" :src="'https://cdn.dribbble.com/users/992274/screenshots/7392790/media/95483df50a0a3324c4cf9ccb1094b825.jpg'"></el-image>
+      </div>
+      <div v-else class="hotel-card" v-for="hotel in filteredHotels" :key="hotel.id">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span class="hotel-card__title">[{{hotel.id}}] {{hotel.name}}</span>
             <el-button style="float: right; padding: 3px 0" @click="deleteHotel(hotel.id)" class="hotel-card__button" icon="el-icon-close"></el-button>
           </div>
-          <el-row class="hotel-card__body" :gutter="24">
-            <el-col :span="6" class="hidden-sm-and-down">
-              <div v-for="image in hotel.images" :key="image">
-                <el-image class="hotel-card__image" :src="image"></el-image>
-              </div>
-            </el-col>
-            <el-col class="hotel-card__content hidden-sm-and-down" :span="18">
-              <div>
-                <span class="hotel-card__content-title">Địa chỉ: </span>
-                <span>{{hotel.address}}</span>
-              </div>
-              <div class="hotel-card__content-description">
-                <span class="hotel-card__content-title">Mô tả: </span>
-                <p class="text-justify">{{hotel.description}}</p>
-              </div>
-              <el-tag class="hotel-card__tag" :type="'warning'" effect="dark">Chưa Hoàn Tất</el-tag>
-            </el-col>
-            <!-- For small screens -->
-            <el-col class="hidden-md-and-up hotel-card__content" :span="24">
-              <div>
-                <span class="hotel-card__content-title">Địa chỉ: </span>
-                <span>{{hotel.address}}</span>
-              </div>
-              <div class="hotel-card__content-description">
-                <span class="hotel-card__content-title">Mô tả: </span>
-                <p class="text-justify">{{hotel.description}}</p>
-              </div>
-              <el-tag class="hotel-card__tag" :type="'warning'" effect="dark">Chưa Hoàn Tất</el-tag>
-            </el-col>
-          </el-row>
+          <div class="hotel-card__body">
+            <div>
+              <el-tag class="hotel-card__tag" :type="'success'" effect="dark"><span class="hotel-card__content-title">Địa chỉ</span></el-tag>
+              <span class="text-justify">{{hotel.address}}</span>
+            </div>
+            <div class="hotel-card__content-description">
+              <el-tag class="hotel-card__tag" effect="dark"><span class="hotel-card__content-title">Mô tả</span></el-tag>
+              <p class="text-justify">{{hotel.description}}</p>
+            </div>
+            <div class="hotel-card__content-description">
+              <el-tag class="hotel-card__tag--rating hotel-card__tag" :type="'warning'" effect="dark"><span class="hotel-card__content-title">Đánh giá</span></el-tag>
+              <span class="text-justify">{{hotel.rating | formatRating}}</span>
+            </div>
+            <div class="hotel-card__content-description">
+              <el-tag class="hotel-card__tag" :type="'danger'" effect="dark"><span class="hotel-card__content-title">Hình ảnh</span></el-tag>
+              <el-carousel height="400px" direction="vertical" :autoplay="false">
+                <el-carousel-item v-for="image in hotel.images" :key="image">
+                  <el-image class="hotel-card__image" :src="image"></el-image>
+                </el-carousel-item>
+              </el-carousel>
+            </div>
+          </div>
           <router-link :to="`/hotel/${hotel.id}/room`" class="edit-hotel">Chỉnh Sửa Thông Tin</router-link>
         </el-card>
       </div>
@@ -62,7 +58,6 @@ export default {
   data(){
     return {
       search: '',
-      targetHotel: ''
     }
   },
   computed: {
@@ -71,6 +66,11 @@ export default {
     },
     hotels() {
       return this.$store.state.ownerHotels;
+    },
+    filteredHotels() {
+      return this.hotels.filter(hotel => {
+        return hotel.name.toLowerCase().includes(this.search.toLowerCase())
+      })
     }
   },
   methods: {
@@ -110,11 +110,15 @@ export default {
         message: 'Đã có lỗi xảy ra, vui lòng thử lại.',
         type: 'error'
       });
+    },
+    isHotelEmpty() {
+      if (this.$store.state.ownerHotels.length == 0) return true;
+      else return false;
     }
   },
   async mounted() {
     await this.$store.dispatch('fetchHotels', this.curOwner.id);
-  }
+  },
 }
 </script>
 
@@ -134,6 +138,7 @@ export default {
   color: #1174a6;
   text-decoration: none;
   font-weight: 700;
+  cursor: pointer;
 }
 .add-hotel:hover {
   color: #0a4461;
@@ -193,12 +198,12 @@ export default {
   color: inherit;
   word-break: break-all;
   margin-top: 0;
+  font-size: 24px;
 }
 .hotel-card__tag {
-  background-color: #ffa726 !important;
   display: inline;
   padding: .2em .6em .3em;
-  font-size: 75%;
+  font-size: 15px;
   font-weight: 700;
   line-height: 1;
   color: #fff;
@@ -207,18 +212,20 @@ export default {
   vertical-align: baseline;
   border-radius: .25em;
 }
+.hotel-card__tag--rating {
+  background-color: #ffa726 !important;
+}
 .hotel-card__button {
   border: none;
 }
 .hotel-card__body {
-  display: flex;
-  justify-content: center;
-  align-content: center;
+  padding: 20px 20px 0;
 }
 .text-justify {
   text-align: justify;
   line-height: 1.2;
-  margin: 5px 0;
+  margin: 10px;
+  font-weight: 700;
 }
 .hotel-card__content {
   padding-left: 0px !important;
@@ -228,13 +235,17 @@ export default {
   font-weight: 700;
 }
 .hotel-card__content-description {
-  padding-top: 10px;
+  padding-top: 20px;
 }
 .hotel-card__image {
-  height: 200px; 
-  width: 200px;
+  padding-top: 20px;
+  width: 100%;
+  height: 100%;
 }
-
+.handle-empty-hotel {
+  display: flex; 
+  justify-content: center;
+}
 @media (max-width: 992px) {
   .hotel-card__content {
     padding-left: 20px !important;

@@ -2,8 +2,8 @@
   <div>
     <div class="add-hotel">
       <div>
-        <i class="el-icon-back add-hotel__back" @click="backListing"></i>
-        <el-divider><h2 class="add-hotel__title">Đăng Ký Khách Sạn</h2></el-divider>
+        <i class="el-icon-back add-hotel__back" @click="backRoomListing"></i>
+        <el-divider><h2 class="add-hotel__title">Cập Nhật Khách Sạn</h2></el-divider>
       </div>
       <el-form ref="form" :model="hotel">
         <el-form-item>
@@ -44,7 +44,7 @@
               <h4 class="form__description-title">Phường/Xã</h4>
               <el-card shadow="hover">
                 <el-select class="add-hotel__select-info" v-model="hotel.wardId" clearable placeholder="Vui Lòng Chọn Phường Xã">
-                  <el-option v-for="ward in wards" :key="ward.id" :label="ward.name" :value="ward.id"> </el-option>
+                  <el-option v-for="ward in wards" :key="ward.id" :label="ward.name" :value="ward.id"></el-option>
                 </el-select>
               </el-card>
             </el-form-item>
@@ -53,7 +53,7 @@
         <el-form-item>
           <h4 class="form__description-title">Mô tả</h4>
           <el-card shadow="hover">
-            <el-input type="textarea" :rows="4"  maxlength="5000" show-word-limit v-model="hotel.description"></el-input>
+            <el-input type="textarea" :rows="4" maxlength="5000" show-word-limit v-model="hotel.description"></el-input>
           </el-card>
         </el-form-item>
         <el-form-item>
@@ -86,16 +86,6 @@
 export default {
   data() {
     return {
-      hotel: {
-        name: '',
-        address: '',
-        provinceId: '',
-        districtId: '',
-        wardId: '',
-        description: '',
-        images: [],
-        ownerId: this.$store.state.curOwner.id,
-      },
       dialogImageUrl: '',
       dialogVisible: false,
       disabled: false,
@@ -133,10 +123,10 @@ export default {
       this.hotel.images = data;
 
       try {
-        this.$store.dispatch('registerHotel', this.hotel);
+        this.$store.dispatch('updateHotel', {hotelId: this.$route.params.id , hotel: this.hotel});
         this.alertSuccess();
-        this.$store.dispatch('fetchHotels', this.curOwner.id);
-        this.$router.push(`/dashboard/${this.curOwner.id}/listing`);
+        await this.$store.dispatch("fetchRoomsByHotelId", this.$route.params.id);
+        this.$router.push(`/hotel/${this.$route.params.id}/room`);
       }
       catch(err) {
         this.alertErr();
@@ -145,7 +135,7 @@ export default {
     alertSuccess() {
       this.$message({
         showClose: true,
-        message: 'Đã thêm khách sạn thành công.',
+        message: 'Đã cập nhật khách sạn thành công.',
         type: 'success'
       });
     },
@@ -156,14 +146,14 @@ export default {
         type: 'error'
       });
     },
-    backListing() {
+    backRoomListing() {
       this.$confirm('Bài đăng vẫn chưa hoàn tất. Tiếp tục?', 'Cảnh Báo', {
         confirmButtonText: 'OK',
         cancelButtonText: 'Hủy bỏ',
         type: 'warning'
       })
       .then(() => {
-        this.$router.push(`/dashboard/${this.curOwner.id}/listing`);
+        this.$router.push(`/hotel/${this.$route.params.id}/room`);
       })
       .catch(() => {
         return;
@@ -180,12 +170,15 @@ export default {
     wards() {
       return this.$store.state.wards;
     },
-    curOwner() {
-      return this.$store.state.curOwner;
+    hotel() {
+      return this.$store.state.hotelById;
     }
   },
-  created() {
+  async created() {
     this.$store.dispatch('fetchProvince');
+    await this.$store.dispatch('fetchHotelById', this.$route.params.id);
+    this.$store.dispatch('fetchDistrict', this.hotel.provinceId);
+    this.$store.dispatch('fetchWards', this.hotel.districtId);
   },
 };
 </script>
