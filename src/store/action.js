@@ -92,7 +92,6 @@ export const actions = {
         .get(`${BASE_URL}/api.hotel?provinceId=${provinceId}`)
         .then((resp) => resp.data)
         .then((body) => {
-          console.log(body.data)
           ctx.commit('SEARCH_HOTEL', body.data);
           resolve(body);
         })

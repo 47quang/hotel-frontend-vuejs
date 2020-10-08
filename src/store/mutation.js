@@ -9,7 +9,8 @@ export const mutations = {
     state.curOwner = {};
   },
   SEARCH_HOTEL(state, payload) {
-    state.hotel = payload;
+    state.hotel=payload
+
   },
   OWNER_UPDATE(state, payload) {
     state.curOwner = payload;
