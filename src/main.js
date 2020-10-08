@@ -8,8 +8,14 @@ import 'element-ui/lib/theme-chalk/index.css';
 import 'element-ui/lib/theme-chalk/display.css';
 import locale from 'element-ui/lib/locale/lang/en'
 
+import Filters from './utils/filters';
+
 Vue.use(ElementUI,{ locale });
 Vue.config.productionTip = false
+
+Vue.mixin({
+  filters: Filters
+});
 
 new Vue({
   store,
