@@ -4,56 +4,108 @@
       <el-col :span="12">
         <i class="el-icon-back add-hotel__back" @click="backHotelListing"></i>
       </el-col>
-      <el-col :span="12" class="add-hotel">
-        <span class="add-hotel-btn" @click="addRoom"><i class="el-icon-plus"></i> Thêm Phòng Mới</span>
+      <el-col :span="12" class="add-room">
+        <span class="add-room-btn" @click="addRoom">
+          <i class="el-icon-plus"></i> Thêm Phòng Mới
+        </span>
       </el-col>
     </el-row>
     <el-input
-      placeholder="Search (property ID or name)"
+      placeholder="Tìm Theo Tên Phòng"
       suffix-icon="el-icon-search"
       class="search-room"
-      v-model="search">
-    </el-input>
+      v-model="search"
+    ></el-input>
     <div class="manage-listings">
-      <span class="horizontal-line-text-middle m-b-4"><strong>Danh Sách Phòng</strong></span>
-      <div class="hotel-card" v-for="room in rooms" :key="room.id">
+      <!-- Hotel Dettails -->
+      <span class="horizontal-line-text-middle m-b-4">
+        <strong>Thông Tin Khách Sạn</strong>
+      </span>
+      <el-card>
+        <div slot="header" class="clearfix">
+          <span class="room-card__title">[{{hotel.id}}] {{hotel.name}}</span>
+        </div>
+        <div class="hotel-card__body">
+          <div>
+            <el-tag class="room-card__tag" :type="'success'" effect="dark"><span class="room-card__content-title">Địa chỉ</span></el-tag>
+            <span class="text-justify">{{hotel.address}}, {{wardById.name}}, {{districtById.name}}, {{provinceById.name}}</span>
+          </div>
+          <div class="room-card__content-description">
+            <el-tag class="room-card__tag" effect="dark"><span class="room-card__content-title">Mô tả</span></el-tag>
+            <p class="text-justify">{{hotel.description}}</p>
+          </div>
+          <div class="room-card__content-description">
+            <el-tag class="room-card__tag--rating room-card__tag" :type="'warning'" effect="dark"><span class="room-card__content-title">Đánh giá</span></el-tag>
+            <span class="text-justify">{{hotel.rating | formatRating}}</span>
+          </div>
+          <div class="room-card__content-description">
+            <el-tag class="room-card__tag" :type="'danger'" effect="dark"><span class="room-card__content-title">Hình ảnh</span></el-tag>
+            <el-carousel class="room-card__carousel" height="400px" direction="vertical" :autoplay="false">
+              <el-carousel-item v-for="image in hotel.images" :key="image">
+                <el-image class="room-card__image" :src="image"></el-image>
+              </el-carousel-item>
+            </el-carousel>
+          </div>
+        </div>
+        <router-link
+            :to="`/hotel/${$route.params.id}/update`"
+            class="edit-room"
+          >Cập Nhật Khách Sạn</router-link>
+      </el-card>
+      <!-- Room Listing -->
+      <span class="horizontal-line-text-middle m-b-4">
+        <strong>Danh Sách Phòng</strong>
+      </span>
+      <div class="room-card" v-for="room in filterdRoom" :key="room.id">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span class="hotel-card__title">[{{room.id}}] {{room.name}}</span>
-            <el-button style="float: right; padding: 3px 0" @click="deleteRoom(room.id)" class="hotel-card__button" icon="el-icon-close"></el-button>
+            <span class="room-card__title">[{{room.id}}] {{room.name}}</span>
+            <el-button
+              style="float: right; padding: 3px 0"
+              @click="deleteRoom(room.id)"
+              class="room-card__button"
+              icon="el-icon-close"
+            ></el-button>
           </div>
-          <el-row class="hotel-card__body" :gutter="24">
-            <el-col :span="6" class="hidden-sm-and-down">
-              <div v-for="image in room.images" :key="image">
-                <el-image class="hotel-card__image" :src="image"></el-image>
+          <div class="room-card__body">
+            <div class="room-card__info">
+              <div>
+                <el-tag class="room-card__tag" :type="'success'" effect="dark"><span class="room-card__content-title">Số Lượng Phòng</span></el-tag>
+                <span class="text-justify">{{room.stock}}</span>
               </div>
-            </el-col>
-            <el-col class="hotel-card__content hidden-sm-and-down" :span="18">
-              <div class="hotel-card__content-description">
-                <span class="hotel-card__content-title">Mô tả: </span>
-                <p class="text-justify">{{room.description}}</p>
+              <div >
+                <el-tag class="room-card__tag" :type="'warning'" effect="dark"><span class="room-card__content-title">Sức Chứa Mỗi Phòng</span></el-tag>
+                <span class="text-justify">{{room.capacity}}</span>
               </div>
-              <div class="hotel-card__content-description">
-                <span class="hotel-card__content-title">Số Lượng Phòng: </span>
-                <span>{{room.stock}}</span>
+              <div>
+                <el-tag class="room-card__tag" effect="dark"><span class="room-card__content-title">Giá Gốc</span></el-tag>
+                <span class="text-justify">{{room.regularPrice | formatCurrency}}</span>
               </div>
-              <div class="hotel-card__content-description">
-                <span class="hotel-card__content-title">Sức Chứa Mỗi Phòng: </span>
-                <span>{{room.capacity}}</span>
+              <div>
+                <el-tag class="room-card__tag" :type="'danger'" effect="dark"><span class="room-card__content-title">Giá Giảm</span></el-tag>
+                <span class="text-justify">{{room.salePrice | formatCurrency}}</span>
               </div>
-              <div class="hotel-card__content-description">
-                <span class="hotel-card__content-title">Giá Gốc: </span>
-                <span>{{room.regularPrice}}</span>
+            </div>
+            <div class="room-card__content-description">
+              <el-tag class="room-card__tag" :type="'info'" effect="dark"><span class="room-card__content-title">Mô tả</span></el-tag>
+              <p class="text-justify">{{room.description}}</p>
+            </div>
+            <div class="room-card__content-description">
+              <el-tag class="room-card__tag room-card__tag--image" :type="'warning'" effect="dark"><span class="room-card__content-title">Hình ảnh</span></el-tag>
+              <div v-if="isImageEmpty(room.images)" class="handle-empty-image">
+                <el-image style="width: 50%; height: 50%" :src="'https://cdn.dribbble.com/users/992274/screenshots/7392790/media/95483df50a0a3324c4cf9ccb1094b825.jpg'"></el-image>
               </div>
-              <div class="hotel-card__content-description">
-                <span class="hotel-card__content-title">Giá Giảm: </span>
-                <span>{{room.salePrice}}</span>
-              </div>
-            </el-col>
-            <!-- For small screens -->
-           
-          </el-row>
-          <router-link :to="`/hotel/${$route.params.id}/room/${room.id}`" class="edit-hotel">Chỉnh Sửa Thông Tin</router-link>
+              <el-carousel v-else height="400px" direction="vertical" :autoplay="false">
+                <el-carousel-item  class="room-card__carousel" v-for="image in room.images" :key="image">
+                  <el-image class="room-card__image" :src="image"></el-image>
+                </el-carousel-item>
+              </el-carousel>
+            </div>
+          </div>
+          <router-link
+            :to="`/hotel/${$route.params.id}/room/${room.id}`"
+            class="edit-room"
+          >Chỉnh Sửa Phòng</router-link>
         </el-card>
       </div>
     </div>
@@ -62,11 +114,11 @@
 
 <script>
 export default {
-  data(){
+  data() {
     return {
-      search: '',
-      targetHotel: ''
-    }
+      search: "",
+      targetHotel: ""
+    };
   },
   computed: {
     curOwner() {
@@ -74,54 +126,79 @@ export default {
     },
     rooms() {
       return this.$store.state.roomsByHotelId;
+    },
+    hotel() {
+      return this.$store.state.hotelById;
+    },
+    wardById(){
+      return this.$store.state.wardById;
+    },
+    districtById(){
+      return this.$store.state.districtById;
+    },
+    provinceById(){
+      return this.$store.state.provinceById;
+    },
+    filterdRoom(){
+      return this.rooms.filter(room => {
+        return room.name.toLowerCase().includes(this.search.toLowerCase())
+      })
     }
   },
   methods: {
     addRoom() {
       try {
         this.$router.push(`/hotel/${this.$route.params.id}/room/new`);
-      }
-      catch(err) {
+      } catch (err) {
         this.alertErr();
       }
     },
     deleteRoom(roomId) {
-      this.$confirm('Xóa vĩnh viễn phòng. Tiếp tục?', 'Cảnh Báo', {
-        confirmButtonText: 'OK',
-        cancelButtonText: 'Hủy bỏ',
-        type: 'warning'
+      this.$confirm("Xóa vĩnh viễn phòng. Tiếp tục?", "Cảnh Báo", {
+        confirmButtonText: "OK",
+        cancelButtonText: "Hủy bỏ",
+        type: "warning"
       })
-      .then(async() => {
-        await this.$store.dispatch('deleteRoom', roomId);
-        this.$store.dispatch('fetchRoomsByHotelId', this.$route.params.id);
-        this.alertSuccess();
-      })
-      .catch(() => {
-        this.alertErr();
-      });
-    }, 
+        .then(async () => {
+          await this.$store.dispatch("deleteRoom", roomId);
+          this.$store.dispatch("fetchRoomsByHotelId", this.$route.params.id);
+          this.alertSuccess();
+        })
+        .catch(() => {
+          this.alertErr();
+        });
+    },
     alertSuccess() {
       this.$message({
         showClose: true,
-        message: 'Đã xóa phòng thành công.',
-        type: 'success'
+        message: "Đã xóa phòng thành công.",
+        type: "success"
       });
     },
     alertErr() {
       this.$message({
         showClose: true,
-        message: 'Đã có lỗi xảy ra, vui lòng thử lại.',
-        type: 'error'
+        message: "Đã có lỗi xảy ra, vui lòng thử lại.",
+        type: "error"
       });
     },
     backHotelListing() {
       this.$router.push(`/dashboard/${this.curOwner.id}/listing`);
-    }
+    },
+    isImageEmpty(images) {
+      if (images == null) return true;
+      else if (images.length == 0) return true;
+      else return false;
+    },
   },
   async mounted() {
-    await this.$store.dispatch('fetchRoomsByHotelId', this.$route.params.id); 
-  }
-}
+    await this.$store.dispatch("fetchHotelById", this.$route.params.id);
+    await this.$store.dispatch("fetchRoomsByHotelId", this.$route.params.id);
+    await this.$store.dispatch('fetchWardById', this.hotel.wardId); 
+    await this.$store.dispatch('fetchDistrictById', this.hotel.districtId); 
+    await this.$store.dispatch('fetchProvinceById', this.hotel.provinceId); 
+  },
+};
 </script>
 
 <style scoped>
@@ -134,17 +211,18 @@ export default {
   justify-content: space-between;
   align-items: center;
 }
-.add-hotel {
+.add-room {
   display: flex;
   justify-content: flex-end;
 }
-.add-hotel-btn {
+.add-room-btn {
   text-transform: uppercase;
   color: #1174a6;
   text-decoration: none;
   font-weight: 700;
+  cursor: pointer;
 }
-.add-hotel:hover {
+.add-room:hover {
   color: #0a4461;
   text-decoration: underline;
 }
@@ -158,7 +236,8 @@ export default {
   flex-direction: row;
   padding-bottom: 30px;
 }
-.horizontal-line-text-middle:after, .horizontal-line-text-middle:before {
+.horizontal-line-text-middle:after,
+.horizontal-line-text-middle:before {
   content: "";
   -ms-flex: 1 1;
   flex: 1 1;
@@ -173,13 +252,19 @@ export default {
 .horizontal-line-text-middle:before {
   margin-right: 20px;
 }
-.el-progress-bar__inner::after, .el-row::after, .el-row::before, .el-slider::after, .el-slider::before, .el-slider__button-wrapper::after, .el-upload-cover::after {
+.el-progress-bar__inner::after,
+.el-row::after,
+.el-row::before,
+.el-slider::after,
+.el-slider::before,
+.el-slider__button-wrapper::after,
+.el-upload-cover::after {
   content: none;
 }
-.hotel-card {
+.room-card {
   padding-bottom: 30px;
 }
-.edit-hotel {
+.edit-room {
   color: #1174a6;
   font-weight: 600;
   position: relative;
@@ -192,19 +277,19 @@ export default {
   font-size: 16px;
   float: right;
 }
-.hotel-card__title {
+.room-card__title {
   font-family: inherit;
   font-weight: 700;
   line-height: 1.1;
   color: inherit;
   word-break: break-all;
   margin-top: 0;
+  font-size: 20px;
 }
-.hotel-card__tag {
-  background-color: #ffa726 !important;
+.room-card__tag {
   display: inline;
   padding: .2em .6em .3em;
-  font-size: 75%;
+  font-size: 15px;
   font-weight: 700;
   line-height: 1;
   color: #fff;
@@ -213,44 +298,65 @@ export default {
   vertical-align: baseline;
   border-radius: .25em;
 }
-.hotel-card__button {
+.room-card__button {
   border: none;
 }
-.hotel-card__body {
-  display: flex;
-  justify-content: center;
-  align-content: center;
+.room-card__body {
+  padding: 20px;
 }
 .text-justify {
   text-align: justify;
   line-height: 1.2;
-  margin: 5px 0;
+  margin: 10px 10px 0;
+  font-weight: 700;
 }
-.hotel-card__content {
+.room-card__content {
   padding-left: 0px !important;
   padding-right: 20px !important;
 }
-.hotel-card__content-title {
+.room-card__content-title {
   font-weight: 700;
 }
-.hotel-card__content-description {
-  padding-top: 10px;
+.room-card__content-description {
+  padding-top: 30px;
 }
-.hotel-card__image {
-  height: 200px; 
-  width: 200px;
+.room-card__image {
+  height: 100%;
+  width: 100%;
 }
-
-@media (max-width: 992px) {
-  .hotel-card__content {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-  }
-}
-.add-hotel__back{
+.add-hotel__back {
   font-size: 25px;
 }
 .search-room {
   margin-bottom: 25px;
+}
+.m-b-4 {
+  margin-top: 30px;
+}
+.hotel-card__body {
+  padding: 20px 20px 0;
+}
+.room-card__carousel {
+  margin-top: 20px;
+}
+.room-card__info {
+  display: flex;
+  justify-content: space-between;
+}
+.room-card__tag--image {
+  background-color: #ffa726 !important;
+}
+.handle-empty-image {
+  display: flex; 
+  justify-content: center;
+}
+.add-hotel__back {
+  cursor: pointer;
+}
+@media (max-width: 992px) {
+  .room-card__content {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
 }
 </style>

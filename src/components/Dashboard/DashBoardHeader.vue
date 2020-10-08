@@ -6,7 +6,7 @@
       text-color="#fff"
       active-text-color="#fff"
     >
-      <el-menu-item index="1">
+      <el-menu-item index="1" class="hidden-xs-only">
         <div class="logo">
           <router-link :to="`/dashboard/${curOwner.id}`">
             <img

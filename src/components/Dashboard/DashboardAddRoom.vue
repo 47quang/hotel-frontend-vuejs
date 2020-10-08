@@ -13,7 +13,7 @@
           </h4>
         </div>
         <el-card shadow="hover">
-          <el-input v-model="room.name" maxlength="50" show-word-limit></el-input>
+          <el-input v-model="room.name" maxlength="100" show-word-limit></el-input>
         </el-card>
       </el-form-item>
       <!-- Room Description -->
@@ -414,5 +414,6 @@ export default {
 }
 .add-room__back{
   font-size: 25px;
+  cursor: pointer;
 }
 </style>

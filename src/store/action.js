@@ -350,5 +350,18 @@ export const actions = {
         reject(err);
       })
     })
+  },
+  updateHotel(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .put(`${BASE_URL}/api.hotel/${payload.hotelId}`, payload.hotel)
+      .then(resp => resp.data)
+      .then(body => {
+        resolve(body.data);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
   }
 };
