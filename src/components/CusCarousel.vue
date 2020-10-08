@@ -88,8 +88,8 @@ export default {
     },
   },
   methods: {
-    searchHotel() {
-      this.$store.dispatch('searchHotel', this.form);
+    async searchHotel() {
+      await this.$store.dispatch('searchHotel', this.form);
       this.$router.push('/search');
     },
   },

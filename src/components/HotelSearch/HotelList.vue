@@ -29,32 +29,31 @@
                         </div>
                     </el-col>
                     <el-col style="padding: 0 5px" :span="18">
-                        <div v-for="item in hotel" :key="item.name" class="hotelList-item" @click="detailHotel(item.idHotel)">
+                        <div v-for="hotel in fetchHotel" :key="hotel.id" class="hotelList-item" @click="detailHotel(hotel.id)">
                             <div class="hotelList-image">
                                 <img src="../../assets/hotel2.jpg" alt="">
                             </div>
                             <div class="hotelList-content">
                                     <el-col :span="16" class="content1" >
-                                        <div class="hotelList-name">{{item.name}}</div>
+                                        <div class="hotelList-name">{{hotel.name}}</div>
                                         <el-rate
-                                            v-model="item.star"
+                                            v-model="hotel.rating"
                                             disabled
-                                            show-score
                                             text-color="#ff9900"
-                                            score-template="{value} stars">
+                                            >
                                         </el-rate>
-                                        <div class="hotelList-district">{{item.district}}</div>
+                                        <div class="hotelList-district">{{hotel.districtName}}</div>
                                     </el-col>
                                     <el-col :span="8" class="content2" >
                                         <div class="hotelList-rating">
-                                            {{item.rating}}
+                                            {{hotel.rating}}
                                         </div>
                                         <div style="font-weight:600" class="hotelList-review">
-                                            {{item.review}}
+                                            {{hotel.review}}
                                         </div>
                                         
                                         <div class="hotelList-price">
-                                            <p style="color: sivler">Giá mỗi đêm rẻ nhất từ</p>{{item.minPrice}}</div>
+                                            <p style="color: sivler">Giá mỗi đêm rẻ nhất từ </p>{{hotel.minPrice}} VND</div>
                                     </el-col>
                             </div>
                             
@@ -100,13 +99,33 @@ export default {
                 rating: 7.6,
                 review: 'Rất tốt'
             }
-            ]
+            ],
+            hotelList:this.fetchHotel
         }
     },
+
+    // created(){
+    //     this.$store.dispatch('fetchDistrict',this.fetchHotel[0].provinceId),
+    //     this.$store.dispatch('fetchWards', this.districtById)
+    // },
+    // mounted() {
+    //     console.log(this.districtById)
+    // },
     methods: {
         detailHotel(id) {
             this.$router.push(`/details/${id}`)
         }
+    },
+    computed: {
+        fetchHotel() {
+            return this.$store.state.hotel                
+        },
+        // districtById() {
+        //     return this.$store.state.districtById
+        // },
+        // wardById() {
+        //     return this.$store.state.wardById
+        // }
     }
 }
 </script>

@@ -30,11 +30,11 @@
                         </el-row>
                   </el-option>
               </el-select>
-              <el-select class="filter"  v-model="star" clearable placeholder="Sao">
+              <el-select class="filter"  v-model="star" clearable placeholder="Rating">
                 <el-option
                   v-for="item in ratings"
                   :key="item.rating"
-                  :value="item.rating+' star '">
+                  :value="item.rating+' score '">
                     <el-rate
                       v-model="item.rating"
                       disabled
@@ -43,7 +43,7 @@
                     </el-rate>
                 </el-option>
               </el-select>
-              <el-select class="filter"  v-model="star" clearable placeholder="Vị trí">
+              <!-- <el-select class="filter"  v-model="star" clearable placeholder="Vị trí">
                 <el-option
                   v-for="item in ratings"
                   :key="item.rating"
@@ -68,7 +68,7 @@
                       text-color="#ff9900">
                     </el-rate>
                 </el-option>
-              </el-select>
+              </el-select> -->
             </div>
            
           </el-col>
@@ -76,7 +76,7 @@
              <el-input
                 placeholder="Từ khóa hay tên khách sạn"
                 prefix-icon="el-icon-search"
-                v-model="hotel">
+                v-model="search">
             </el-input>
           </el-col>
         </el-row>
@@ -97,7 +97,7 @@ import HotelList from '../components/HotelSearch/HotelList'
 export default {
   data(){
     return {
-        hotel:'',
+        search:'',
         star: '',
         value:'',
         range: [5,20],
@@ -130,17 +130,14 @@ export default {
     maxPrice() {
       return this.range[1]*10 
     }
-    
-    
   },
+  
   components: {
     CusNavbar,
     SearchBar,
     HotelList
   },
-  // mounted(){
-  //   console.log(this.hotel)
-  // },
+
   // computed: {
   //   hotel(){
   //     console.log(this.$store.state.hotel)
