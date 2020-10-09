@@ -56,7 +56,7 @@
       <span class="horizontal-line-text-middle m-b-4">
         <strong>Danh Sách Phòng</strong>
       </span>
-      <div class="room-card" v-for="room in filterdRoom" :key="room.id">
+      <div class="room-card" v-for="room in filteredRooms" :key="room.id">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span class="room-card__title">[{{room.id}}] {{room.name}}</span>
@@ -116,8 +116,7 @@
 export default {
   data() {
     return {
-      search: "",
-      targetHotel: ""
+      search: '',
     };
   },
   computed: {
@@ -139,8 +138,9 @@ export default {
     provinceById(){
       return this.$store.state.provinceById;
     },
-    filterdRoom(){
-      return this.rooms.filter(room => {
+    filteredRooms() {
+      console.log('rooms', this.rooms)
+      return (Array.from(this.rooms) || []).filter(room => {
         return room.name.toLowerCase().includes(this.search.toLowerCase())
       })
     }
