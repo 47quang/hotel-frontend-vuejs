@@ -11,17 +11,23 @@
             <el-button id="signin" type="danger" @click="dialogSignInVisible = true">Đăng Nhập</el-button>
             <!-- Popup Sign In -->
             <el-dialog class="signin-dialog" title="Đăng Nhập" :visible.sync="dialogSignInVisible">
-              <el-form class="signin-dialog-content" :label-position="labelPosition" label-width="100px" :model="form" >
-                <el-form-item class="form-item" label="Email">
+              <el-form ref="form" class="signin-dialog-content" :label-position="labelPosition" label-width="100px" :model="form" >
+                <el-form-item prop="username" class="form-item" label="Email"
+                :rules="[
+                  { required: true, message: 'Email is required'},
+                ]">
                   <el-input v-model="form.username" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item class="form-item" label="Mật Khẩu">
-                  <el-input type="password" v-model="form.password" autocomplete="off"  @keyup.enter.native="signin"></el-input>
+                <el-form-item prop="password" class="form-item" label="Mật Khẩu"
+                :rules="[
+                  { required: true, message: 'Password is required'},
+                ]">
+                  <el-input type="password" v-model="form.password" autocomplete="off" @keyup.enter.native="signin('form')"></el-input>
                 </el-form-item>
                 <el-form-item>
                   <a href="/forget-password">Quên Mật Khẩu</a>
                 </el-form-item>
-                <el-button type="danger" class="signin-button-form" @click="signin">Đăng Nhập</el-button>
+                <el-button type="danger" class="signin-button-form" @click="signin('form')">Đăng Nhập</el-button>
               </el-form>
               <div slot="footer" class="dialog-footer">
                 <strong style="color: #2A2A2E">Bạn chưa có tài khoản?</strong>
@@ -32,35 +38,56 @@
             <el-button id="signup" type="danger" @click="dialogSignUpVisible = true">Tạo Tài Khoản</el-button>
             <!-- Popup Sign Up -->
             <el-dialog class="signin-dialog signup-dialog" title="Tạo Tài Khoản" :visible.sync="dialogSignUpVisible">
-              <el-form class="signin-dialog-content" :label-position="labelPosition" label-width="100px" :model="form">
+              <el-form ref="formSignUp" class="signin-dialog-content" :label-position="labelPosition" label-width="100px" :model="formSignUp">
                 <el-row :gutter="24">
                   <el-col :span="12">
-                    <el-form-item  class="form-item" label="Tên">
+                    <el-form-item prop="firstname" class="form-item" label="Tên"
+                    :rules="[
+                      { required: true, message: 'First name is required'},
+                    ]">
                       <el-input v-model="formSignUp.firstname" autocomplete="off"></el-input>
                     </el-form-item>
-                    <el-form-item  class="form-item" label="Họ">
+                    <el-form-item prop="lastname" class="form-item" label="Họ"
+                    :rules="[
+                      { required: true, message: 'Last name is required'},
+                    ]">
                       <el-input v-model="formSignUp.lastname" autocomplete="off"></el-input>
                     </el-form-item>
-                    <el-form-item class="form-item" label="Username">
+                    <el-form-item prop="username" class="form-item" label="Username"
+                    :rules="[
+                      { required: true, message: 'Username is required'},
+                    ]">
                       <el-input v-model="formSignUp.username" autocomplete="off"></el-input>
                     </el-form-item>
-                    <el-form-item class="form-item" label="Số Điện Thoại">
+                    <el-form-item prop="phone" class="form-item" label="Số Điện Thoại"
+                    :rules="[
+                      { required: true, message: 'Phone is required'},
+                    ]">
                       <el-input v-model="formSignUp.phone" autocomplete="off"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="12">
-                    <el-form-item class="form-item" label="Email">
+                    <el-form-item prop="email" class="form-item" label="Email"
+                    :rules="[
+                      { required: true, message: 'Email is required'},
+                    ]">
                       <el-input type="email" v-model="formSignUp.email" autocomplete="off"></el-input>
                     </el-form-item>
-                    <el-form-item class="form-item" label="Mật Khẩu">
+                    <el-form-item prop="password" class="form-item" label="Mật Khẩu"
+                    :rules="[
+                      { required: true, message: 'Password is required'},
+                    ]">
                       <el-input type="password" v-model="formSignUp.password" autocomplete="off"></el-input>
                     </el-form-item>
-                    <el-form-item class="form-item" label="Địa Chỉ">
-                      <el-input v-model="formSignUp.address" autocomplete="off" @keyup.enter.native="signup"></el-input>
+                    <el-form-item prop="address" class="form-item" label="Địa Chỉ"
+                    :rules="[
+                      { required: true, message: 'Address is required'},
+                    ]">
+                      <el-input v-model="formSignUp.address" autocomplete="off" @keyup.enter.native="signup('formSignUp')"></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
-                <el-button type="danger" class="signin-button-form" @click="signup">Tạo tài khoản</el-button>
+                <el-button type="danger" class="signin-button-form" @click="signup('formSignUp')">Tạo tài khoản</el-button>
               </el-form>
               <div slot="footer" class="dialog-footer signup-footer">
                 <strong style="color: #2A2A2E">Bạn đã có tài khoản?</strong>
@@ -127,32 +154,62 @@ export default {
     },
   },
   methods: {
-    onChange(event) {
-      console.log(event)
+    signup(formName){
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          try {
+            this.$store.dispatch('ownerSignUp', this.formSignUp);
+            this.alertSignUpSuccess();
+            this.$refs[formName].resetFields();
+          }
+          catch(err) {
+            this.alertErr();
+          }
+        } else {
+          this.alertErr();
+        }
+      });
     },
-    signup(){
-      console.log("Sign Up:",this.formSignUp);
-      this.$store.dispatch('ownerSignUp', this.formSignUp);
-      this.formSignUp.firstname = '';
-      this.formSignUp.lastname = '';
-      this.formSignUp.username = '';
-      this.formSignUp.email = '';
-      this.formSignUp.password = '';
-      this.formSignUp.address = '';
-      this.formSignUp.phone = '';
+    async signin(formName){
+      this.$refs[formName].validate(async(valid) => {
+        if (valid) {
+          try {
+            await this.$store.dispatch("ownerSignIn", this.form);
+            this.alertSignInSuccess();
+            this.$router.push(`/dashboard/${this.curOwner.id}`);
+            this.$refs[formName].resetFields();
+          }
+          catch(err) {
+            this.alertErr();
+            this.$refs[formName].resetFields();
+          }
+        } else {
+          this.alertErr();
+        }
+      });
     },
-    async signin(){
-      try {
-        await this.$store.dispatch("ownerSignIn", this.form);
-        this.$router.push(`/dashboard/${this.curOwner.id}`);
-        this.form.username = '';
-        this.form.password = '';
-      }
-      catch (err){
-        console.log(err);
-      }
-    }
-  },
+    alertSignInSuccess() {
+      this.$message({
+        showClose: true,
+        message: "Đăng nhập thành công.",
+        type: "success"
+      });
+    },
+    alertErr() {
+      this.$message({
+        showClose: true,
+        message: "Đã có lỗi xảy ra, vui lòng thử lại.",
+        type: "error"
+      });
+    },
+    alertSignUpSuccess() {
+      this.$message({
+        showClose: true,
+        message: "Đăng ký thành công.",
+        type: "success"
+      });
+    },
+  }
 }
 </script>
 
@@ -237,6 +294,7 @@ a {
 .signup-footer{
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 /* Register Hotel */
@@ -304,6 +362,15 @@ a {
 }
 
 /* Responsive */
+@media (max-width: 767px) {
+  .signup-dialog {
+    width: 98%;
+    padding: 0 1%;
+  }
+  #signup-button-form {
+    max-height: 40px;
+  }
+}
 @media (min-width: 992px){
   .register-hotel{
     height: 534px;
@@ -342,6 +409,10 @@ a {
     font-size: 18px;
     width: 90%;
   }
+  .signup-dialog {
+    width: 90%;
+    padding: 0 5%;
+  }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -375,6 +446,10 @@ a {
     font-size: 18px;
     line-height: 1.4;
     margin-bottom: 20px;
+  }
+  .signup-dialog {
+    width: 90%;
+    padding: 0 5%;
   }
 }
 
