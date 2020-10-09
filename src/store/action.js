@@ -73,7 +73,6 @@ export const actions = {
         })
         .catch((err) => {
           reject(err);
-          alert('Something went wrong! Please check your username or password!');
         });
     });
   },
