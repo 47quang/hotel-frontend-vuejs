@@ -3,7 +3,7 @@
     <CusNavbar></CusNavbar>
     <SearchBar></SearchBar>
     <Info :idHotel="idHotel"></Info>
-    <Room></Room>
+    <Room v-for="room in hotel.rooms" :key="room.id" :room="room"></Room>
   </div>
    
 </template>
@@ -19,8 +19,13 @@ export default {
       idHotel: this.$route.params.id
     }
   },
-  created(){
-    console.log(this.$route.params.id)
+  async created(){
+    await this.$store.dispatch('fetchHotelById', this.idHotel);
+  },
+  computed: {
+    hotel(){
+      return this.$store.state.hotelById;
+    }
   },
   components: {
     CusNavbar,

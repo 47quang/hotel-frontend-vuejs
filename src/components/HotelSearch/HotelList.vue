@@ -53,7 +53,7 @@
                                         </div>
                                         
                                         <div class="hotelList-price">
-                                            <p style="color: sivler">Giá mỗi đêm rẻ nhất từ </p>{{hotel.minPrice}} VND</div>
+                                            <p style="color: sivler">Giá mỗi đêm rẻ nhất từ </p>{{hotel.minPrice | formatCurrency}}</div>
                                     </el-col>
                             </div>
                             
@@ -103,16 +103,9 @@ export default {
             hotelList:this.fetchHotel
         }
     },
-
-    // created(){
-    //     this.$store.dispatch('fetchDistrict',this.fetchHotel[0].provinceId),
-    //     this.$store.dispatch('fetchWards', this.districtById)
-    // },
-    // mounted() {
-    //     console.log(this.districtById)
-    // },
     methods: {
-        detailHotel(id) {
+        async detailHotel(id) {
+            await this.$store.dispatch('fetchHotelById', id);
             this.$router.push(`/details/${id}`)
         }
     },
@@ -120,12 +113,6 @@ export default {
         fetchHotel() {
             return this.$store.state.hotel                
         },
-        // districtById() {
-        //     return this.$store.state.districtById
-        // },
-        // wardById() {
-        //     return this.$store.state.wardById
-        // }
     }
 }
 </script>
