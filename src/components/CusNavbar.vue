@@ -26,7 +26,6 @@
     },
     computed:{
       fullName(){
-        console.log('alo', this.$store.state.myCustomer.fullname)
         return this.$store.state.myCustomer.fullname
       }
     },
