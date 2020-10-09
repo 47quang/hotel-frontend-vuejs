@@ -5,12 +5,13 @@
       </div>
       <div class=button>
         <router-link class="owner" to="/owner" > Đăng ký cho thuê nhà</router-link>
-        <div style="display: inline-block" v-if="!fullName">
+        <div style="display: inline-block" v-if="!myCustomer.fullname">
           <Login class=login-component></Login>
           <Register class=register-component></Register>
         </div>
-        <div style="display: inline-block" v-else>
-          {{fullName}}
+        <div style="display: inline-block; font-weight:600" v-else>
+          {{myCustomer.fullname}}
+          <el-button @click="signOut" style="margin: 0 10px" type="info">Đăng xuất</el-button>
         </div>
 
       </div>
@@ -25,11 +26,16 @@
       Register, Login
     },
     computed:{
-      fullName(){
-        console.log('alo', this.$store.state.myCustomer.fullname)
-        return this.$store.state.myCustomer.fullname
+      myCustomer(){
+        return this.$store.state.myCustomer
       }
     },
+    methods: {
+      signOut() {
+        this.$store.dispatch('customerSignOut');
+        this.$router.push('/')
+      }
+    }
     
   };
 </script>

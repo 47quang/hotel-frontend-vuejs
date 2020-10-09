@@ -76,7 +76,7 @@
                                         <div class="room-dropdown">1</div>
                                     </el-col>
                                     <el-col :span="5" class="ChildRoom-book-content">
-                                        <el-button type="primary" class="reverseNow">Đặt trước</el-button>
+                                        <el-button type="primary" class="reverseNow">Xem Chi Tiết</el-button>
                                         
                                     </el-col>
                                 </el-row>
@@ -112,7 +112,7 @@ export default {
         border-right: 1px solid rgb(221,223,226)
     }
     .reverseNow {
-       width: 85%;
+       width: 70%;
        margin: 10px 0;
     }
     .ChildRoom-book-content {
