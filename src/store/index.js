@@ -7,6 +7,8 @@ Vue.use(Vuex);
 const localUser = JSON.parse(localStorage.getItem('user'));
 const localHotels = JSON.parse(localStorage.getItem('hotels'));
 const localCustomer = JSON.parse(localStorage.getItem('customer'));
+const orderLines = JSON.parse(localStorage.getItem('orderLine'));
+
 export default new Vuex.Store({
   state: {
     BASE_URL,
@@ -34,6 +36,7 @@ export default new Vuex.Store({
     roomById: {},
     reviews: {},
     customerById: {},
+    orderLines,
   },
   mutations,
   actions,

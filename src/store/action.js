@@ -376,7 +376,20 @@ export const actions = {
       .post(`${BASE_URL}/api.hotel/${payload.idHotel}/review`, payload.review)
       .then(resp => resp.data)
       .then(body => {
-        console.log(body.data)
+        resolve(body.data);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },
+  fetchRoomDetail(ctx, payload) {
+    const {id, start, end} = payload;
+    return new Promise((resolve, reject) => {
+      client
+      .get(`${BASE_URL}/api.room/${id}?start=${start}&end=${end}`)
+      .then(resp => resp.data)
+      .then(body => {
         resolve(body.data);
       })
       .catch(err => {
