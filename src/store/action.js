@@ -362,5 +362,19 @@ export const actions = {
         reject(err);
       })
     })
+  },
+  fetchRoomDetail(ctx, payload) {
+    const {id, start, end} = payload;
+    return new Promise((resolve, reject) => {
+      client
+      .get(`${BASE_URL}/api.room/${id}?start=${start}&end=${end}`)
+      .then(resp => resp.data)
+      .then(body => {
+        resolve(body.data);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
   }
 };

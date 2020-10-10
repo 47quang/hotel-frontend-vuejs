@@ -6,6 +6,7 @@ Vue.use(Vuex);
 
 const localUser = JSON.parse(localStorage.getItem('user'));
 const localHotels = JSON.parse(localStorage.getItem('hotels'));
+const orderLines = JSON.parse(localStorage.getItem('orderLine'));
 
 export default new Vuex.Store({
   state: {
@@ -31,7 +32,8 @@ export default new Vuex.Store({
     provinceById: {},
     attributes: {},
     roomsByHotelId: {},
-    roomById: {}
+    roomById: {},
+    orderLines,
   },
   mutations,
   actions,
