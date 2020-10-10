@@ -19,11 +19,17 @@ import DashboardRoomListing from '../components/Dashboard/DashboardRoomListing'
 import DashboardUpdateRoom from '../components/Dashboard/DashboardUpdateRoom'
 import DashboardUpdateHotel from '../components/Dashboard/DashboardUpdateHotel'
 import AddToCart from '../views/AddToCart'
+import CustomerReviews from '../components/CustomerReviews'
 
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/customer-review',
+    name:  'CustomerReviews',
+    component: CustomerReviews
+  },
   {
     path: '/add-to-cart/:id',
     name:  'AddToCart',

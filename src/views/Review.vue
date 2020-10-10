@@ -8,6 +8,17 @@
                     <div class=review-description>
                             <el-form ref="form" :model="review">
                                 <el-form-item>
+                                <h4 class="form__content-title">Chủ đề bài đăng</h4>
+                                <el-select v-model="review.tagId" placeholder="Select">
+                                    <el-option
+                                    v-for="tag in tags"
+                                    :key="tag.id"
+                                    :label="tag.name"
+                                    :value="tag.id">
+                                    </el-option>
+                                </el-select>
+                                </el-form-item>
+                                <el-form-item>
                                 <h4 class="form__content-title">Nội dung bài đăng</h4>
                                 <el-card shadow="hover">
                                     <el-input type="textarea" :rows="4"  maxlength="5000" show-word-limit v-model="review.content"></el-input>
@@ -64,15 +75,23 @@ export default {
                 content:'',
                 rating:null,
                 images: [],
-                tagId:3
+                tagId:null
             },
             dialogImageUrl: '',
             dialogVisible: false,
             disabled: false,
         }
     },
+    created() {
+        this.$store.dispatch('fetchTags')
+    },
     components: {
         CusNavBar
+    },
+    computed: {
+        tags() {
+            return this.$store.state.tags
+        }
     },
     methods: {
         handlePictureCardPreview(file) {
@@ -125,8 +144,9 @@ export default {
                 showClose: true,
                 message: 'Đã có lỗi xảy ra, vui lòng thử lại',
                 type: 'error'
-        });
-    },
+            });
+        },
+        
     }
     
 }

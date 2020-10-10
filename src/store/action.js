@@ -412,13 +412,13 @@ export const actions = {
         })
     })
   },
-  fetchCustomerById(ctx, payload) {
+  fetchCustomer(ctx) {
     return new Promise((resolve, reject) => {
       client
-        .get(`${BASE_URL}/api.customer/${payload}`)
+        .get(`${BASE_URL}/api.customer`)
         .then(resp => resp.data)
         .then(body => {
-          ctx.commit('FETCH_CUSTOMER_BY_ID', body.data)
+          ctx.commit('FETCH_CUSTOMER', body.data)
           resolve(body.data);
         })
         .catch(err => {
@@ -427,4 +427,48 @@ export const actions = {
     })
   },
  
+  fetchTags(ctx) {
+    return new Promise((resolve, reject) => {
+      client
+        .get(`${BASE_URL}/api.tag`)
+        .then(resp => resp.data)
+        .then(body => {
+          ctx.commit('FETCH_TAGS', body.data)
+          resolve(body.data);
+        })
+        .catch(err => {
+          reject(err);
+        })
+    })
+  },
+
+  fetchReviewsByCustomer(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+        .get(`${BASE_URL}/api.review?customerId=${payload}`)
+        .then(resp => resp.data)
+        .then(body => {
+          ctx.commit('FETCH_REVIEWS_BY_CUSTOMER', body.data);
+          resolve(body);
+        })
+        .catch(err => {
+          reject(err);
+        })
+    })
+  },
+
+  fetchAllHotels(ctx) {
+    return new Promise((resolve, reject) => {
+      client
+        .get(`${BASE_URL}/api.hotel`)
+        .then(resp => resp.data)
+        .then(body => {
+          ctx.commit('FETCH_ALL_HOTELS', body.data)
+          resolve(body);
+        })
+        .catch(err => {
+          reject(err);
+        })
+    })
+  },
 };

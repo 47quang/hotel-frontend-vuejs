@@ -3,8 +3,9 @@
         <el-main>
             <el-row class="review-row">
                 <div class="review-header">
-                     <div style="font-size:24px, font-weight:600">Bài đánh giá Khách sạn từ du khách</div>
-                    <el-button @click="postReview(idHotel)" type="warning">Đăng bài review</el-button>
+                     <div class="review-title" style="font-size:24px, font-weight:600">Bài đánh giá Khách sạn từ du khách</div>
+                    <el-button @click="updateReview" type="success">Bài review của tôi</el-button>
+                    <el-button @click="postReview(idHotel)" type="primary">Đăng bài review</el-button>
                 </div>
                 <div v-for="review of reviews" :key="review.id" class="review-body">
                     <el-col :span="6" class="review-detail">
@@ -12,7 +13,7 @@
                         <div class="review-customer">Khách: {{reviewForm.customerName}}</div>
                     </el-col>
                     <el-col :span="18" class="review-content">
-                        <div class="review-content-tag">{{reviewForm.tag}}</div>
+                        <div class="review-content-tag">"{{review.tag.name}}"</div>
                         <div class="review-content-body">
                             {{review.content}}
                         </div>
@@ -42,22 +43,40 @@ export default {
     methods: {
         postReview(id) {
             this.$router.push(`/review/${id}`)
+        },
+        updateReview() {
+            this.$router.push(`/customer-review`)
         }
+
     },
     created() {
-        
-        this.$store.dispatch('fetchReviews',this.idHotel)
+        // this.$store.dispatch('fetchCustomer')
+        this.$store.dispatch('fetchReviews',this.idHotel);
+        this.$store.dispatch('fetchTags')
     },
     computed: {
         reviews() {
             return this.$store.state.reviews
+            .map(r => {
+                r.tag = this.tags.find(t => t.id == r.tagId)
+                return r
+            })
         },
-        
+        tags() {
+            return this.$store.state.tags
+        },
+        // customer() {
+        //     return this.$store.state.customer
+        // } 
     }
 }
 </script>
 
 <style scoped>
+    .review-title {
+        font-weight: 600;
+        font-size: 24px
+    }
     .review-content-tag {
         font-weight: 600;
         font-size: 18px
