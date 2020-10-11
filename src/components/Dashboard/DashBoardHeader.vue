@@ -25,20 +25,25 @@
       </el-menu-item>
       <el-menu-item index="2">
         <router-link :to="`/dashboard/${curOwner.id}`"
-          ><i class="el-icon-odometer"></i> Tổng quan</router-link
+          ><i class="el-icon-odometer"></i> Tổng Quan</router-link
         >
       </el-menu-item>
       <el-menu-item index="3">
         <router-link :to="`/dashboard/${curOwner.id}/listing`"
-          ><i class="el-icon-s-home"></i> Chỗ ở</router-link
+          ><i class="el-icon-s-home"></i> Chỗ Ở</router-link
         >
       </el-menu-item>
       <el-menu-item index="4">
-        <router-link :to="`/dashboard/${curOwner.id}/profile`"
-          ><i class="el-icon-s-custom"></i> Hồ sơ</router-link
+        <router-link :to="`/dashboard/${curOwner.id}/orders`"
+          ><i class="el-icon-s-order"></i> Đơn Hàng</router-link
         >
       </el-menu-item>
-      <el-menu-item index="5" @click="telegram.dialogVisible = true">
+      <el-menu-item index="5">
+        <router-link :to="`/dashboard/${curOwner.id}/profile`"
+          ><i class="el-icon-s-custom"></i> Hồ Sơ</router-link
+        >
+      </el-menu-item>
+      <el-menu-item index="6" @click="telegram.dialogVisible = true">
         <i class="el-icon-s-promotion"></i>
         Telegram
       </el-menu-item>
