@@ -81,7 +81,7 @@
                   <el-dialog title="Lịch đặt phòng" :visible.sync="dialogDetailVisible" width="50%">
                     <el-row>
                       <el-calendar>
-                        <template slot="dateCell" slot-scope="{date, data }">
+                        <template slot="dateCell" slot-scope="{ date, data }">
                           <div :class="data.isSelected ? 'is-selected' : ''">
                             <div>
                               {{
@@ -149,6 +149,8 @@
 </template>
 
 <script>
+import { v4 as uuidv4 } from 'uuid';
+
 export default {
   props: ['room'],
   data() {
@@ -217,16 +219,18 @@ export default {
       const start = new Date(Date.parse(this.datePicker2[0])).toDateString();
       const end = new Date(Date.parse(this.datePicker2[1])).toDateString();
       const payload = {
+        hotelId: this.roomDetail.hotelId,
         roomId: this.roomDetail.id,
         name: this.roomDetail.name,
         price: this.roomDetail.salePrice,
         start,
         end,
         quantity: this.quantity,
+        id: uuidv4(),
       };
       const orderLine = JSON.parse(localStorage.getItem('orderLine')) || [];
       orderLine.push(payload);
-      localStorage.setItem('orderLine', JSON.stringify(orderLine));
+      this.$store.commit('UPDATE_ORDERLINE', orderLine);
     },
     renderCellCalender(month, day) {
       const transaction = this.roomDetail.transaction.find((t) => {

@@ -5,10 +5,11 @@
         <el-input
           placeholder="Tìm Theo Tên Khách Hàng"
           suffix-icon="el-icon-search"
-          v-model="search">
+          v-model="search"
+        >
         </el-input>
       </el-col>
-      <el-col :span="6"/>
+      <el-col :span="6" />
       <el-col :span="12" class="order-filter">
         <el-dropdown @command="handleCommand">
           <span class="el-dropdown-link">
@@ -21,37 +22,54 @@
         </el-dropdown>
       </el-col>
     </el-row>
-    <el-divider class="order-title"><h2 >Danh Sách Đơn Hàng</h2></el-divider>
+    <el-divider class="order-title"><h2>Danh Sách Đơn Hàng</h2></el-divider>
     <div class="order-list" v-for="order in filteredOrders" :key="order.id">
       <el-card class="order-card">
         <div slot="header" class="clearfix">
-          <span class="order-card__title">[{{order.id}}] {{order.fullname}}</span>
+          <span class="order-card__title">[{{ order.id }}] {{ order.fullname }}</span>
         </div>
         <div class="order-card__body">
           <div>
             <span class="order-card__content">Email:</span>
-            <span>{{order.email}}</span>
+            <span>{{ order.email }}</span>
           </div>
           <div class="order-card__content-description">
             <span class="order-card__content">Phone:</span>
-            <span>{{order.phone}}</span>
+            <span>{{ order.phone }}</span>
           </div>
           <div class="order-card__content-description">
             <span class="order-card__content">Đơn tạo:</span>
-            <span>{{order.createdAt | formatTime}},</span>
-            <span> {{order.createdAt | formatDate}}</span>
+            <span>{{ order.createdAt | formatTime }},</span>
+            <span> {{ order.createdAt | formatDate }}</span>
           </div>
           <div class="order-card__content-description">
             <span class="order-card__content">Lần cập nhật mới nhất:</span>
-            <span>{{order.updatedAt | formatTime}},</span>
-            <span> {{order.updatedAt | formatDate}}</span>
+            <span>{{ order.updatedAt | formatTime }},</span>
+            <span> {{ order.updatedAt | formatDate }}</span>
           </div>
           <div class="order-card__content-description">
             <span class="order-card__content">Trạng Thái:</span>
-            <el-tag v-if="order.status === 'new'" class="hotel-card__tag" :type="'success'" effect="dark"><span class="order-card__content-title">Mới</span></el-tag>
-            <el-tag v-else class="hotel-card__tag" :type="'warning'" effect="dark"><span class="order-card__content-title">Done</span></el-tag>
+            <el-tag
+              v-if="order.status === 'new'"
+              class="hotel-card__tag"
+              :type="'success'"
+              effect="dark"
+              ><span class="order-card__content-title">Mới</span></el-tag
+            >
+            <el-tag
+              v-else-if="order.status === 'done'"
+              class="hotel-card__tag"
+              :type="'warning'"
+              effect="dark"
+              ><span class="order-card__content-title">Hoàn thành</span></el-tag
+            >
+            <el-tag v-else class="hotel-card__tag" :type="'danger'" effect="dark"
+              ><span class="order-card__content-title">Hủy</span></el-tag
+            >
           </div>
-          <el-button class="order-detail" type="text" @click="fetchOrder(order.id)">Chi Tiết Đơn Hàng</el-button>
+          <el-button class="order-detail" type="text" @click="fetchOrder(order.id)"
+            >Chi Tiết Đơn Hàng</el-button
+          >
 
           <el-dialog
             title="Chi Tiết Đơn Hàng"
@@ -60,55 +78,75 @@
           >
             <div class="order__modal">
               <div class="order-card__content-description">
-                <el-tag class="hotel-card__tag" :type="'warning'" effect="dark"><span class="order-card__content-title">Đơn tạo</span></el-tag>
-                <span> {{orderById.createdAt | formatTime}},</span>
-                <span> {{orderById.createdAt | formatDate}}</span>
+                <el-tag class="hotel-card__tag" :type="'warning'" effect="dark"
+                  ><span class="order-card__content-title">Đơn tạo</span></el-tag
+                >
+                <span> {{ orderById.createdAt | formatTime }},</span>
+                <span> {{ orderById.createdAt | formatDate }}</span>
               </div>
               <div class="order-card__content-description">
-                <el-tag class="hotel-card__tag" :type="'success'" effect="dark"><span class="order-card__content-title">Cập nhật mới nhất</span></el-tag>
-                <span> {{orderById.updatedAt | formatTime}},</span>
-                <span> {{orderById.updatedAt | formatDate}}</span>
+                <el-tag class="hotel-card__tag" :type="'success'" effect="dark"
+                  ><span class="order-card__content-title">Cập nhật mới nhất</span></el-tag
+                >
+                <span> {{ orderById.updatedAt | formatTime }},</span>
+                <span> {{ orderById.updatedAt | formatDate }}</span>
               </div>
               <div class="order-card__content-description">
-                <el-tag class="hotel-card__tag" effect="dark"><span class="order-card__content-title">Email</span></el-tag>
-                <span> {{order.email}}</span>
+                <el-tag class="hotel-card__tag" effect="dark"
+                  ><span class="order-card__content-title">Email</span></el-tag
+                >
+                <span> {{ order.email }}</span>
               </div>
               <div class="order-card__content-description">
-                <el-tag class="hotel-card__tag" :type="'danger'" effect="dark"><span class="order-card__content-title">Phone</span></el-tag>
-                <span> {{order.phone}}</span>
+                <el-tag class="hotel-card__tag" :type="'danger'" effect="dark"
+                  ><span class="order-card__content-title">Phone</span></el-tag
+                >
+                <span> {{ order.phone }}</span>
               </div>
               <el-table
-                :data="tableData"
+                :data="orderById.orderLines"
                 stripe
                 style="width: 100%"
-                class="order-card__content-description">
-                <el-table-column
-                  prop="date"
-                  label="Date"
-                  width="180">
-                   <template slot-scope="scope">
+                class="order-card__content-description"
+              >
+                <el-table-column prop="id" label="ID" width="60"> </el-table-column>
+                <el-table-column prop="start" label="Date" width="240">
+                  <template slot-scope="scope">
                     <i class="el-icon-time"></i>
-                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                    <span style="margin-left: 10px">{{ scope.row.start | formatDate }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column
-                  prop="name"
-                  label="Name"
-                  width="180">
+                <el-table-column prop="end" label="Date" width="240">
+                  <template slot-scope="scope">
+                    <i class="el-icon-time"></i>
+                    <span style="margin-left: 10px">{{ scope.row.end | formatDate }}</span>
+                  </template>
                 </el-table-column>
-                <el-table-column
-                  prop="address"
-                  label="Address">
-                </el-table-column>
+                <el-table-column prop="quantity" label="Số lượng" width="150"> </el-table-column>
+                <el-table-column prop="price" label="Giá" width="150"> </el-table-column>
               </el-table>
             </div>
-            
+
             <span v-if="checkOrderDone(orderById.status)" slot="footer" class="dialog-footer">
-              <el-button class="order-detail__btn--cancel order-detail__btn" @click="cancelOrder(orderById)">Huỷ Đơn</el-button>
-              <el-button class="order-detail__btn--confirm order-detail__btn" type="primary" @click="confirmOrder(orderById)">Xác Nhận Đơn Hàng</el-button>
+              <el-button
+                class="order-detail__btn--cancel order-detail__btn"
+                @click="cancelOrder(orderById)"
+                >Huỷ Đơn</el-button
+              >
+              <el-button
+                class="order-detail__btn--confirm order-detail__btn"
+                type="primary"
+                @click="confirmOrder(orderById)"
+                >Xác Nhận Đơn Hàng</el-button
+              >
             </span>
             <span v-else slot="footer" class="dialog-footer">
-              <el-button class="order-detail order-detail__btn--dialog" type="text" @click="dialogVisible = false">Đơn Hàng Đã Xác Nhận</el-button>
+              <el-button
+                class="order-detail order-detail__btn--dialog"
+                type="text"
+                @click="dialogVisible = false"
+                >Đơn Hàng Đã Xác Nhận</el-button
+              >
             </span>
           </el-dialog>
         </div>
@@ -122,24 +160,7 @@ export default {
     return {
       search: '',
       dialogVisible: false,
-      tableData: [{
-        date: '2016-05-03',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles'
-      }, {
-        date: '2016-05-02',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles'
-      }, {
-        date: '2016-05-04',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles'
-      }, {
-        date: '2016-05-01',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles'
-      }]
-    }
+    };
   },
   computed: {
     orders() {
@@ -149,49 +170,50 @@ export default {
       return this.$store.state.orderById;
     },
     filteredOrders() {
-      return (Array.from(this.orders) || []).filter(order => {
-        return order.fullname.toLowerCase().includes(this.search.toLowerCase())
-      })
-    }
+      return (Array.from(this.orders) || []).filter((order) => {
+        return order.fullname.toLowerCase().includes(this.search.toLowerCase());
+      });
+    },
   },
   methods: {
     async fetchOrder(orderId) {
       await this.$store.dispatch('fetchOrderById', orderId);
       this.dialogVisible = true;
     },
-    async confirmOrder(order){
+    async confirmOrder(order) {
       try {
-        if (order.status == "done") {
+        if (order.status == 'done') {
           this.alertCheckOrderDone();
-        }
-        else {
-          await this.$store.dispatch('cancelOrder', order.id);
+        } else {
+          await this.$store.dispatch('confirmOrder', order.id);
+          (this.orders.find((o) => o.id === order.id) || {}).status = 'done';
           this.dialogVisible = false;
           this.alertSuccess();
         }
-      }
-      catch(err) {
+      } catch (err) {
         this.alertErr();
         this.dialogVisible = false;
       }
     },
     cancelOrder(order) {
-      if (order.status == "done") {
+      if (order.status == 'done') {
         this.alertCheckOrderDone();
-      }
-      else {
+      } else {
         this.$confirm('Hủy đơn hàng. Tiếp tục?', 'Cảnh Báo', {
           confirmButtonText: 'OK',
           cancelButtonText: 'Hủy bỏ',
           type: 'warning',
         })
-        .then(() => {
-          this.$store.dispatch('cancelOrder', order.id);
-          this.dialogVisible = false;
-        })
-        .catch(() => {
-          return;
-        });
+          .then(() => {
+            this.$store.dispatch('cancelOrder', order.id);
+          })
+          .then(() => {
+            this.dialogVisible = false;
+            (this.orders.find((o) => o.id === order.id) || {}).status = 'cancel';
+          })
+          .catch(() => {
+            return;
+          });
       }
     },
     alertErr() {
@@ -213,17 +235,16 @@ export default {
     },
     handleCommand(command) {
       if (command == 'new') {
-        console.log('command', command)
+        console.log('command', command);
+      } else {
+        console.log('command', command);
       }
-      else {
-        console.log('command', command)
-      }
-    }
+    },
   },
   async mounted() {
     this.$store.dispatch('fetchRoomOrdersByHotelId', this.$route.params.id);
-  }
-}
+  },
+};
 </script>
 <style scoped>
 .manage-order {
@@ -257,7 +278,7 @@ export default {
 }
 .order-card__tag {
   display: inline;
-  padding: .2em .6em .3em;
+  padding: 0.2em 0.6em 0.3em;
   font-size: 15px;
   font-weight: 700;
   line-height: 1;
@@ -265,7 +286,7 @@ export default {
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
-  border-radius: .25em;
+  border-radius: 0.25em;
 }
 .order-card__content {
   font-size: 16px;
@@ -332,7 +353,7 @@ export default {
   border-color: #1174a6;
 }
 .order__modal {
-  padding: 0 10%;
+  padding: 0 5%;
 }
 .order-detail__btn--dialog {
   float: none;
