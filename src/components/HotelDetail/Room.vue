@@ -218,6 +218,7 @@ export default {
       const end = new Date(Date.parse(this.datePicker2[1])).toDateString();
       const payload = {
         roomId: this.roomDetail.id,
+        name: this.roomDetail.name,
         price: this.roomDetail.salePrice,
         start,
         end,
