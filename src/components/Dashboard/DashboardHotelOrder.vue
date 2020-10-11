@@ -11,19 +11,19 @@
       </el-col>
       <el-col :span="6" />
       <el-col :span="12" class="order-filter">
-        <el-dropdown @command="handleCommand">
-          <span class="el-dropdown-link">
-            Trạng Thái Đơn<i class="el-icon-arrow-down el-icon--right"></i>
-          </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="new">New</el-dropdown-item>
-            <el-dropdown-item command="done" divided>Done</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
+        <el-select v-model="value" filterable placeholder="Select">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
       </el-col>
     </el-row>
     <el-divider class="order-title"><h2>Danh Sách Đơn Hàng</h2></el-divider>
-    <div class="order-list" v-for="order in filteredOrders" :key="order.id">
+    <div class="order-list" v-for="order in filterOrderByStatus" :key="order.id">
       <el-card class="order-card">
         <div slot="header" class="clearfix">
           <span class="order-card__title">[{{ order.id }}] {{ order.fullname }}</span>
@@ -160,6 +160,25 @@ export default {
     return {
       search: '',
       dialogVisible: false,
+      options: [
+        {
+          label: 'Mới',
+          value: 'new'
+        },
+        {
+          label: 'Hoàn thành',
+          value: 'done'
+        },
+        {
+          label: 'Hủy',
+          value: 'cancel'
+        },
+        {
+          label: 'Tất cả',
+          value: 'all'
+        },
+      ],
+      value: 'all'
     };
   },
   computed: {
@@ -174,6 +193,10 @@ export default {
         return order.fullname.toLowerCase().includes(this.search.toLowerCase());
       });
     },
+    filterOrderByStatus(){
+      if (this.value == 'all') return (Array.from(this.orders) || []);
+      return (Array.from(this.orders) || []).filter(o => o.status == this.value);
+    }
   },
   methods: {
     async fetchOrder(orderId) {
