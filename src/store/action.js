@@ -471,4 +471,58 @@ export const actions = {
         })
     })
   },
+  fetchRoomOrdersByHotelId(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .get(`${BASE_URL}/api.order?hotelId=${payload}`)
+      .then(resp => resp.data)
+      .then(body => {
+        ctx.commit('FETCH_ROOM_ORDERS_BY_HOTEL_ID', body.data);
+        resolve(body.data);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },
+  fetchOrderById(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .get(`${BASE_URL}/api.order/${payload}`)
+      .then(resp => resp.data)
+      .then(body => {
+        ctx.commit('FETCH_ORDER_BY_ID', body.data);
+        resolve(body.data);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },
+  confirmOrder(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .put(`${BASE_URL}/api.order/${payload}/complete`)
+      .then(resp => resp.data)
+      .then(body => {
+        resolve(body.data);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },
+  cancelOrder(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .put(`${BASE_URL}/api.order/${payload}/cancel`)
+      .then(resp => resp.data)
+      .then(body => {
+        resolve(body.data);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  }
 };

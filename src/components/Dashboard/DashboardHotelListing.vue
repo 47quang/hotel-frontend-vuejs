@@ -46,7 +46,8 @@
               </el-carousel>
             </div>
           </div>
-          <router-link :to="`/hotel/${hotel.id}/room`" class="edit-hotel">Chỉnh Sửa Thông Tin</router-link>
+          <router-link v-if="checkPath()" :to="`/hotel/${hotel.id}/room`" class="edit-hotel">Chỉnh Sửa Thông Tin</router-link>
+          <router-link v-else :to="`/hotel/${hotel.id}/orders`" class="edit-hotel">Chi Tiết Khách Sạn</router-link>
         </el-card>
       </div>
     </div>
@@ -114,6 +115,9 @@ export default {
     isHotelEmpty() {
       if (this.$store.state.ownerHotels.length == 0) return true;
       else return false;
+    },
+    checkPath() {
+      return this.$route.path === `dashboard/${this.curOwner.id}/listing`
     }
   },
   async mounted() {

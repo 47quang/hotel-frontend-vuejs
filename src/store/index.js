@@ -32,7 +32,9 @@ export default new Vuex.Store({
     orderLines,
     tags: [],
     reviewsByCustomer:[],
-    allHotels:[]
+    allHotels:[],
+    roomOrdersByHotelId: {},
+    orderById: {}
   },
   mutations,
   actions,

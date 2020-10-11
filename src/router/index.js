@@ -21,6 +21,8 @@ import DashboardUpdateHotel from '../components/Dashboard/DashboardUpdateHotel'
 import AddToCart from '../views/AddToCart'
 import CustomerReviews from '../components/CustomerReviews'
 
+import DashboardManageOrder from '../components/Dashboard/DashboardManageOrder'
+import DashboardHotelOrder from '../components/Dashboard/DashboardHotelOrder'
 
 Vue.use(VueRouter)
 
@@ -70,6 +72,10 @@ const routes = [
       {
         path: 'hotels',
         component: DashboardAddHotel
+      },
+      {
+        path: 'orders',
+        component: DashboardManageOrder
       }
     ]
   },
@@ -123,10 +129,13 @@ const routes = [
       {
         path: 'update',
         component: DashboardUpdateHotel
+      },
+      {
+        path: 'orders',
+        component: DashboardHotelOrder
       }
     ]
   }
-
 ]
 
 const router = new VueRouter({
