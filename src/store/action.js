@@ -31,11 +31,29 @@ export const actions = {
         .then((body) => {
           ctx.commit('SIGN_IN', body.data.user);
           localStorage.setItem('accessToken', JSON.stringify(body.data.accessToken));
+          localStorage.setItem('customer', JSON.stringify(body.data.user));
           resolve(body);
         })
         .catch((err) => {
           reject(err);
           alert('Your username was wrong! Please re-try');
+        });
+    });
+  },
+    ownerSignIn(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+        .post(`${BASE_URL}/api.user/login`, payload)
+        .then((resp) => resp.data)
+        .then((body) => {
+          ctx.commit('OWNER_SIGN_IN', body.data.user);
+          localStorage.setItem('accessToken', JSON.stringify(body.data.accessToken));
+          localStorage.setItem('user', JSON.stringify(body.data.user));
+          resolve(body);
+        })
+        .catch((err) => {
+          reject(err);
+          alert('Something went wrong! Please check your username or password!');
         });
     });
   },
@@ -60,21 +78,10 @@ export const actions = {
   async ownerSignUp(ctx, payload) {
     await axios.post(`${BASE_URL}/api.user/register`, payload);
   },
-  ownerSignIn(ctx, payload) {
-    return new Promise((resolve, reject) => {
-      client
-        .post(`${BASE_URL}/api.user/login`, payload)
-        .then((resp) => resp.data)
-        .then((body) => {
-          ctx.commit('OWNER_SIGN_IN', body.data.user);
-          localStorage.setItem('accessToken', JSON.stringify(body.data.accessToken));
-          localStorage.setItem('user', JSON.stringify(body.data.user));
-          resolve(body);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
+  customerSignOut(ctx) {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('customer');
+    ctx.commit('CUSTOMER_SIGN_OUT');
   },
   ownerSignOut(ctx) {
     localStorage.removeItem('accessToken');
@@ -363,6 +370,19 @@ export const actions = {
       })
     })
   },
+  postReview(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .post(`${BASE_URL}/api.hotel/${payload.idHotel}/review`, payload.review)
+      .then(resp => resp.data)
+      .then(body => {
+        resolve(body.data);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },
   fetchRoomDetail(ctx, payload) {
     const {id, start, end} = payload;
     return new Promise((resolve, reject) => {
@@ -376,5 +396,79 @@ export const actions = {
         reject(err);
       })
     })
-  }
+  },
+  fetchReviews(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+        .get(`${BASE_URL}/api.review?hotelId=${payload}`)
+        .then(resp => resp.data)
+        .then(body => {
+          console.log(body.data)
+          ctx.commit('FETCH_REVIEWS', body.data);
+          resolve(body);
+        })
+        .catch(err => {
+          reject(err);
+        })
+    })
+  },
+  fetchCustomer(ctx) {
+    return new Promise((resolve, reject) => {
+      client
+        .get(`${BASE_URL}/api.customer`)
+        .then(resp => resp.data)
+        .then(body => {
+          ctx.commit('FETCH_CUSTOMER', body.data)
+          resolve(body.data);
+        })
+        .catch(err => {
+          reject(err);
+        })
+    })
+  },
+ 
+  fetchTags(ctx) {
+    return new Promise((resolve, reject) => {
+      client
+        .get(`${BASE_URL}/api.tag`)
+        .then(resp => resp.data)
+        .then(body => {
+          ctx.commit('FETCH_TAGS', body.data)
+          resolve(body.data);
+        })
+        .catch(err => {
+          reject(err);
+        })
+    })
+  },
+
+  fetchReviewsByCustomer(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+        .get(`${BASE_URL}/api.review?customerId=${payload}`)
+        .then(resp => resp.data)
+        .then(body => {
+          ctx.commit('FETCH_REVIEWS_BY_CUSTOMER', body.data);
+          resolve(body);
+        })
+        .catch(err => {
+          reject(err);
+        })
+    })
+  },
+
+  fetchAllHotels(ctx) {
+    return new Promise((resolve, reject) => {
+      client
+        .get(`${BASE_URL}/api.hotel`)
+        .then(resp => resp.data)
+        .then(body => {
+          ctx.commit('FETCH_ALL_HOTELS', body.data)
+          resolve(body);
+        })
+        .catch(err => {
+          reject(err);
+        })
+    })
+  },
 };

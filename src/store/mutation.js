@@ -2,6 +2,9 @@ export const mutations = {
   SIGN_IN(state, payload) {
     state.myCustomer = payload;
   },
+  CUSTOMER_SIGN_OUT(state) {
+    state.myCustomer = {}
+  },
   OWNER_SIGN_IN(state, payload) {
     state.curOwner = payload;
   },
@@ -47,5 +50,20 @@ export const mutations = {
   },
   FETCH_ROOM_BY_ID(state, payload) {
     state.roomById = payload;
+  },
+  FETCH_REVIEWS(state, payload) {
+    state.reviews = payload
+  },
+  FETCH_CUSTOMER(state, payload) {
+    state.customer = payload
+  },
+  FETCH_TAGS(state, payload) {
+    state.tags = payload
+  },
+  FETCH_REVIEWS_BY_CUSTOMER(state, payload) {
+    state.reviewsByCustomer = payload
+  },
+  FETCH_ALL_HOTELS(state, payload) {
+    state.allHotels = payload
   }
 }

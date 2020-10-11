@@ -5,8 +5,11 @@
         <el-dialog class="dialog-register"  :visible.sync="dialogFormVisible">
           <el-form :model="form">
             <h2 >Tạo tài khoản</h2>
-            <el-form-item label="Họ và tên"  :label-width="formLabelWidth">
-              <el-input  v-model="form.fullname" autocomplete="off"></el-input>
+            <el-form-item label="Họ"  :label-width="formLabelWidth">
+              <el-input  v-model="form.lastname" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="Tên"  :label-width="formLabelWidth">
+              <el-input  v-model="form.firstname" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="Username" :label-width="formLabelWidth">
               <el-input v-model="form.username" autocomplete="off"></el-input>
@@ -47,7 +50,8 @@ export default {
       return {
         dialogFormVisible: false,
         form: {
-          fullname: '',
+          firstname: '',
+          lastname:'',
           email: '',
           username: '',
           phone: '',

@@ -4,11 +4,14 @@
     <SearchBar></SearchBar>
     <Info :idHotel="idHotel"></Info>
     <Room v-for="room in hotel.rooms" :key="room.id" :room="room"></Room>
+    <HotelReviews :idHotel="idHotel"></HotelReviews>
+    
   </div>
    
 </template>
 
 <script>
+import HotelReviews from '../components/HotelDetail/HotelReviews'
 import CusNavbar from '../components/CusNavbar'
 import SearchBar from '../components/HotelSearch/SearchBar'
 import Info from '../components/HotelDetail/Info'
@@ -31,7 +34,8 @@ export default {
     CusNavbar,
     SearchBar,
     Info,
-    Room
+    Room,
+    HotelReviews
   }
 }
 </script>

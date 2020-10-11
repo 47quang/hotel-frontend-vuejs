@@ -81,7 +81,7 @@
                   <el-dialog title="Lịch đặt phòng" :visible.sync="dialogDetailVisible" width="50%">
                     <el-row>
                       <el-calendar>
-                        <template slot="dateCell" slot-scope="{ date, data }">
+                        <template slot="dateCell" slot-scope="{date, data }">
                           <div :class="data.isSelected ? 'is-selected' : ''">
                             <div>
                               {{

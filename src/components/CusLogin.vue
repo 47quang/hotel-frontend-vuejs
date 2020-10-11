@@ -13,7 +13,7 @@
               <el-input type="password" v-model="form.password" autocomplete="off"></el-input>
             </el-form-item>
             
-            <el-button class="modal-login" type="primary" @click="signin">Đăng nhập</el-button>
+            <el-button class="modal-login" type="primary"  @click="signin">Đăng nhập</el-button>
             <div class="chua-co-tai-khoan">
               <p>Bạn chưa có tài khoản</p>
               <el-button class="modal-register" type="primary" >Đăng ký</el-button>
@@ -43,7 +43,7 @@ export default {
      methods: {
       async signin(){
        await this.$store.dispatch('signIn', this.form)
-         this.$router.push('/');
+         
       }
     }
 }

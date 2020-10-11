@@ -8,6 +8,7 @@ import HotelBooking from '../views/HotelBooking.vue'
 import HotelDetail from '../views/HotelDetail.vue'
 import HotelRegister from '../views/HotelRegister.vue'
 import Product from '../views/Product.vue'
+import Review from '../views/Review.vue'
 import OwnerUpdate from '../components/Owner/OwnerUpdate'
 import Dashboard from '../components/Dashboard/Dashboard'
 import DashboardHotelListing from '../components/Dashboard/DashboardHotelListing'
@@ -17,10 +18,28 @@ import DashboardAddRoom from '../components/Dashboard/DashboardAddRoom'
 import DashboardRoomListing from '../components/Dashboard/DashboardRoomListing'
 import DashboardUpdateRoom from '../components/Dashboard/DashboardUpdateRoom'
 import DashboardUpdateHotel from '../components/Dashboard/DashboardUpdateHotel'
+import AddToCart from '../views/AddToCart'
+import CustomerReviews from '../components/CustomerReviews'
+
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/customer-review',
+    name:  'CustomerReviews',
+    component: CustomerReviews
+  },
+  {
+    path: '/add-to-cart/:id',
+    name:  'AddToCart',
+    component: AddToCart
+  },
+  {
+    path: '/review/:id',
+    name:  'Review',
+    component: Review
+  },
   {
     path: '/',
     name: 'CustomerHomepage',
