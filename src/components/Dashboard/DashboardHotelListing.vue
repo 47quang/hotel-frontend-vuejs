@@ -72,7 +72,7 @@ export default {
       return this.hotels.filter(hotel => {
         return hotel.name.toLowerCase().includes(this.search.toLowerCase())
       })
-    }
+    },
   },
   methods: {
     addHotel() {
@@ -117,8 +117,12 @@ export default {
       else return false;
     },
     checkPath() {
-      return this.$route.path === `dashboard/${this.curOwner.id}/listing`
+      return this.$route.path == `/dashboard/${this.curOwner.id}/listing`
     }
+  },
+  created() {
+    this.$route.path;
+      
   },
   async mounted() {
     await this.$store.dispatch('fetchHotels', this.curOwner.id);
