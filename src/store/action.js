@@ -537,5 +537,18 @@ export const actions = {
         reject(err);
       })
     })
-  }
+  },
+  deleteReview(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+        .delete(`${BASE_URL}/api.review/${payload}`)
+        .then(resp => resp.data)
+        .then(body => {
+          resolve(body);
+        })
+        .catch(err => {
+          reject(err);
+        })
+    })
+  },
 };
