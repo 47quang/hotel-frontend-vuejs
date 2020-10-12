@@ -524,5 +524,18 @@ export const actions = {
         reject(err);
       })
     })
+  },
+  createOrder(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .post(`${BASE_URL}/api.order`, payload)
+      .then(resp => resp.data)
+      .then(body => {
+        resolve(body.data);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
   }
 };

@@ -3,7 +3,7 @@ export const mutations = {
     state.myCustomer = payload;
   },
   CUSTOMER_SIGN_OUT(state) {
-    state.myCustomer = {}
+    state.myCustomer = {};
   },
   OWNER_SIGN_IN(state, payload) {
     state.curOwner = payload;
@@ -12,8 +12,7 @@ export const mutations = {
     state.curOwner = {};
   },
   SEARCH_HOTEL(state, payload) {
-    state.hotel=payload
-
+    state.hotel = payload;
   },
   OWNER_UPDATE(state, payload) {
     state.curOwner = payload;
@@ -52,24 +51,28 @@ export const mutations = {
     state.roomById = payload;
   },
   FETCH_REVIEWS(state, payload) {
-    state.reviews = payload
+    state.reviews = payload;
   },
   FETCH_CUSTOMER(state, payload) {
-    state.customer = payload
+    state.customer = payload;
   },
   FETCH_TAGS(state, payload) {
-    state.tags = payload
+    state.tags = payload;
   },
   FETCH_REVIEWS_BY_CUSTOMER(state, payload) {
-    state.reviewsByCustomer = payload
+    state.reviewsByCustomer = payload;
   },
   FETCH_ALL_HOTELS(state, payload) {
-    state.allHotels = payload
+    state.allHotels = payload;
   },
   FETCH_ROOM_ORDERS_BY_HOTEL_ID(state, payload) {
     state.roomOrdersByHotelId = payload;
   },
   FETCH_ORDER_BY_ID(state, payload) {
     state.orderById = payload;
-  }
-}
+  },
+  UPDATE_ORDERLINE(state, payload) {
+    localStorage.setItem('orderLine', JSON.stringify([]));
+    state.orderLines = payload;
+  },
+};

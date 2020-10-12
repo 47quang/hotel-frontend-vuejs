@@ -23,6 +23,7 @@ import CustomerReviews from '../components/CustomerReviews'
 
 import DashboardManageOrder from '../components/Dashboard/DashboardManageOrder'
 import DashboardHotelOrder from '../components/Dashboard/DashboardHotelOrder'
+import AdminSignIn from '../components/Admin/AdminSignIn'
 
 Vue.use(VueRouter)
 
@@ -135,6 +136,10 @@ const routes = [
         component: DashboardHotelOrder
       }
     ]
+  },
+  {
+    path: '/admin',
+    component: AdminSignIn
   }
 ]
 
