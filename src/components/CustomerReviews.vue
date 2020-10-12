@@ -23,7 +23,7 @@
                             </el-col>
                          </div>
                          <div style="text-align: right; padding: 10px 0" >
-                             <el-button type="success">CẬP NHẬT</el-button>
+                             <el-button @click="updateReview(review.id)" type="success">CẬP NHẬT</el-button>
                              <el-button @click="deleteReview(review.id)" type="danger">Xóa</el-button>
                          </div>
                         
@@ -39,6 +39,7 @@
 
 <script>
 import CusNavbar from '../components/CusNavbar'
+
 export default {
     data() {
         return {
@@ -100,6 +101,9 @@ export default {
                 type: 'error'
             });
             },
+        },
+        updateReview(id) {
+            console.log(id)
         }
 }
 </script>

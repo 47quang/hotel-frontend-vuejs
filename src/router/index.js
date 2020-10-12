@@ -23,10 +23,16 @@ import CustomerReviews from '../components/CustomerReviews'
 
 import DashboardManageOrder from '../components/Dashboard/DashboardManageOrder'
 import DashboardHotelOrder from '../components/Dashboard/DashboardHotelOrder'
+import CustomerUpdate from '../components/Customer/CustomerUpdate.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/customer-update',
+    name: 'CustomerUpdate',
+    component: CustomerUpdate
+  },
   {
     path: '/customer-review',
     name:  'CustomerReviews',

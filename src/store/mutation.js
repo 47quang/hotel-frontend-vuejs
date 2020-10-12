@@ -75,4 +75,8 @@ export const mutations = {
     localStorage.setItem('orderLine', JSON.stringify([]));
     state.orderLines = payload;
   },
+  CUSTOMER_UPDATE(state, payload) {
+    localStorage.setItem('customer', JSON.stringify(body.data));
+    state.myCustomer = payload;
+  },
 };
