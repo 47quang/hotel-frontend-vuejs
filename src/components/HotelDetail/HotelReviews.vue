@@ -42,17 +42,34 @@ export default {
     },
     methods: {
         postReview(id) {
-            this.$router.push(`/review/${id}`)
+            const checkAccessToken = JSON.parse(localStorage.getItem('accessToken'))
+            if(!checkAccessToken){
+                this.$router.push('/')
+                this.alertErr()
+            }
+            else(
+                this.$router.push(`/review/${id}`)
+                
+            ) 
         },
         updateReview() {
             this.$router.push(`/customer-review`)
-        }
+        },
+        alertErr() {
+            this.$message({
+                showClose: true,
+                message: 'Quý khách cần phải đăng nhập để thực hiện tác vụ này!',
+                type: 'error'
+            });
+        },
 
     },
     created() {
-        // this.$store.dispatch('fetchCustomer')
+       
+        this.$store.dispatch('fetchCustomer')
         this.$store.dispatch('fetchReviews',this.idHotel);
         this.$store.dispatch('fetchTags')
+        
     },
     computed: {
         reviews() {
