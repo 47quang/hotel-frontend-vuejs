@@ -551,4 +551,32 @@ export const actions = {
         })
     })
   },
+  updateReview(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+        .put(`${BASE_URL}/api.review/${payload.id}`, payload.review)
+        .then(resp => resp.data)
+        .then(body => {
+          resolve(body);
+        })
+        .catch(err => {
+          reject(err);
+        })
+    })
+  },
+  updateCustomer(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+        .put(`${BASE_URL}/api.customer/${payload.id}`, payload.form)
+        .then((resp) => resp.data)
+        .then((body) => {
+          ctx.commit('CUSTOMER_UPDATE', body.data);
+          
+          resolve(body);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
 };
