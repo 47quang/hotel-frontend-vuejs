@@ -9,9 +9,9 @@
                 </el-row>
 
                 <div>
-                     <el-row v-for="review of reviews" :key="review.id" class="myreview-wrapper">
-                         <el-col :span="24">
-                             <el-col :span="6" class="review-detail">
+                     <div v-for="review of reviews" :key="review.id" class="myreview-wrapper">
+                         <div style="display: flex; align-items:center" >
+                             <el-col  :span="6" class="review-detail">
                                 <div class="review-hotel">{{review.hotel.name}}</div>
                                 <div class="review-rating">{{review.rating}}.0</div>
                             </el-col>
@@ -21,14 +21,14 @@
                                     {{review.content}}
                                 </div>
                             </el-col>
-                         </el-col>
-                         <el-col :span="24">
-                             <el-button type="warning">Cập Nhật</el-button>
-                             <el-button type="danger">Xóa</el-button>
-                         </el-col>
+                         </div>
+                         <div style="text-align: right; padding: 10px 0" >
+                             <el-button type="success">CẬP NHẬT</el-button>
+                             <el-button @click="deleteReview(review.id)" type="danger">Xóa</el-button>
+                         </div>
                         
                         
-                   </el-row>
+                   </div>
                    
                 </div>
                 
@@ -69,7 +69,38 @@ export default {
         hotels() {
             return this.$store.state.allHotels
         }
-    }
+    },
+    methods: {
+        deleteReview(id) {
+            this.$confirm('Xác nhận xóa bài review ?', 'Xóa', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                type: 'warning'
+            })
+            .then(async() => {
+                await this.$store.dispatch('deleteReview', id);
+                this.$store.dispatch('fetchReviewsByCustomer', this.$store.state.myCustomer.id)
+                this.alertSuccess();
+            })
+            .catch(() => {
+                this.alertErr()
+            })
+        },
+        alertSuccess() {
+            this.$message({
+                showClose: true,
+                message: 'Đã xóa bài review thành công.',
+                type: 'success'
+            });
+        },
+        alertErr() {
+            this.$message({
+                showClose: true,
+                message: 'Đã có lỗi xảy ra, vui lòng thử lại.',
+                type: 'error'
+            });
+            },
+        }
 }
 </script>
 
@@ -107,9 +138,7 @@ export default {
         color: #488bf8
     }
     .myreview-wrapper {
-        display: flex;
-        align-items: center;
-        padding: 30px 10px;
+        padding: 20px 10px;
     }
     .review-row {
         width: 80%;
