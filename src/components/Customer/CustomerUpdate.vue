@@ -34,7 +34,7 @@
                             </span>
                             </el-dialog>
                         </div>
-                        <div class="customer-wrapper">
+                        <!-- <div class="customer-wrapper">
                             <div>
                                 <div class="customer-title">Username</div>
                                 <div class="customer">{{form.username}}</div>
@@ -53,7 +53,7 @@
                             </span>
                             </el-dialog>
                             
-                        </div>
+                        </div> -->
                         <div class="customer-wrapper">
                             <div>
                                 <div class="customer-title">Email</div>
@@ -129,7 +129,7 @@ export default {
     data() {
         return {
             dialogNameVisible: false,
-            dialogUserNameVisible: false,
+            // dialogUserNameVisible: false,
             dialogMailVisible: false,
             dialogAddressVisible: false,
             dialogPhoneVisible: false,
@@ -162,8 +162,8 @@ export default {
         }
     },
     methods: {
-        updateCustomer() {
-            this.$store.dispatch('updateCustomer', {
+        async updateCustomer() {
+            await this.$store.dispatch('updateCustomer', {
                 form: this.form,
                 id: this.customerId
             })
@@ -206,7 +206,7 @@ export default {
         color: #5392f9;
         font-size: 18px;
         width: 70%;
-        margin: 0 0 0 80px;
+        margin: 0 0 0 75px;
         cursor: pointer;
         font-weight: 600;
     }
