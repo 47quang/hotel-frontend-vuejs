@@ -63,9 +63,9 @@ export default {
 .el-dialog__title {
   padding: 20px 30px;
 }
-.el-dialog__body {
+/* .el-dialog__body {
   padding: 0px !important;
-}
+} */
 .el-dialog__footer {
   border-top: 1px solid #e5e5e5;
 }

@@ -3,14 +3,17 @@
         <CusNavbar></CusNavbar>
         <el-container>
             <el-main>
-                <el-row class="UpdateCustomer">
+                <el-row class="UpdateCustomer" style="display: flex">
                     <el-col class="UpdateCustomer_List" :span="6">
-                        <div class="UpdateCustomer_Item">
+                        <div class="UpdateCustomer_Item UpdateCustomer_Profile">
                             <i class="el-icon-user"></i>
                             Hồ sơ</div>
                         <div class="UpdateCustomer_Item"><i class="el-icon-time"></i>
                             Lịch sử đặt phòng</div>
+                             <div class="UpdateCustomer_Item"><i class="el-icon-time"></i>
+                            Quản lý đơn hàng</div>
                     </el-col>
+
                     <el-col class="UpdateCustomer_Detail" :span="18">
                         <div style="font-size:24px; padding: 0 0 20px 0">Thông Tin Người Dùng</div>
                         <div class="customer-name-wrapper">
@@ -210,6 +213,16 @@ export default {
         cursor: pointer;
         font-weight: 600;
     }
+     .UpdateCustomer_Profile {
+        background-color: #5392f9;
+        padding: 20px;
+        color: white;
+        font-size: 18px;
+        width: 70%;
+        margin: 0 0 0 75px;
+        cursor: pointer;
+        font-weight: 600;
+    }
     .UpdateCustomer_Item:hover {
         background-color: #5392f9;
         color:white
@@ -222,5 +235,14 @@ export default {
         padding: 20px;
         box-shadow: 9px 0px 6px 0px #e9ebee;
         background: linear-gradient(90deg,#f8f7f9,#fff);
+    }
+</style>
+
+<style >
+    .UpdateCustomer_Detail .el-dialog {
+        width: 40%;
+    }
+    .UpdateCustomer_Detail .el-dialog__title {
+        display: none;
     }
 </style>
