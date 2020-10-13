@@ -5,7 +5,7 @@
     <Info :idHotel="idHotel"></Info>
     <Room v-for="room in hotel.rooms" :key="room.id" :room="room"></Room>
     <HotelReviews :idHotel="idHotel"></HotelReviews>
-    
+    <Footer></Footer>
   </div>
    
 </template>
@@ -16,6 +16,7 @@ import CusNavbar from '../components/CusNavbar'
 import SearchBar from '../components/HotelSearch/SearchBar'
 import Info from '../components/HotelDetail/Info'
 import Room from '../components/HotelDetail/Room'
+import Footer from '../components/Footer'
 export default {
   data() {
     return {
@@ -35,7 +36,8 @@ export default {
     SearchBar,
     Info,
     Room,
-    HotelReviews
+    HotelReviews,
+    Footer
   }
 }
 </script>

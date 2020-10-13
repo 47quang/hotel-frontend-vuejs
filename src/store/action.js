@@ -537,5 +537,47 @@ export const actions = {
         reject(err);
       })
     })
-  }
+  },
+  deleteReview(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+        .delete(`${BASE_URL}/api.review/${payload}`)
+        .then(resp => resp.data)
+        .then(body => {
+          resolve(body);
+        })
+        .catch(err => {
+          reject(err);
+        })
+    })
+  },
+  updateReview(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+        .put(`${BASE_URL}/api.review/${payload.id}`, payload.review)
+        .then(resp => resp.data)
+        .then(body => {
+          resolve(body);
+        })
+        .catch(err => {
+          reject(err);
+        })
+    })
+  },
+  updateCustomer(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+        .put(`${BASE_URL}/api.customer/${payload.id}`, payload.form)
+        .then((resp) => resp.data)
+        .then((body) => {
+          console.log(body.data)
+          localStorage.setItem('customer', JSON.stringify(body.data));
+          ctx.commit('CUSTOMER_UPDATE', body.data);
+          resolve(body);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
 };

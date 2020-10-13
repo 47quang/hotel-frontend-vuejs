@@ -4,8 +4,11 @@
             <el-row class="review-row">
                 <div class="review-header">
                      <div class="review-title" style="font-size:24px, font-weight:600">Bài đánh giá Khách sạn từ du khách</div>
-                    <el-button @click="updateReview" type="success">Bài review của tôi</el-button>
-                    <el-button @click="postReview(idHotel)" type="primary">Đăng bài review</el-button>
+                     <div class="review-button">
+                         <el-button @click="updateReview" type="success">Bài review của tôi</el-button>
+                        <el-button @click="postReview(idHotel)" type="primary">Đăng bài review</el-button>
+                     </div>
+                    
                 </div>
                 <div v-for="review of reviews" :key="review.id" class="review-body">
                     <el-col :span="6" class="review-detail">
@@ -42,17 +45,39 @@ export default {
     },
     methods: {
         postReview(id) {
-            this.$router.push(`/review/${id}`)
+            const checkAccessToken = JSON.parse(localStorage.getItem('accessToken'))
+            if(!checkAccessToken) {
+                this.alertErr()
+            }
+            else(
+                this.$router.push(`/review/${id}`)
+            ) 
         },
         updateReview() {
-            this.$router.push(`/customer-review`)
-        }
+             const checkAccessToken = JSON.parse(localStorage.getItem('accessToken'))
+            if(!checkAccessToken){
+                this.alertErr()
+            }
+            else(
+                 this.$router.push(`/customer-review`)
+            ) 
+           
+        },
+        alertErr() {
+            this.$message({
+                showClose: true,
+                message: 'Quý khách cần phải đăng nhập để thực hiện tác vụ này!',
+                type: 'error'
+            });
+        },
 
     },
     created() {
-        // this.$store.dispatch('fetchCustomer')
+       
+        this.$store.dispatch('fetchCustomer')
         this.$store.dispatch('fetchReviews',this.idHotel);
         this.$store.dispatch('fetchTags')
+        
     },
     computed: {
         reviews() {

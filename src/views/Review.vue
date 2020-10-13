@@ -3,7 +3,7 @@
         <CusNavBar></CusNavBar>
         <el-container>
             <el-main>
-                <el-row class="review-row">
+                <el-row class="postreview-row">
                     <el-divider><h2 class="Review-title">Đăng Bài Review Khách Sạn</h2></el-divider>
                     <div class=review-description>
                             <el-form ref="form" :model="review">
@@ -61,12 +61,14 @@
 
             </el-main>
         </el-container>
+        <Footer></Footer>
         
     </div>
 </template>
 
 <script>
 import CusNavBar from '../components/CusNavbar'
+import Footer from '../components/Footer'
 export default {
     data() {
         return {
@@ -86,7 +88,7 @@ export default {
         this.$store.dispatch('fetchTags')
     },
     components: {
-        CusNavBar
+        CusNavBar,Footer
     },
     computed: {
         tags() {
@@ -159,12 +161,12 @@ export default {
     .form__content-title {
         font-size: 18px;
     }
-    .review-row {
+    .postreview-row {
         margin: 0 auto;
         width: 80%;
     }
-    .review-title .el-divider__text {
-        font-size: 24px
+    .Review-title  {
+        font-size: 28px
     }
 </style>
 
