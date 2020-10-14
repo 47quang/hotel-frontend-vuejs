@@ -1,6 +1,5 @@
 <template>
   <div>
-    <el-button id="signin" type="danger" @click="openSignIn()">Đăng Nhập</el-button>
     <!-- Popup Sign In -->
     <el-dialog :modal="false" class="signin-dialog hidden-sm-and-down" title="Đăng Nhập" :visible.sync="dialogSignInVisible">
       <el-form ref="form" class="signin-dialog-content" :label-position="labelPosition" label-width="100px" :model="form" >
@@ -82,9 +81,6 @@ export default {
     },
   },
   methods: {
-    openSignIn() {
-      this.$store.commit('CHANGE_DIALOG_SIGN_IN', true);
-    },
     closeSignInOpenSignUp() {
       this.$store.commit('CHANGE_DIALOG_SIGN_IN', false);
       this.$store.commit('CHANGE_DIALOG_SIGN_UP', true);
@@ -103,7 +99,7 @@ export default {
             this.$refs[formName].resetFields();
           }
         } else {
-          this.alertErr();
+          this.alertErr({message: "Vui lòng điền đầy đủ các thông tin!"});
         }
       });
     },
@@ -129,6 +125,14 @@ a {
   color: #1174a6 !important;
   text-decoration: none;
 }
+#signup {
+  margin-top: -5px;
+  min-height: 40px;
+  min-width: 160px;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 3px;
+}
 #signin {
   min-height: 40px;
   min-width: 120px;
@@ -142,23 +146,15 @@ a {
   margin-right: 10px;
   border-radius: 3px;
 }
-#signup {
-  margin-top: -5px;
-  min-height: 40px;
-  min-width: 160px;
-  padding: 10px;
-  font-size: 14px;
-  border-radius: 3px;
-}
-.signin-dialog {
-  width: 50%;
-  padding: 0 25%;
-}
 .el-button--danger {
   background-color: #ff567d !important;
   border-color: #ff567d !important;
   font-weight: 700 !important;
   text-transform: uppercase;
+}
+.signin-dialog {
+  width: 50%;
+  padding: 0 25%;
 }
 .signin-dialog-content {
   padding: 0 30px;
