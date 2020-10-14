@@ -1,18 +1,16 @@
 <template>
-  <el-container class="instruct">
-    <div style="padding: 0 20%">
-      <h1 class="instruct-title">Tất cả những gì bạn cần làm là</h1>
-      <el-row :gutter="20" >
-        <el-col class="instruct-info" :span="6" v-for="instruct in instructions" :key="instruct.content">
-          <el-image
-            style="width: 120px; height: 120px; background-color: #fff"
-            :src="instruct.url"
-          ></el-image>
-          <div class="instruct-content">{{instruct.content}}</div>
-        </el-col>
-      </el-row>
-    </div>
-  </el-container>
+  <div class="instruct">
+    <h1 class="instruct-title">Tất cả những gì bạn cần làm là</h1>
+    <el-row :gutter="20" >
+      <el-col class="instruct-info" :span="6" v-for="instruct in instructions" :key="instruct.content">
+        <el-image
+          style="width: 120px; height: 120px; background-color: #fff"
+          :src="instruct.url"
+        ></el-image>
+        <div class="instruct-content">{{instruct.content}}</div>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script>
@@ -49,7 +47,7 @@ export default {
 /* Instructions */
 .instruct {
   text-align: center;
-  padding: 80px 0;
+  padding: 50px 20%;
 }
 .instruct .instruct-content {
   font-size: 16px;
