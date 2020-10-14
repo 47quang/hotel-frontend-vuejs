@@ -90,6 +90,11 @@ export const mutations = {
   },
   FETCH_ATTRIBUTE_BY_ID(state, payload) {
     state.attributeById = payload;
-    console.log('attribute', state.attributeById)
+  },
+  CHANGE_DIALOG_SIGN_IN(state, payload) {
+    state.dialogSignInVisible = payload;
+  },
+  CHANGE_DIALOG_SIGN_UP(state, payload) {
+    state.dialogSignUpVisible = payload;
   }
 };

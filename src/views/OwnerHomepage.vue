@@ -64,6 +64,10 @@ export default {
     width: 98% !important;
     padding: 0 1% !important;
   }
+  .navbar-brand .el-image__inner {
+    width: unset !important;
+    padding-left: 20%;
+  }
 }
 @media (min-width: 992px){
   .register-hotel{
@@ -90,6 +94,10 @@ export default {
     width: 90% !important;
     padding: 0 5% !important;
   }
+  .navbar-brand .el-image__inner {
+    width: unset !important;
+    padding-left: 20%;
+  }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -106,6 +114,10 @@ export default {
   .signin-dialog {
     width: 80% !important;
     padding: 0 10% !important;
+  }
+  .navbar-brand .el-image__inner {
+    width: unset !important;
+    padding-left: 20%;
   }
 }
 @media (min-width: 1200px) and (max-width: 1319px) {

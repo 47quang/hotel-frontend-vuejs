@@ -37,7 +37,9 @@ export default new Vuex.Store({
     orderById: {},
     curAdmin: {},
     attributeOptions: {},
-    attributeById: {}
+    attributeById: {},
+    dialogSignInVisible: false,
+    dialogSignUpVisible: false
   },
   mutations,
   actions,
