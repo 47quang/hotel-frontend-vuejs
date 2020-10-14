@@ -141,8 +141,6 @@ export default {
   margin-bottom: 20px;
 }
 
-
-
 .box-card .sign-in-caption {
   font-size: 16px;
   font-weight: 700;
@@ -154,6 +152,28 @@ export default {
 }
 
 /* Responsive */
+@media (max-width: 767px) {
+  .navbar-brand {
+    width: 80%;
+    height: 60%;
+  }
+  .box-card {
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+    padding: 18px;
+    border-radius: 3px;
+    background-color: hsla(0,0%,100%,.9);
+    
+  }
+  .box-card .text-section-title {
+    font-size: 24px;
+  }
+  .box-card .text-section-description {
+    font-size: 15px;
+    width: 80%;
+  }
+}
 @media (min-width: 992px){
   .register-hotel{
     height: 534px;
@@ -165,11 +185,6 @@ export default {
   }
 }
 @media (min-width: 768px) and (max-width: 991px){
-  .navbar-brand {
-    width: 60%;
-    height: 40%;
-    vertical-align: middle;
-  }
   .box-card {
     width: -webkit-max-content;
     width: -moz-max-content;

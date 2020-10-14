@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button id="signup" type="danger" @click="dialogSignUpVisible = true">Tạo Tài Khoản</el-button>
+    <el-button id="signup" type="danger" @click="openSignUp()">Tạo Tài Khoản</el-button>
     <!-- Popup Sign Up -->
     <el-dialog :modal="false" class="signin-dialog signup-dialog hidden-xs-only" title="Tạo Tài Khoản" :visible.sync="dialogSignUpVisible">
       <el-form ref="formSignUp" class="signin-dialog-content" :label-position="labelPosition" label-width="100px" :model="formSignUp" @submit.native.prevent>
@@ -56,7 +56,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer signup-footer">
         <strong class="footer__content">Bạn đã có tài khoản?</strong>
-        <el-button type="danger" id="signin" @click="dialogSignInVisible = true; dialogSignUpVisible = false">Đăng Nhập</el-button>
+        <el-button type="danger" id="signin" @click="closeSignUpOpenSignIn()">Đăng Nhập</el-button>
       </div>
     </el-dialog>
     <!-- End of Pop Up -->
@@ -110,7 +110,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer signup-footer">
         <strong class="footer__content">Bạn đã có tài khoản?</strong>
-        <el-button type="danger" id="signin" @click="dialogSignInVisible = true; dialogSignUpVisible = false">Đăng Nhập</el-button>
+        <el-button type="danger" id="signin" @click="closeSignUpOpenSignIn()">Đăng Nhập</el-button>
       </div>
     </el-dialog>
   </div>
@@ -119,7 +119,6 @@
 export default {
   data() {
     return {
-      dialogSignUpVisible: false,
       labelPosition: 'top',
       formSignUp: {
         firstname: '',
@@ -133,7 +132,24 @@ export default {
       }
     }
   },
+  computed: {
+    dialogSignUpVisible: {
+      get() {
+        return this.$store.state.dialogSignUpVisible;
+      },
+      set(value) {
+        this.$store.commit('CHANGE_DIALOG_SIGN_UP', value);
+      }
+    },
+  },
   methods: {
+    openSignUp() {
+      this.$store.commit('CHANGE_DIALOG_SIGN_UP', true);
+    },
+    closeSignUpOpenSignIn() {
+      this.$store.commit('CHANGE_DIALOG_SIGN_UP', false);
+      this.$store.commit('CHANGE_DIALOG_SIGN_IN', true);
+    },
     signup(formName){
       this.$refs[formName].validate((valid) => {
         if (valid) {
