@@ -4,26 +4,24 @@
       <div class="sign-in__title">
         <h3>Welcome Back!</h3>
       </div>
-      <div class="sign-in__content">
-        <el-form ref="form" :label-position="labelPosition" label-width="100px" :model="form" >
-          <el-form-item prop="username" class="form-item" label="Email"
-          :rules="[
-            { required: true, message: 'Email is required'},
-          ]">
-            <el-input v-model="form.username" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item prop="password" class="form-item" label="Mật Khẩu"
-          :rules="[
-            { required: true, message: 'Password is required'},
-          ]">
-            <el-input type="password" v-model="form.password" autocomplete="off" @keyup.enter.native="signin('form')"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <a class="sign-in__forget" href="/forget-password">Quên Mật Khẩu</a>
-          </el-form-item>
-          <el-button type="primary" class="sign-in__btn--confirm sign-in__btn" @click="signin('form')">Đăng Nhập</el-button>
-        </el-form>
-      </div>
+      <el-form ref="form" class="signin-dialog-content" :label-position="labelPosition" label-width="100px" :model="admin" @submit.native.prevent @keyup.enter.native="adminSignIn('form')">
+        <el-form-item prop="username" class="form-item" label="Username"
+        :rules="[
+          { required: true, message: 'Username is required'},
+        ]">
+          <el-input v-model="admin.username" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item prop="password" class="form-item" label="Mật Khẩu"
+        :rules="[
+          { required: true, message: 'Password is required'},
+        ]">
+          <el-input type="password" v-model="admin.password" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <a href="/forget-password">Quên Mật Khẩu</a>
+        </el-form-item>
+        <el-button type="danger" class="signin-button-form" @click="adminSignIn('form')">Đăng Nhập</el-button>
+      </el-form>
     </el-card>
   </div>
 </template>
@@ -31,25 +29,34 @@
 export default {
   data() {
     return {
-      form: {
+      admin: {
         username: '',
-        password: ''
+        password: '',
       },
-      labelPosition: 'top'
+      labelPosition: "top"
+    };
+  },
+  computed: {
+    curAdmin() {
+      return this.$store.state.curAdmin;
     }
   },
   methods: {
-    async signin(formName){
-      this.$refs[formName].validate(async(valid) => {
+    async adminSignIn(formName) {
+      this.$refs[formName].validate(async valid => {
         if (valid) {
           try {
-            // await this.$store.dispatch("ownerSignIn", this.form);
-            this.alertSignInSuccess();
-            // this.$router.push(`/admin/${this.admin.id}`);
+            await this.$store.dispatch('ownerSignIn', this.admin);
+            if (this.curAdmin.role == 'admin') {
+              this.$router.push(`/admin/dashboard/${this.curAdmin.id}`);
+              this.alertSignInSuccess();
+            }
+            else {
+              this.alertErr();
+            }
             this.$refs[formName].resetFields();
-          }
-          catch(err) {
-            this.alertErr();
+          } catch (err) {
+            this.alertErr(err);
             this.$refs[formName].resetFields();
           }
         } else {
@@ -64,15 +71,24 @@ export default {
         type: "success"
       });
     },
-    alertErr() {
-      this.$message({
-        showClose: true,
-        message: "Đã có lỗi xảy ra, vui lòng thử lại.",
-        type: "error"
-      });
-    },
+    alertErr(error) {
+      if (error.message == "Cannot read property 'message' of undefined") {
+        this.$message({
+          showClose: true,
+          message: "Khách hàng không thể đăng nhập Trang Admin!",
+          type: "error"
+        });
+      }
+      else {
+        this.$message({
+          showClose: true,
+          message: error.message,
+          type: "error"
+        });
+      }
+    }
   }
-}
+};
 </script>
 <style scoped>
 a {

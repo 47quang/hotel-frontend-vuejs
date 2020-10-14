@@ -46,14 +46,18 @@ export const actions = {
         .post(`${BASE_URL}/api.user/login`, payload)
         .then((resp) => resp.data)
         .then((body) => {
-          ctx.commit('OWNER_SIGN_IN', body.data.user);
+          if (body.data.user.role != 'admin') {
+            ctx.commit('OWNER_SIGN_IN', body.data.user);
+          }
+          else {
+            ctx.commit('ADMIN_SIGN_IN', body.data.user);
+          }
           localStorage.setItem('accessToken', JSON.stringify(body.data.accessToken));
           localStorage.setItem('user', JSON.stringify(body.data.user));
           resolve(body);
         })
         .catch((err) => {
-          reject(err);
-          alert('Something went wrong! Please check your username or password!');
+          reject(err.response.data);
         });
     });
   },
@@ -310,6 +314,7 @@ export const actions = {
         .get(`${BASE_URL}/api.attribute-option?attributeId=${payload}`)
         .then(resp => resp.data)
         .then(body => {
+          ctx.commit('FETCH_ATTRIBUTE_OPTIONS_BY_ATTRIBUE_ID', body.data)
           resolve(body.data);
         })
         .catch(err => {
@@ -580,4 +585,117 @@ export const actions = {
         });
     });
   },
+  adminSignIn(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .post(`${BASE_URL}/api.user/login`, payload)
+      .then(resp => resp.data)
+      .then(body => {
+        ctx.commit('ADMIN_SIGN_IN', body.data.user);
+        localStorage.setItem('accessToken', JSON.stringify(body.data.accessToken));
+        localStorage.setItem('user', JSON.stringify(body.data.user));
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },
+  adminSignOut(ctx) {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('user');
+    localStorage.removeItem('hotels');
+    ctx.commit('ADMIN_SIGN_OUT');
+  },
+  createAttributeOption(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .put(`${BASE_URL}/api.attribute/${payload.id}/add-attribute-option`, payload.attributeOption)
+      .then(resp => resp.data)
+      .then(body => {
+        resolve(body.data);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },
+  updateAttribute(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .put(`${BASE_URL}/api.attribute/${payload.id}`, payload.attribute)
+      .then(resp => resp.data)
+      .then(body => {
+        resolve(body.data);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },
+  deleteAttribute(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .delete(`${BASE_URL}/api.attribute/${payload}`)
+      .then(resp => resp.data)
+      .then(body => {
+        resolve(body.data);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },
+  createAttribute(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .post(`${BASE_URL}/api.attribute/`, payload)
+      .then(resp => resp.data)
+      .then(body => {
+        resolve(body.data);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },
+  fetchAttributeById(ctx, payload){
+    return new Promise((resolve, reject) => {
+      client
+      .get(`${BASE_URL}/api.attribute/${payload}`)
+      .then(resp => resp.data)
+      .then(body => {
+        ctx.commit('FETCH_ATTRIBUTE_BY_ID', body.data)
+        resolve(body.data);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },
+  updateAttributeOption(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+      .put(`${BASE_URL}/api.attribute-option/${payload.id}`,payload.attributeOption)
+      .then(resp => resp.data)
+      .then(body => {
+        resolve(body.data);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },
+  deleteAttributeOption(ctx, payload){
+    return new Promise((resolve, reject) => {
+      client
+      .put(`${BASE_URL}/api.attribute/${payload.id}/remove-attribute-option`, payload.attributeOption)
+      .then(resp => resp.data)
+      .then(body => {
+        resolve(body.data);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
+  },  
 };
