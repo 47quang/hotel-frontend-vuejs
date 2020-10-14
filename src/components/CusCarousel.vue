@@ -89,8 +89,21 @@ export default {
   },
   methods: {
     async searchHotel() {
-      await this.$store.dispatch('searchHotel', this.form);
-      this.$router.push('/search');
+      const checkProvinceId = this.form.provinceId;
+      if(!checkProvinceId) {
+        this.alertErr()
+      }
+      else(
+         await this.$store.dispatch('searchHotel', this.form),
+         this.$router.push('/search')
+      )
+    },
+     alertErr() {
+      this.$message({
+        showClose: true,
+        message: 'Vui lòng chọn tỉnh thành !',
+        type: 'error'
+      });
     },
   },
 };

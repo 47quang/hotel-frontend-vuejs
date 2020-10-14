@@ -84,6 +84,7 @@
     </el-main>
   </el-container>
   <HotelList></HotelList>
+  <Footer></Footer>
    
 </div>
 
@@ -94,6 +95,7 @@
 import CusNavbar from '../components/CusNavbar'
 import SearchBar from '../components/HotelSearch/SearchBar'
 import HotelList from '../components/HotelSearch/HotelList'
+import Footer from '../components/Footer'
 export default {
   data(){
     return {
@@ -135,7 +137,8 @@ export default {
   components: {
     CusNavbar,
     SearchBar,
-    HotelList
+    HotelList,
+    Footer
   },
 
   // computed: {

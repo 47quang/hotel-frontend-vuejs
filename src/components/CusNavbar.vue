@@ -10,8 +10,16 @@
           <Register class=register-component></Register>
         </div>
         <div style="display: inline-block; font-weight:600" v-else>
-          {{myCustomer.fullname}}
-          <el-button @click="signOut" style="margin: 0 10px" type="info">Đăng xuất</el-button>
+            <el-dropdown style="cursor: pointer" trigger="click">
+              <span class="el-dropdown-link">
+                {{myCustomer.lastname}} {{myCustomer.firstname}}<i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item @click.native="customerUpdate" icon="el-icon-user">Hồ sơ của {{myCustomer.firstname}}</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-time">Lịch sử đặt phòng</el-dropdown-item>
+                <el-dropdown-item @click.native="signOut" icon="el-icon-switch-button">Đăng xuất</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
         </div>
 
       </div>
@@ -34,6 +42,9 @@
       signOut() {
         this.$store.dispatch('customerSignOut');
         this.$router.push('/')
+      },
+      customerUpdate() {
+        this.$router.push('/customer-update')
       }
     }
     
