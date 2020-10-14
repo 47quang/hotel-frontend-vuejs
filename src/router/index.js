@@ -25,6 +25,9 @@ import DashboardManageOrder from '../components/Dashboard/DashboardManageOrder'
 import DashboardHotelOrder from '../components/Dashboard/DashboardHotelOrder'
 import AdminSignIn from '../components/Admin/AdminSignIn'
 import CustomerUpdate from '../components/Customer/CustomerUpdate.vue'
+import AdminDashboard from '../components/Admin/AdminDashboard'
+import AdminOverall from '../components/Admin/AdminOverall'
+import AdminAttribute from '../components/Admin/AdminAttribute'
 
 Vue.use(VueRouter)
 
@@ -145,7 +148,21 @@ const routes = [
   },
   {
     path: '/admin',
-    component: AdminSignIn
+    component: AdminSignIn,
+  },
+  {
+    path: '/admin/dashboard/:id',
+    component: AdminDashboard,
+    children: [
+      {
+        path: '',
+        component: AdminOverall
+      },
+      {
+        path: 'attributes',
+        component: AdminAttribute
+      }
+    ]
   }
 ]
 

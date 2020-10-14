@@ -79,4 +79,17 @@ export const mutations = {
     
     state.myCustomer = payload;
   },
+  ADMIN_SIGN_IN(state, payload) {
+    state.curAdmin = payload;
+  },
+  ADMIN_SIGN_OUT(state) {
+    state.curAdmin = {};
+  },
+  FETCH_ATTRIBUTE_OPTIONS_BY_ATTRIBUE_ID(state, payload) {
+    state.attributeOptions = payload;
+  },
+  FETCH_ATTRIBUTE_BY_ID(state, payload) {
+    state.attributeById = payload;
+    console.log('attribute', state.attributeById)
+  }
 };
