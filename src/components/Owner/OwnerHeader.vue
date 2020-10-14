@@ -2,15 +2,11 @@
   <div>
     <!-- Header -->
     <el-header class="navbar">
-      <el-menu mode="horizontal" active-text-color="transparent" class="header-menu">
-        <el-menu-item class="header-menu-item" index="1">
-          <el-image class="navbar-brand" :src="url" />
-        </el-menu-item>
-        <el-button-group class="navbar__action">
-          <owner-sign-in/>
-          <owner-sign-up/>
-        </el-button-group>
-      </el-menu>
+      <el-image class="navbar-brand" :src="url" />
+      <el-button-group class="navbar__action">
+        <owner-sign-in/>
+        <owner-sign-up/>
+      </el-button-group>
     </el-header>
     <!-- End of Header -->
     <el-container class="register-hotel">
@@ -69,6 +65,9 @@ export default {
     rgba(0, 0, 0, 0.54),
     rgba(0, 0, 0, 0.3)
   );
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   
 }
 .navbar .header-menu {
@@ -84,9 +83,10 @@ export default {
 .navbar .header-menu::after {
   content: none;
 }
-.navbar .header-menu .header-menu-item {
+.navbar .header-menu {
   background-color: transparent;
   padding: 0px;
+  
 }
 .el-menu.el-menu--horizontal {
   border-bottom: transparent !important;
@@ -154,15 +154,6 @@ export default {
 }
 
 /* Responsive */
-@media (max-width: 767px) {
-  /* .signup-dialog {
-    width: 98%;
-    padding: 0 1%;
-  }
-  #signup-button-form {
-    max-height: 40px;
-  } */
-}
 @media (min-width: 992px){
   .register-hotel{
     height: 534px;
@@ -179,12 +170,6 @@ export default {
     height: 40%;
     vertical-align: middle;
   }
-  /* #signin, #signup {
-    padding: 4px;
-    min-height: 26px!important;
-    min-width: 80px;
-    font-size: 10px;
-  } */
   .box-card {
     width: -webkit-max-content;
     width: -moz-max-content;
@@ -213,13 +198,6 @@ export default {
     height: 60%;
     vertical-align: middle;
   }
-  /* #signin, #signup {
-    padding: 4px;
-    min-height: 30px!important;
-    min-width: 100px;
-    font-size: 10px;
-  } */
-
   .box-card {
     width: -webkit-max-content;
     width: -moz-max-content;
@@ -239,10 +217,6 @@ export default {
     line-height: 1.4;
     margin-bottom: 20px;
   }
-  /* .signup-dialog {
-    width: 90%;
-    padding: 0 5%;
-  } */
 }
 
 @media (min-width: 1200px) and (max-width: 1319px) {
