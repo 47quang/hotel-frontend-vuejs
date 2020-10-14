@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button id="signin" type="danger" @click="dialogSignInVisible = true">Đăng Nhập</el-button>
+    <el-button id="signin" type="danger" @click="openSignIn()">Đăng Nhập</el-button>
     <!-- Popup Sign In -->
     <el-dialog :modal="false" class="signin-dialog hidden-sm-and-down" title="Đăng Nhập" :visible.sync="dialogSignInVisible">
       <el-form ref="form" class="signin-dialog-content" :label-position="labelPosition" label-width="100px" :model="form" >
@@ -23,7 +23,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer hidden-sm-and-down">
         <strong class="footer__content">Bạn chưa có tài khoản?</strong>
-        <el-button type="danger" id="signin" @click="dialogSignInVisible = false; dialogSignUpVisible = true">Tạo tài khoản</el-button>
+        <el-button type="danger" id="signin" @click="closeSignInOpenSignUp()">Tạo tài khoản</el-button>
       </div>
     </el-dialog>
 
@@ -51,7 +51,7 @@
       <!-- For small screen -->
       <div slot="footer" class="dialog__footer--small hidden-lg-and-up">
         <div class="footer__content">Bạn chưa có tài khoản?</div>
-        <el-button type="danger" id="signin" class="dialog__sign-in-btn--small" @click="dialogSignInVisible = false; dialogSignUpVisible = true">Tạo tài khoản</el-button>
+        <el-button type="danger" id="signin" class="dialog__sign-in-btn--small" @click="closeSignInOpenSignUp()">Tạo tài khoản</el-button>
       </div>
     </el-dialog>
     <!-- End of Pop Up -->
@@ -65,7 +65,6 @@ export default {
         username: '',
         password: ''
       },
-      dialogSignInVisible: false,
       labelPosition: 'top',
     }
   },
@@ -73,8 +72,23 @@ export default {
     curOwner() {
       return this.$store.state.curOwner;
     },
+    dialogSignInVisible: {
+      get() {
+        return this.$store.state.dialogSignInVisible;
+      },
+      set(value) {
+        this.$store.commit('CHANGE_DIALOG_SIGN_IN', value);
+      }
+    },
   },
   methods: {
+    openSignIn() {
+      this.$store.commit('CHANGE_DIALOG_SIGN_IN', true);
+    },
+    closeSignInOpenSignUp() {
+      this.$store.commit('CHANGE_DIALOG_SIGN_IN', false);
+      this.$store.commit('CHANGE_DIALOG_SIGN_UP', true);
+    },
     async signin(formName){
       this.$refs[formName].validate(async(valid) => {
         if (valid) {
@@ -85,7 +99,7 @@ export default {
             this.$refs[formName].resetFields();
           }
           catch(err) {
-            this.alertErr();
+            this.alertErr(err);
             this.$refs[formName].resetFields();
           }
         } else {
@@ -100,10 +114,10 @@ export default {
         type: "success"
       });
     },
-    alertErr() {
+    alertErr(err) {
       this.$message({
         showClose: true,
-        message: "Đã có lỗi xảy ra, vui lòng thử lại.",
+        message: err.message || "Đã có lỗi xảy ra, vui lòng thử lại.",
         type: "error"
       });
     },

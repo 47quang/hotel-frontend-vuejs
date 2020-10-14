@@ -1,6 +1,6 @@
 <template>
   <el-container class="carousel-info">
-    <el-carousel  indicator-position="outside" height="350px" style="width: 100%">
+    <el-carousel class="hidden-xs-only" indicator-position="outside" height="350px" style="width: 100%">
       <el-carousel-item class="carousel-info-item" v-for="item in info" :key="item.content">
         <el-row :gutter="18" class="info-item">
           <el-col :span="6">
@@ -11,6 +11,16 @@
               <h4 class="info-content">{{ item.content }}</h4>
           </el-col>
         </el-row>
+      </el-carousel-item>
+    </el-carousel>
+    <!-- For small screen -->
+    <el-carousel class="hidden-sm-and-up" indicator-position="outside" height="650px" style="width: 100%">
+      <el-carousel-item class="carousel-info-item--small" v-for="item in info" :key="item.content">
+        <div class="info__content">
+          <el-image class="info__image" :src="item.url"></el-image>
+          <h3 class="info__title--small">{{ item.title }}</h3>
+          <h4 class="info__content--small">{{ item.content }}</h4>
+        </div>
       </el-carousel-item>
     </el-carousel>
   </el-container>
@@ -91,6 +101,31 @@ export default {
   font-weight: 600;
 }
 
+.info__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.info__image {
+  background-color: #fff; 
+  width: 80%; 
+  height: 80%;
+}
+.info__title--small {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+.info__content--small {
+  font-size: 20px;
+  line-height: 25px;
+  font-weight: 600;
+}
+.carousel-info-item--small {
+  width: unset !important;
+}
 /* Responsive */
 @media (min-width: 768px) and (max-width: 992px) {
   .info-title {
