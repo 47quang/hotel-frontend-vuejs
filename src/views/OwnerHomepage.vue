@@ -24,44 +24,13 @@ export default {
 </script>
 
 <style scope>
-
-.el-button--danger {
-  background-color: #ff567d !important;
-  border-color: #ff567d !important;
-  font-weight: 700 !important;
-  text-transform: uppercase;
-}
-
-/* Sign In Form */
-.signin-dialog {
-  border-radius: 3px;
-  transition: transform .3s ease-out;
-  transform: translate(0);
-  margin-top: 80px;
-  margin: 30px auto;
-  width: 800px;
-  height: max-content;
-  padding: 0 30%;
-}
-.signin-button-form {
-  text-transform: initial;
-  min-height: 42px;
-  width: 100%;
-}
-
-.signin-dialog .signin-dialog-content{
-  padding: 0 50px 20px;
-  position: relative;
-}
-
-.signin-dialog .signin-dialog-content .form-item{
-  margin-bottom: 0px;
-}
 .el-dialog__header {
-  padding: 20px 20px 0px !important;
+  padding: 30px 20px 0px !important;
 }
 .el-dialog__title {
   padding: 20px 30px;
+  font-weight: 700;
+  font-size: 20px !important;
 }
 /* .el-dialog__body {
   padding: 0px !important;
@@ -70,26 +39,95 @@ export default {
   border-top: 1px solid #e5e5e5;
 }
 .dialog-footer {
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 0 30px;
 }
-
-#signup-button-form {
-  text-transform: initial;
-  color: #ff567d !important;
-  background-color: #fff !important;
-  border-color: #ff567d !important;
-  margin-left: 10px;
+.footer__content {
+  color: #2A2A2E;
 }
 
-@media (min-width: 768px) and (max-width: 991px) {
+/* Responsive */
+@media (max-width: 767px) {
+  html {
+    width: 768px;
+  }
+  .signup-dialog {
+    width: 98% !important;
+    padding: 0 1% !important;
+  }
+  #signup-button-form {
+    max-height: 40px;
+  }
+  .signin-dialog {
+    width: 98% !important;
+    padding: 0 1% !important;
+  }
+}
+@media (min-width: 992px){
+  .register-hotel{
+    height: 534px;
+  }
+}
+@media (min-width: 1200px) {
+  .navbar-brand {
+    padding-top: 8px;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px){
   html {
     width: 992px;
   }
+  #signin, #signup {
+    padding: 4px;
+    min-height: 26px!important;
+    min-width: 80px;
+    font-size: 10px;
+  }
+ 
+  .signup-dialog {
+    width: 90% !important;
+    padding: 0 5% !important;
+  }
 }
-@media (max-width: 768px) {
-  html {
-    width: 768px;
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  #signin, #signup {
+    padding: 4px;
+    min-height: 30px!important;
+    min-width: 100px;
+    font-size: 10px;
+  }
+  .signup-dialog {
+    width: 90% !important;
+    padding: 0 5% !important;
+  }
+  .signin-dialog {
+    width: 80% !important;
+    padding: 0 10% !important;
+  }
+}
+@media (min-width: 1200px) and (max-width: 1319px) {
+  #signin, #signup {
+    padding: 4px;
+    min-height: 32px!important;
+    min-width: 120px;
+    font-size: 12px;
+  }
+  .signup-dialog {
+    width: 90% !important;
+    padding: 0 5% !important;
+  }
+  .signin-dialog {
+    width: 70% !important;
+    padding: 0 15% !important;
+  }
+}
+@media (min-width: 1320px) and (max-width: 1480px) {
+  .signin-dialog {
+    width: 60% !important;
+    padding: 0 20% !important;
   }
 }
 </style>
