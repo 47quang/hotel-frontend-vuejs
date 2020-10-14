@@ -4,7 +4,9 @@
     <el-header class="navbar">
       <el-image class="navbar-brand" :src="url" />
       <el-button-group class="navbar__action">
+        <el-button id="signin" type="danger" @click="openSignIn()">Đăng Nhập</el-button>
         <owner-sign-in/>
+        <el-button id="signup" type="danger" @click="openSignUp()">Tạo Tài Khoản</el-button>
         <owner-sign-up/>
       </el-button-group>
     </el-header>
@@ -16,11 +18,22 @@
           class="text-section-description"
         >Độc giả toàn cầu, trọng điểm châu Á. Nhận các đặt phòng bạn đã bỏ lỡ bằng cách ghi danh miễn phí trên Agoda, ngay hôm nay!</div>
         <!-- Register Hotel -->
-        <owner-register-hotel/>
+        <el-button
+          id="startHostingBtn"
+          type="danger"
+          class="start-hosting-btn btn btn-lg btn-info"
+          @click="openSignUp()"
+        >Đăng nhà ngay</el-button>
+        <owner-sign-up/>
         <div class="sign-in-caption hidden-xs hidden-sm">
           <span class="m-r-1">Bạn đã bắt đầu thủ tục đăng ký rồi à?</span>
           <!-- Continue to Sign In -->
-          <owner-continue-sign-in/>
+          <span
+            class="continue-here-text"
+            data-element-name="agoda-homes-continue-here-button"
+            @click="openSignIn()"
+          >Tiếp tục</span>
+          <owner-sign-in/>
         </div>
       </el-card>
     </el-container>
@@ -30,8 +43,6 @@
 <script>
 import OwnerSignIn from '@/components/Owner/OwnerSignIn'
 import OwnerSignUp from '@/components/Owner/OwnerSignUp'
-import OwnerContinueSignIn from '@/components/Owner/OwnerContinueSignIn'
-import OwnerRegisterHotel from '@/components/Owner/OwnerRegisterHotel'
 export default {
   data() {
     return {
@@ -41,17 +52,48 @@ export default {
   components: {
     OwnerSignIn,
     OwnerSignUp,
-    OwnerContinueSignIn,
-    OwnerRegisterHotel
   },
   computed: {
     curOwner() {
       return this.$store.state.curOwner;
     },
   },
+  methods: {
+    openSignIn() {
+      this.$store.commit('CHANGE_DIALOG_SIGN_IN', true);
+    },
+    openSignUp() {
+      this.$store.commit('CHANGE_DIALOG_SIGN_UP', true);
+    },
+  }
 }
 </script>
 <style scoped>
+/* Sign In */
+#signin {
+  min-height: 40px;
+  min-width: 120px;
+  padding: 10px;
+  font-size: 12px;
+  color: #ff567d !important;
+  background-color: #fff !important;
+  border-color: #ff567d !important;
+  margin-top: -5px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 3px;
+}
+.el-button--danger {
+  background-color: #ff567d !important;
+  border-color: #ff567d !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+}
+.continue-here-text {
+  cursor: pointer;
+  border-bottom: 2px solid gray;
+}
+/* Navbar */
 .navbar {
   width: 100%;
   position: fixed;
@@ -144,6 +186,7 @@ export default {
 .box-card .sign-in-caption {
   font-size: 16px;
   font-weight: 700;
+  padding-top: 15px;
 }
 .navbar__action {
   display: flex;

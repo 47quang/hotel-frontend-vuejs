@@ -1,6 +1,5 @@
 <template>
   <div>
-    <el-button id="signup" type="danger" @click="openSignUp()">Tạo Tài Khoản</el-button>
     <!-- Popup Sign Up -->
     <el-dialog :modal="false" class="signin-dialog signup-dialog hidden-xs-only" title="Tạo Tài Khoản" :visible.sync="dialogSignUpVisible">
       <el-form ref="formSignUp" class="signin-dialog-content" :label-position="labelPosition" label-width="100px" :model="formSignUp" @submit.native.prevent>
@@ -143,9 +142,6 @@ export default {
     },
   },
   methods: {
-    openSignUp() {
-      this.$store.commit('CHANGE_DIALOG_SIGN_UP', true);
-    },
     closeSignUpOpenSignIn() {
       this.$store.commit('CHANGE_DIALOG_SIGN_UP', false);
       this.$store.commit('CHANGE_DIALOG_SIGN_IN', true);
@@ -159,17 +155,17 @@ export default {
             this.$refs[formName].resetFields();
           }
           catch(err) {
-            this.alertErr();
+            this.alertErr(err);
           }
         } else {
-          this.alertErr();
+          this.alertErr({message: "Vui lòng điền đầy đủ các thông tin!"});
         }
       });
     },
-    alertErr() {
+    alertErr(err) {
       this.$message({
         showClose: true,
-        message: "Đã có lỗi xảy ra, vui lòng thử lại.",
+        message: err.message || "Đã có lỗi xảy ra, vui lòng thử lại.",
         type: "error"
       });
     },
