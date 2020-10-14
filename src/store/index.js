@@ -34,7 +34,10 @@ export default new Vuex.Store({
     reviewsByCustomer:[],
     allHotels:[],
     roomOrdersByHotelId: {},
-    orderById: {}
+    orderById: {},
+    curAdmin: {},
+    attributeOptions: {},
+    attributeById: {}
   },
   mutations,
   actions,
