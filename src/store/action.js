@@ -102,6 +102,7 @@ export const actions = {
         .get(`${BASE_URL}/api.hotel?provinceId=${provinceId}`)
         .then((resp) => resp.data)
         .then((body) => {
+          localStorage.setItem('hotelSearch', JSON.stringify(body.data))
           ctx.commit('SEARCH_HOTEL', body.data);
           resolve(body);
         })

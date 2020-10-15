@@ -5,12 +5,15 @@
         <el-dialog class="dialog-register"  :visible.sync="dialogFormVisible">
           <el-form :model="form">
             <h2 >Tạo tài khoản</h2>
-            <el-form-item label="Họ"  :label-width="formLabelWidth">
-              <el-input  v-model="form.lastname" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="Tên"  :label-width="formLabelWidth">
-              <el-input  v-model="form.firstname" autocomplete="off"></el-input>
-            </el-form-item>
+            <div>
+                <el-form-item label="Họ"  :label-width="formLabelWidth">
+                <el-input  v-model="form.lastname" autocomplete="off"></el-input>
+              </el-form-item>
+                <el-form-item label="Tên"  :label-width="formLabelWidth">
+                  <el-input  v-model="form.firstname" autocomplete="off"></el-input>
+                </el-form-item>
+            </div>
+            
             <el-form-item label="Username" :label-width="formLabelWidth">
               <el-input v-model="form.username" autocomplete="off"></el-input>
             </el-form-item>
@@ -21,11 +24,11 @@
               <el-input  v-model="form.email" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="Số điện thoại" :label-width="formLabelWidth">
-              <el-input type="phone" v-model="form.phone" autocomplete="off"></el-input>
+              <el-input type="phone" v-model="form.phone" @keyup.enter.native="submit" autocomplete="off"></el-input>
             </el-form-item>
-             <el-form-item label="Địa chỉ" :label-width="formLabelWidth">
-              <el-input type="address" v-model="form.address" autocomplete="off"></el-input>
-            </el-form-item>
+             <!-- <el-form-item label="Địa chỉ" :label-width="formLabelWidth">
+              <el-input  type="address" v-model="form.address"  autocomplete="off"></el-input>
+            </el-form-item> -->
             <el-button class="modal-register" type="primary" @click="submit()">Tạo tài khoản</el-button>
             <div class="da-co-tai-khoan-position">
                <div class="da-co-tai-khoan">
@@ -55,7 +58,7 @@ export default {
           email: '',
           username: '',
           phone: '',
-          address:'',
+          // address:'',
           password: ''
         },
         formLabelWidth: '120px'
@@ -70,6 +73,20 @@ export default {
 }
 </script>
 <style scoped >
+    @media(max-width: 768px){
+    .bg-form {
+      display: none;
+    }
+    .dialog-register .el-dialog__body .el-form {
+      width: 100% !important;
+    }
+    .da-co-tai-khoan {
+      padding: 10px 0
+    }
+    .register-component .el-dialog {
+      margin-top: 50vh !important;
+    }
+  }
     h2{
     text-align: left;
     margin:20px 40px;
@@ -119,7 +136,7 @@ export default {
     
   }
   .register-component .el-dialog{
-    margin: 30px auto 0 !important;
+    margin: 10px auto 0 !important;
   }
     .dialog-register .el-dialog__header{
     display:none;
