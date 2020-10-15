@@ -10,10 +10,10 @@
               <el-input v-model="form.username" autocomplete="off"></el-input>
             </el-form-item>
              <el-form-item label="Mật khẩu" :label-width="formLabelWidth">
-              <el-input type="password" v-model="form.password" autocomplete="off"></el-input>
+              <el-input type="password" @keyup.enter.native="signin" v-model="form.password" autocomplete="off" ></el-input>
             </el-form-item>
             
-            <el-button class="modal-login" type="primary"  @click="signin">Đăng nhập</el-button>
+            <el-button class="modal-login" type="primary"   @click="signin">Đăng nhập</el-button>
             <div class="chua-co-tai-khoan">
               <p>Bạn chưa có tài khoản</p>
               <el-button class="modal-register" type="primary" >Đăng ký</el-button>
@@ -49,11 +49,25 @@ export default {
 }
 </script>
 <style scoped >
-    h2{
+  @media(max-width: 768px){
+    .bg-form {
+      display: none;
+    }
+    .dialog-login .el-dialog__body .el-form {
+      width: 100% !important;
+    }
+    .chua-co-tai-khoan {
+      padding: 10px 0
+    }
+    .login-component .el-dialog {
+      margin-top: 50vh !important;
+    }
+  }
+  h2{
     text-align: left;
     margin:20px 40px;
   }
-.login{
+  .login{
     color: #5392f9;
     background-color:transparent;
     padding: 12px;
@@ -88,13 +102,18 @@ export default {
   }
  
 </style>
-<style >
-   .login-component .el-dialog__wrapper{
+<style>
+  @media(max-width: 768px){
+    .login-component .el-dialog {
+      margin-top: 30vh !important;
+    }
+  }
+  .login-component .el-dialog__wrapper{
     overflow: hidden;
     
   }
   .login-component .el-dialog{
-    margin: 50px auto 0 !important;
+    margin: 50px auto 0 ;
   }
      .dialog-login .el-dialog__header{
     display:none;

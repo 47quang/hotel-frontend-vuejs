@@ -52,6 +52,11 @@
 </script>
 
 <style scoped>
+  @media(max-width: 768px){
+    .el-dropdown-menu {
+      left: 570px !important;
+    } 
+  } 
   .register-component{
     display:inline-block;
   }
@@ -86,6 +91,9 @@
  
   .nav{
         padding: 20px 0;
+  }
+  .el-dropdown-menu {
+      width: 170px !important;
   }
  
 </style>
