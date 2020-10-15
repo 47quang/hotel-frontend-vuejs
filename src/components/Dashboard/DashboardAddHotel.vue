@@ -66,7 +66,7 @@
                 <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
                   <i class="el-icon-zoom-in"></i>
                 </span>
-                <span v-if="!disabled" class="el-upload-list__item-delete" :on-remove="handleRemove(file, hotel.images)">
+                <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove()">
                   <i class="el-icon-delete"></i>
                 </span>
               </span>
@@ -76,7 +76,7 @@
           <el-dialog :visible.sync="dialogVisible">
             <img width="100%" :src="dialogImageUrl" alt="" />
           </el-dialog>
-          <el-button type="warning" icon="el-icon-star-off" round @click="handleUpload">Upload</el-button>
+          <el-button plain class="form__submit" @click="handleUpload">Đăng Ký</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -109,10 +109,8 @@ export default {
     handleSelectDistrict(districtId){
       this.$store.dispatch('fetchWards', districtId);
     },
-    handleRemove(file, fileList) {
-      console.log('image uploaded: ', file);
-      console.log('list images: ', fileList);
-      console.log('list hotel images: ', this.hotel.images);
+    handleRemove() {
+      this.$refs.upload.clearFiles();
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
@@ -212,5 +210,13 @@ export default {
   font-family: inherit;
   font-weight: 700;
   line-height: 1.1;
+}
+.form__submit {
+  margin-top: 10px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #1174a6;
+  background-color: #fff;
+  border-color: #1174a6;
 }
 </style>

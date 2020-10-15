@@ -39,7 +39,7 @@
             </div>
             <div class="hotel-card__content-description">
               <el-tag class="hotel-card__tag" :type="'danger'" effect="dark"><span class="hotel-card__content-title">Hình ảnh</span></el-tag>
-              <el-carousel height="400px" direction="vertical" :autoplay="false">
+              <el-carousel height="800px" direction="vertical" :autoplay="false">
                 <el-carousel-item v-for="image in hotel.images" :key="image">
                   <el-image class="hotel-card__image" :src="image"></el-image>
                 </el-carousel-item>
@@ -247,8 +247,9 @@ export default {
 }
 .hotel-card__image {
   padding-top: 20px;
-  width: 100%;
+  max-width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 .handle-empty-hotel {
   display: flex; 
