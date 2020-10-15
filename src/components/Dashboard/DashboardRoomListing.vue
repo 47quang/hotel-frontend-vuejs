@@ -40,7 +40,7 @@
           </div>
           <div class="room-card__content-description">
             <el-tag class="room-card__tag" :type="'danger'" effect="dark"><span class="room-card__content-title">Hình ảnh</span></el-tag>
-            <el-carousel class="room-card__carousel" height="400px" direction="vertical" :autoplay="false">
+            <el-carousel class="room-card__carousel" height="800px" direction="vertical" :autoplay="false">
               <el-carousel-item v-for="image in hotel.images" :key="image">
                 <el-image class="room-card__image" :src="image"></el-image>
               </el-carousel-item>
@@ -95,8 +95,8 @@
               <div v-if="isImageEmpty(room.images)" class="handle-empty-image">
                 <el-image style="width: 50%; height: 50%" :src="'https://cdn.dribbble.com/users/992274/screenshots/7392790/media/95483df50a0a3324c4cf9ccb1094b825.jpg'"></el-image>
               </div>
-              <el-carousel v-else height="400px" direction="vertical" :autoplay="false">
-                <el-carousel-item  class="room-card__carousel" v-for="image in room.images" :key="image">
+              <el-carousel v-else height="800px" direction="vertical" :autoplay="false" class="room-card__carousel">
+                <el-carousel-item   v-for="image in room.images" :key="image">
                   <el-image class="room-card__image" :src="image"></el-image>
                 </el-carousel-item>
               </el-carousel>
@@ -321,8 +321,9 @@ export default {
   padding-top: 30px;
 }
 .room-card__image {
+  max-width: 100%;
   height: 100%;
-  width: 100%;
+  object-fit: cover;
 }
 .add-hotel__back {
   font-size: 25px;

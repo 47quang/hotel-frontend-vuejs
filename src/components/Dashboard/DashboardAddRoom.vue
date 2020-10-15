@@ -187,7 +187,7 @@
               <span
                 v-if="!disabled"
                 class="el-upload-list__item-delete"
-                @click="handleRemove(file, room.images)"
+                @click="handleRemove()"
               >
                 <i class="el-icon-delete"></i>
               </span>
