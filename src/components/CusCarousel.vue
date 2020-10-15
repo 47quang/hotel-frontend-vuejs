@@ -110,6 +110,19 @@ export default {
 </script>
 
 <style scoped>
+@media (max-width: 768px) {
+  .table {
+    width: 75% !important;
+    top: 60% !important;
+  }
+  .select .el-select {
+    width: 55% !important;
+  };
+  .button-select {
+    width: 45% !important;
+  }
+
+}
 .carousel {
   background-image: url(../assets/carousel.png);
   background-position: bottom center;
@@ -184,6 +197,11 @@ p {
 </style>
 
 <style>
+@media (max-width: 768px) {
+  .button-select {
+    width: 45% !important;
+  }
+} 
 .search .el-select input {
   height: 80px;
 }

@@ -8,6 +8,7 @@ const localUser = JSON.parse(localStorage.getItem('user'));
 const localHotels = JSON.parse(localStorage.getItem('hotels'));
 const localCustomer = JSON.parse(localStorage.getItem('customer'));
 const orderLines = JSON.parse(localStorage.getItem('orderLine'));
+const hotelSearch = JSON.parse(localStorage.getItem('hotelSearch'))
 
 export default new Vuex.Store({
   state: {
@@ -15,7 +16,7 @@ export default new Vuex.Store({
     curOwner: localUser || {},
     customer: {},
     myCustomer:localCustomer || {},
-    hotel: {},
+    hotel: hotelSearch || {},
     provinces: {},
     districts: {},
     wards: {},
