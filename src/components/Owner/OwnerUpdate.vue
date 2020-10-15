@@ -4,10 +4,8 @@
       <el-main>
         <el-row>
           <el-col :span="24">
-            <div>
-              <h3>
-                Chọn/ Đổi hình đại diện hình đại diện trong hồ sơ (không bắt buộc)
-              </h3>
+            <div class="avatar__description">
+              <h3>Chọn/ Đổi hình đại diện hình đại diện trong hồ sơ (không bắt buộc)</h3>
               <p>
                 Tạo thiện cảm từ cái nhìn đầu tiên! Chúng tôi sẽ thêm hình đại diện vào hồ sơ của
                 bạn và hiển thị cho khách hàng hay chủ nhà khác về sau.
@@ -19,12 +17,7 @@
           <el-col :span="24">
             <div class="avatar">
               <el-col class="avatar-content" :span="17">
-               
-                
-                  <el-avatar :size="70" :src="owner.preview"></el-avatar>
-                
-               
-
+                <el-avatar class="hidden-md-and-down" :size="70" :src="owner.preview"></el-avatar>
                 <p>
                   Hình ảnh thật sự có tác dụng. Hãy chọn một bức ảnh rõ ràng và thân thiện để tăng
                   lượng khách đặt phòng.
@@ -32,15 +25,22 @@
               </el-col>
               <el-col class="avatar-update" :span="7">
                 <el-upload
-                  class="avatar-uploader"
+                  class="avatar-uploader hidden-xs-only"
                   action="https://hotel.eyeteam.vn/api.upload/image"
                   name="image"
                   :show-file-list="false"
                   :on-success="handleAvatarSuccess"
                   ref="upload"
-                >
-                  CHỌN/ĐỔI HÌNH ĐẠI DIỆN TRONG HỒ SƠ
-                </el-upload>
+                >CHỌN/ĐỔI HÌNH ĐẠI DIỆN</el-upload>
+                <!-- For small screens -->
+                <el-upload
+                  class="avatar-uploader hidden-sm-and-up"
+                  action="https://hotel.eyeteam.vn/api.upload/image"
+                  name="image"
+                  :show-file-list="false"
+                  :on-success="handleAvatarSuccess"
+                  ref="upload"
+                >CHỌN/ĐỔI HÌNH</el-upload>
               </el-col>
             </div>
           </el-col>
@@ -76,7 +76,7 @@
 
         <div v-if="!success"></div>
 
-        <el-alert v-else title="Success update" type="success" show-icon> </el-alert>
+        <el-alert v-else title="Success update" type="success" show-icon></el-alert>
       </el-main>
     </el-container>
   </div>
@@ -132,8 +132,8 @@
   width: 80%;
   margin: 0 auto;
 }
-.el-col{
-  padding: 0 20px 0 0;
+.el-col {
+  padding-right: 20px;
   font-weight: 600;
 }
 .firstName {
@@ -149,6 +149,9 @@
   padding: 10px 0;
 }
 .address {
+  padding: 10px 0;
+}
+.avatar-uploader {
   padding: 10px 0;
 }
 .avatar-uploader .el-upload {
@@ -174,6 +177,31 @@
   height: 178px;
   display: block;
 }
+/* Responsive */
+@media(max-width: 767px) {
+  .el-col {
+    padding-right: 0px !important;
+  }
+  .avatar__description {
+    font-size: 15px;
+  }
+  .avatar-content {
+    font-size: 15px;
+  }
+  .avatar-uploader {
+    font-size: 15px;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .el-col {
+    padding-right: 0px !important;
+  }
+}
+@media (min-width: 992px) and (max-width: 1200px) {
+  .el-col {
+    padding-right: 0px !important;
+  }
+}
 </style>
 
 <script>
@@ -187,27 +215,28 @@ export default {
         phone: this.$store.state.curOwner.phone,
         address: this.$store.state.curOwner.address,
         email: this.$store.state.curOwner.email,
-        preview: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-        avatar: '',
+        preview:
+          "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+        avatar: ""
       },
-      success: '',
+      success: ""
     };
   },
   computed: {
     avatarUpdate() {
-      return this.$store.state.curOwner.avatar
+      return this.$store.state.curOwner.avatar;
     }
   },
   methods: {
     handleAvatarSuccess(res, file) {
       this.owner.preview = URL.createObjectURL(file.raw);
-      console.log('Res: ', res.data[0]);
+      console.log("Res: ", res.data[0]);
       this.owner.avatar = res.data[0];
     },
     async handleUpdateOwner() {
-      console.log(this.owner)
-      await this.$store.dispatch('updateUser', this.owner);
+      console.log(this.owner);
+      await this.$store.dispatch("updateUser", this.owner);
     }
-  },
+  }
 };
 </script>

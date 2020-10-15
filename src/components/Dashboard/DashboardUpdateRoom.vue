@@ -124,7 +124,7 @@
               <span
                 v-if="!disabled"
                 class="el-upload-list__item-delete"
-                @click="handleRemove(file, room.images)"
+                @click="handleRemove()"
               >
                 <i class="el-icon-delete"></i>
               </span>
@@ -206,10 +206,7 @@ export default {
           return;
         });
     },
-    handleRemove(file, fileList) {
-      console.log('image uploaded: ', file);
-      console.log('list images: ', fileList);
-      console.log('list hotel images: ', this.room.images);
+    handleRemove() {
       this.$refs.upload.clearFiles();
     },
     handlePictureCardPreview(file) {

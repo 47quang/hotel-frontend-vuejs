@@ -1,14 +1,9 @@
 <template>
   <el-container class="dashboard">
-    <el-menu
-      mode="horizontal"
-      background-color="#1174a6"
-      text-color="#fff"
-      active-text-color="#fff"
-    >
-      <el-menu-item index="1" class="hidden-xs-only">
-        <div class="logo">
-          <router-link :to="`/dashboard/${curOwner.id}`">
+    <el-header class="dashboard__header">
+      <div class="dashboard__operations">
+        <div class="logo dashboard__operations hidden-md-and-down">
+          <router-link :to="`/dashboard/${curOwner.id}`" class="dashboard__operations-icon">
             <img
               class="agoda-logo"
               srcset="
@@ -22,48 +17,73 @@
             />
           </router-link>
         </div>
-      </el-menu-item>
-      <el-menu-item index="2">
-        <router-link :to="`/dashboard/${curOwner.id}`"
-          ><i class="el-icon-odometer"></i> Tổng Quan</router-link
-        >
-      </el-menu-item>
-      <el-menu-item index="3">
-        <router-link :to="`/dashboard/${curOwner.id}/listing`"
-          ><i class="el-icon-s-home"></i> Chỗ Ở</router-link
-        >
-      </el-menu-item>
-      <el-menu-item index="4">
-        <router-link :to="`/dashboard/${curOwner.id}/orders`"
-          ><i class="el-icon-s-order"></i> Đơn Hàng</router-link
-        >
-      </el-menu-item>
-      <el-menu-item index="5">
-        <router-link :to="`/dashboard/${curOwner.id}/profile`"
-          ><i class="el-icon-s-custom"></i> Hồ Sơ</router-link
-        >
-      </el-menu-item>
-      <el-menu-item index="6" @click="telegram.dialogVisible = true">
-        <i class="el-icon-s-promotion"></i>
-        Telegram
-      </el-menu-item>
-      <el-menu-item class="user-info">
-        <el-avatar
-          icon="el-icon-user-solid"
-          class="hidden-sm-and-down"
-          style="line-height: 32px;"
-        ></el-avatar>
+        <div class="hidden-sm-and-up">
+          <el-dropdown trigger="click" class="owner-name">
+            <span class="el-dropdown-link">
+              <i class="el-icon-s-operation navbar-toggle"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item>
+                <router-link class="dashboard__operations-icon--black" :to="`/dashboard/${curOwner.id}`"><i class="el-icon-odometer" ></i> Tổng Quan</router-link>
+              </el-dropdown-item>
+              <el-dropdown-item>
+                <router-link class="dashboard__operations-icon--black" :to="`/dashboard/${curOwner.id}/listing`"
+                  ><i class="el-icon-s-home"></i> Chỗ Ở</router-link
+                >
+              </el-dropdown-item>
+              <el-dropdown-item>
+                <router-link class="dashboard__operations-icon--black" :to="`/dashboard/${curOwner.id}/orders`"
+                  ><i class="el-icon-s-order"></i> Đơn Hàng</router-link
+                >
+              </el-dropdown-item>
+              <el-dropdown-item>
+                <router-link class="dashboard__operations-icon--black" :to="`/dashboard/${curOwner.id}/profile`"
+                  ><i class="el-icon-s-custom"></i> Hồ Sơ</router-link
+                >
+              </el-dropdown-item>
+              <el-dropdown-item class="dashboard__operations-icon--black" @click.native="signout">
+                <i class="el-icon-switch-button"></i>Đăng Xuất
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
+        <div class="dashboard__operations-icon  hidden-xs-only">
+          <router-link :to="`/dashboard/${curOwner.id}`"
+            ><i class="el-icon-odometer"></i> Tổng Quan</router-link
+          >
+        </div>
+        <div class="dashboard__operations-icon  hidden-xs-only ">
+          <router-link :to="`/dashboard/${curOwner.id}/listing`"
+            ><i class="el-icon-s-home"></i> Chỗ Ở</router-link
+          >
+        </div>
+        <div class="dashboard__operations-icon  hidden-xs-only ">
+          <router-link :to="`/dashboard/${curOwner.id}/orders`"
+            ><i class="el-icon-s-order"></i> Đơn Hàng</router-link
+          >
+        </div>
+        <div class="dashboard__operations-icon  hidden-xs-only ">
+          <router-link :to="`/dashboard/${curOwner.id}/profile`"
+            ><i class="el-icon-s-custom"></i> Hồ Sơ</router-link
+          >
+        </div>
+        <div class="dashboard__operations-icon hidden-xs-only" @click="telegram.dialogVisible = true">
+          <i class="el-icon-s-promotion"></i>
+          Telegram
+        </div>
+      </div>
+      <div class="dashboard__operations  hidden-xs-only ">
         <el-dropdown trigger="click" class="owner-name">
-          <span class="el-dropdown-link">
+          <span class="el-dropdown-link dashboard__operations-icon">
             {{ `${curOwner.lastname} ${curOwner.firstname}`
             }}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item @click.native="signout">Đăng Xuất</el-dropdown-item>
+            <el-dropdown-item @click.native="signout"><i class="el-icon-switch-button"></i>Đăng Xuất</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-      </el-menu-item>
-    </el-menu>
+      </div>
+    </el-header>
     <el-dialog title="Liên kết Telegram bot" :visible.sync="telegram.dialogVisible" width="15%">
       <div :style="{ width: '60%', margin: '30px auto' }">
         <el-radio-group v-model="telegram.type">
@@ -113,25 +133,38 @@ export default {
 <style scoped>
 a {
   text-decoration: none;
+  color: #fff;
 }
 .dashboard {
   width: 100%;
   background-color: #1174a6;
   padding: 0 10%;
 }
-.el-menu-item i {
-  color: #fff !important;
-  width: max-content;
+.dashboard__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 !important;
 }
-.menu-item {
-  font-size: 16px;
+.dashboard__operations {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.dashboard__operations-icon {
+  padding: 0 15px;
+  font-size: 18px;
+  color: #fff
+}
+.dashboard__operations-icon--black {
+  color: #2A2A2A;
 }
 .el-dropdown-link {
   cursor: pointer;
   color: #fff;
 }
 .el-icon-arrow-down {
-  font-size: 12px;
+  font-size: 15px;
 }
 .owner-name {
   color: #fff;
@@ -142,5 +175,18 @@ a {
 }
 .el-menu.el-menu--horizontal {
   border-bottom: none;
+}
+.navbar-toggle {
+  border: 1px solid #fff;
+  padding: 5px;
+  border-radius: 4px;
+  font-size:18px !important;
+}
+/* Responsive */
+@media(min-width:768px) and (max-width: 992px) {
+  .dashboard__operations-icon {
+    padding: 0 10px;
+    font-size: 18px;
+  }
 }
 </style>
