@@ -38,12 +38,7 @@ export default {
 .el-dialog__footer {
   border-top: 1px solid #e5e5e5;
 }
-.dialog-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 30px;
-}
+
 .footer__content {
   color: #2A2A2E;
 }
@@ -89,8 +84,11 @@ export default {
     min-width: 80px;
     font-size: 10px;
   }
- 
   .signup-dialog {
+    width: 90% !important;
+    padding: 0 5% !important;
+  }
+  .signin-dialog {
     width: 90% !important;
     padding: 0 5% !important;
   }

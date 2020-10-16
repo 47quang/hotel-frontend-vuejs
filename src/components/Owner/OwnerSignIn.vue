@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Popup Sign In -->
-    <el-dialog :modal="false" class="signin-dialog hidden-sm-and-down" title="Đăng Nhập" :visible.sync="dialogSignInVisible">
+    <el-dialog class="signin-dialog" title="Đăng Nhập" :visible.sync="dialogSignInVisible">
       <el-form ref="form" class="signin-dialog-content" :label-position="labelPosition" label-width="100px" :model="form" >
         <el-form-item prop="username" class="form-item" label="Username"
         :rules="[
@@ -24,29 +24,6 @@
         <strong class="footer__content">Bạn chưa có tài khoản?</strong>
         <el-button type="danger" id="signin" @click="closeSignInOpenSignUp()">Tạo tài khoản</el-button>
       </div>
-    </el-dialog>
-
-    <!-- For small screen -->
-    <el-dialog :modal="false" class="signin-dialog--small hidden-md-and-up" title="Đăng Nhập" :visible.sync="dialogSignInVisible">
-      <el-form ref="form" class="signin-dialog-content" :label-position="labelPosition" label-width="100px" :model="form" >
-        <el-form-item prop="username" class="form-item" label="Username"
-        :rules="[
-          { required: true, message: 'Username is required'},
-        ]">
-          <el-input v-model="form.username" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item prop="password" class="form-item" label="Mật Khẩu"
-        :rules="[
-          { required: true, message: 'Password is required'},
-        ]">
-          <el-input type="password" v-model="form.password" autocomplete="off" @keyup.enter.native="signin('form')"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <a href="/forget-password">Quên Mật Khẩu</a>
-        </el-form-item>
-        <el-button type="danger" class="signin-button-form" @click="signin('form')">Đăng Nhập</el-button>
-      </el-form>
-    
       <!-- For small screen -->
       <div slot="footer" class="dialog__footer--small hidden-lg-and-up">
         <div class="footer__content">Bạn chưa có tài khoản?</div>
@@ -175,5 +152,11 @@ a {
 .signin-dialog--small {
   width: 90%;
   padding: 0 5%;
+}
+.dialog-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
 }
 </style>

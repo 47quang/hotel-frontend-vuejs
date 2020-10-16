@@ -41,6 +41,9 @@
                   ><i class="el-icon-s-custom"></i> Hồ Sơ</router-link
                 >
               </el-dropdown-item>
+              <el-dropdown-item class="dashboard__operations-icon--black" @click.native="telegram.dialogVisible = true">
+                <i class="el-icon-s-promotion"></i>Telegram
+              </el-dropdown-item>
               <el-dropdown-item class="dashboard__operations-icon--black" @click.native="signout">
                 <i class="el-icon-switch-button"></i>Đăng Xuất
               </el-dropdown-item>
@@ -84,29 +87,16 @@
         </el-dropdown>
       </div>
     </el-header>
-    <el-dialog title="Liên kết Telegram bot" :visible.sync="telegram.dialogVisible" width="20%" class="hidden-sm-and-down">
+    <el-dialog title="Liên kết Telegram bot" :visible.sync="telegram.dialogVisible">
       <div class="dashboard__tele-options">
-        <el-radio-group v-model="telegram.type">
+        <el-radio-group class="tele__options" v-model="telegram.type">
           <el-radio :label="1">Cá nhân</el-radio>
           <el-radio :label="2">Nhóm</el-radio>
         </el-radio-group>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="telegram.dialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="handleTelegram">Confirm</el-button>
-      </span>
-    </el-dialog>
-    <!-- For small screen -->
-    <el-dialog title="Liên kết Telegram bot" :visible.sync="telegram.dialogVisible" width="40%" class="hidden-md-and-up">
-      <div class="dashboard__tele-options">
-        <el-radio-group v-model="telegram.type">
-          <el-radio :label="1">Cá nhân</el-radio>
-          <el-radio :label="2">Nhóm</el-radio>
-        </el-radio-group>
-      </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="telegram.dialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="handleTelegram">Confirm</el-button>
+        <el-button @click="telegram.dialogVisible = false">Hủy Bỏ</el-button>
+        <el-button type="primary" @click="handleTelegram">Xác Nhận</el-button>
       </span>
     </el-dialog>
   </el-container>
@@ -199,17 +189,32 @@ a {
   width: 70%;
   margin: 30px auto;
 }
+.tele__options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 /* Responsive */
+@media(max-width: 767px) {
+  .dashboard__tele-options {
+    width: 30%;
+    margin: 5px auto;
+  }
+}
 @media(min-width:768px) and (max-width: 992px) {
   .dashboard__operations-icon {
     padding: 0 10px;
     font-size: 18px;
   }
+  .dashboard__tele-options {
+    width: 40%;
+    margin: 5px auto;
+  }
 }
 @media(min-width:992px) and (max-width: 1199px) {
   .dashboard__tele-options {
-    width: 100%;
-    margin: 0;
+    width: 40%;
+    margin: 10px auto;
   }
   .dialog-footer {
     padding: 0px;
@@ -217,7 +222,7 @@ a {
 }
 @media(min-width: 1200px) and (max-width: 1319px) {
   .dashboard__tele-options {
-    width: 90%;
+    width: 40%;
     margin: 10px auto;
   }
   .dialog-footer {
@@ -226,7 +231,7 @@ a {
 }
 @media(min-width: 1320px) and (max-width: 1480px) {
   .dashboard__tele-options {
-    width: 80%;
+    width: 40%;
     margin: 20px auto;
   }
 }
