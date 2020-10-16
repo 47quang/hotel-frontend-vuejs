@@ -30,7 +30,7 @@ export default {
 .el-dialog__title {
   padding: 20px 30px;
   font-weight: 700;
-  font-size: 20px !important;
+  font-size: 20px;
 }
 /* .el-dialog__body {
   padding: 0px !important;
