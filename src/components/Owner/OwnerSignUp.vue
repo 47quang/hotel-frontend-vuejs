@@ -1,9 +1,9 @@
 <template>
   <div>
     <!-- Popup Sign Up -->
-    <el-dialog :modal="false" class="signin-dialog signup-dialog hidden-xs-only" title="Tạo Tài Khoản" :visible.sync="dialogSignUpVisible">
+    <el-dialog class="signin-dialog signup-dialog " title="Tạo Tài Khoản" :visible.sync="dialogSignUpVisible">
       <el-form ref="formSignUp" class="signin-dialog-content" :label-position="labelPosition" label-width="100px" :model="formSignUp" @submit.native.prevent>
-        <el-row :gutter="24">
+        <el-row :gutter="24" class="hidden-xs-only">
           <el-col :span="12">
             <el-form-item prop="firstname" class="form-item" label="Tên"
             :rules="[
@@ -51,6 +51,51 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <!-- For small screen -->
+        <el-row class="hidden-sm-and-up">
+          <el-form-item prop="firstname" class="form-item" label="Tên"
+            :rules="[
+              { required: true, message: 'First name is required'},
+            ]">
+            <el-input v-model="formSignUp.firstname" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item prop="lastname" class="form-item" label="Họ"
+          :rules="[
+            { required: true, message: 'Last name is required'},
+          ]">
+            <el-input v-model="formSignUp.lastname" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item prop="username" class="form-item" label="Username"
+          :rules="[
+            { required: true, message: 'Username is required'},
+          ]">
+            <el-input v-model="formSignUp.username" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item prop="phone" class="form-item" label="Số Điện Thoại"
+          :rules="[
+            { required: true, message: 'Phone is required'},
+          ]">
+            <el-input v-model="formSignUp.phone" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item prop="email" class="form-item" label="Email"
+          :rules="[
+            { required: true, message: 'Email is required'},
+          ]">
+            <el-input type="email" v-model="formSignUp.email" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item prop="password" class="form-item" label="Mật Khẩu"
+          :rules="[
+            { required: true, message: 'Password is required'},
+          ]">
+            <el-input type="password" v-model="formSignUp.password" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item prop="address" class="form-item" label="Địa Chỉ"
+          :rules="[
+            { required: true, message: 'Address is required'},
+          ]">
+            <el-input v-model="formSignUp.address" autocomplete="off" @keyup.enter.native="signup('formSignUp')"></el-input>
+          </el-form-item>
+        </el-row>
         <el-button type="danger" class="signin-button-form" @click="signup('formSignUp')">Tạo tài khoản</el-button>
       </el-form>
       <div slot="footer" class="dialog-footer signup-footer">
@@ -59,59 +104,6 @@
       </div>
     </el-dialog>
     <!-- End of Pop Up -->
-
-    <!-- For small screen -->
-    <el-dialog :modal="false" class="signin-dialog signup-dialog hidden-sm-and-up" title="Tạo Tài Khoản" :visible.sync="dialogSignUpVisible">
-      <el-form ref="formSignUp" class="signin-dialog-content" :label-position="labelPosition" label-width="100px" :model="formSignUp" @submit.native.prevent>
-            <el-form-item prop="firstname" class="form-item" label="Tên"
-            :rules="[
-              { required: true, message: 'First name is required'},
-            ]">
-              <el-input v-model="formSignUp.firstname" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item prop="lastname" class="form-item" label="Họ"
-            :rules="[
-              { required: true, message: 'Last name is required'},
-            ]">
-              <el-input v-model="formSignUp.lastname" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item prop="username" class="form-item" label="Username"
-            :rules="[
-              { required: true, message: 'Username is required'},
-            ]">
-              <el-input v-model="formSignUp.username" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item prop="phone" class="form-item" label="Số Điện Thoại"
-            :rules="[
-              { required: true, message: 'Phone is required'},
-            ]">
-              <el-input v-model="formSignUp.phone" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item prop="email" class="form-item" label="Email"
-            :rules="[
-              { required: true, message: 'Email is required'},
-            ]">
-              <el-input type="email" v-model="formSignUp.email" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item prop="password" class="form-item" label="Mật Khẩu"
-            :rules="[
-              { required: true, message: 'Password is required'},
-            ]">
-              <el-input type="password" v-model="formSignUp.password" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item prop="address" class="form-item" label="Địa Chỉ"
-            :rules="[
-              { required: true, message: 'Address is required'},
-            ]">
-              <el-input v-model="formSignUp.address" autocomplete="off" @keyup.enter.native="signup('formSignUp')"></el-input>
-            </el-form-item>
-        <el-button type="danger" class="signin-button-form" @click="signup('formSignUp')">Tạo tài khoản</el-button>
-      </el-form>
-      <div slot="footer" class="dialog-footer signup-footer">
-        <strong class="footer__content">Bạn đã có tài khoản?</strong>
-        <el-button type="danger" id="signin" @click="closeSignUpOpenSignIn()">Đăng Nhập</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 <script>
@@ -227,5 +219,11 @@ a {
 }
 .signin-button-form {
   width: 100%;
+}
+.dialog-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
 }
 </style>
