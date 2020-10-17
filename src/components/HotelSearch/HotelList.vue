@@ -160,9 +160,9 @@ export default {
         }
         
     },
-    mounted() {
-       console.log(this.hotelSuggestion)
-    }
+    // mounted() {
+    //    console.log(this.hotelSuggestion)
+    // }
     
 }
 </script>

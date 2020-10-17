@@ -173,7 +173,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 80%;
+    width: 90%;
   }
   .filter-row{
     width: 80% !important; 
