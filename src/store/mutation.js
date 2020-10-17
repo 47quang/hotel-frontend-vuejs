@@ -22,6 +22,7 @@ export const mutations = {
   },
   FETCH_DISTRICT(state, payload) {
     state.districts = payload;
+    
   },
   FETCH_HOTELS(state, payload) {
     state.ownerHotels = payload;
@@ -96,5 +97,8 @@ export const mutations = {
   },
   CHANGE_DIALOG_SIGN_UP(state, payload) {
     state.dialogSignUpVisible = payload;
-  }
+  },
+  // FETCH_WARDS_BY_PROVINCE_ID(state, payload) {
+  //   state.wardsByProvinceId = payload
+  // }
 };
