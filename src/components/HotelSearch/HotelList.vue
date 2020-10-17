@@ -3,19 +3,21 @@
         <el-container>
             <el-main>
                 <el-row class="hotelOffer-row">
-                    <el-col  style="padding: 0 5px" :span="6">
+                    <el-col class="hotel-suggest"  style="padding: 0 5px" :span="6">
                         <div class="tileMapWrapper">
                             <img class="static-map-paper" src="../../assets/bkg-map-entry.svg" alt="">
                             <img class="static-map-pin" src="../../assets/img-map-pin-red.svg" alt="">
                             <a href="">XEM VỊ TRÍ</a>
                         </div>
-                        <h4>Đề xuất cho bạn ở Đà Lạt</h4>
-                        <div v-for="item of hotel" :key="item.name" class="hotelOffer-item">
-                            <div class="hotelOffer-image"></div>
+                        <h4>Đề xuất cho bạn ở Lâm Đồng</h4>
+                        <div v-for="s of hotelSuggestion" :key="s.id" class="hotelOffer-item">
+                            <div class="hotelOffer-image">
+                                <img :src="s.images[0]" alt="">
+                            </div>
                             <div class= "hotelOffer-content">
-                                <div class=hotelOffer-name>{{item.name}}</div>
+                                <div class=hotelOffer-name>{{s.name}}</div>
                                 <el-rate
-                                    v-model="item.star"
+                                    v-model="s.rating"
                                     disabled
                                     show-score
                                     text-color="#ff9900"
@@ -23,15 +25,25 @@
                                 </el-rate>
                                 <div class="minPrice">
                                     Giá mỗi đêm rẻ nhất từ
-                                    <h3>{{item.minPrice}}</h3>
+                                    <h3>{{s.minPrice | formatCurrency}}</h3>
                                 </div>
                             </div>
                         </div>
                     </el-col>
-                    <el-col style="padding: 0 5px" :span="18">
-                        <div v-for="hotel in fetchHotel" :key="hotel.id" class="hotelList-item" @click="detailHotel(hotel.id)">
+                    <el-col class="hotel-detail" style="padding: 0 5px" :span="18">
+                        <div v-for="hotel in filterHotel" :key="hotel.id" class="hotelList-item" @click="detailHotel(hotel.id)">
                             <div class="hotelList-image">
-                                <img src="../../assets/hotel2.jpg" alt="">
+                               
+                                <div class="main-image">
+                                     <img :src="hotel.images[0]" alt="">
+                                </div>
+                                <div class="thumbnail-image">
+                                    <el-row>
+                                        <el-col v-for="(thumbnail,index) in hotel.thumbnailImage" :key="index" class="thumbnail-col" :span="6">
+                                            <img :src="thumbnail" alt="">
+                                        </el-col>
+                                    </el-row>
+                                </div>
                             </div>
                             <div class="hotelList-content">
                                     <el-col :span="16" class="content1" >
@@ -42,7 +54,9 @@
                                             text-color="#ff9900"
                                             >
                                         </el-rate>
-                                        <div class="hotelList-district">{{hotel.districtName}}</div>
+                                        <div class="hotelList-address">{{hotel.address}}</div>
+                                        <div class="hotelList-district">{{hotel.districtInfo.name}}</div>
+                                        
                                     </el-col>
                                     <el-col :span="8" class="content2" >
                                         <div class="hotelList-rating">
@@ -69,6 +83,7 @@
 
 <script>
 export default {
+    props:['star', 'range'],
     data() {
         return {
             hotel : [
@@ -100,8 +115,15 @@ export default {
                 review: 'Rất tốt'
             }
             ],
-            hotelList:this.fetchHotel
+            hotelList:this.fetchHotel,
+
+
         }
+    },
+
+    created() {
+        this.$store.dispatch('fetchDistrict',this.fetchHotel[0].provinceId)
+        // this.$store.dispatch('fetchWardsByProvinceId', this.fetchHotel[0].provinceId)
     },
     methods: {
         async detailHotel(id) {
@@ -109,15 +131,79 @@ export default {
             this.$router.push(`/details/${id}`)
         }
     },
-    computed: {
-        fetchHotel() {
-            return this.$store.state.hotel                
+    computed: {    
+        fetchHotel() { 
+            return this.$store.state.hotel
+            .map(h => {
+                h.districtInfo = this.fetchDistrict.find(d => d.id == h.districtId)
+                h.thumbnailImage = h.images.filter(i => h.images.indexOf(i) > 0 && h.images.indexOf(i) <= 8)
+                return h
+            }) 
         },
+
+        
+        filterHotel() {
+            for ( let i=1 ; i<=5 ; i++) {
+                if(this.star === i) {
+                return this.fetchHotel.filter(h => h.rating >=i && this.range[0]*200000  <= h.minPrice && h.minPrice <= this.range[1]*200000)
+                }
+            }
+            return this.fetchHotel.filter(h => this.range[0]*200000  <= h.minPrice && h.minPrice <= this.range[1]*200000)
+        },
+      
+        fetchDistrict() {
+            return this.$store.state.districts
+        },
+
+        hotelSuggestion() {
+            return this.filterHotel.filter(s => this.filterHotel.indexOf(s) > 0 && this.filterHotel.indexOf(s) <=4 )
+        }
+        
+    },
+    mounted() {
+       console.log(this.hotelSuggestion)
     }
+    
 }
 </script>
 
 <style scoped>
+    @media(max-width: 768px){
+        .hotel-suggest {
+            display: none
+        }
+        .hotel-detail {
+            width: 100%
+        }
+        .content1 {
+            border-right: none !important;
+        }
+        .hotelList-rating {
+            width: 40% !important;
+        }
+        .hotelList-image {
+            width: 80% !important ;
+        }
+    }
+   
+    .thumbnail-col {
+        height: 60px;
+        padding: 1px;
+    }
+    .thumbnail-col img{
+        width: 100%;
+        height: 60px;
+        object-fit: cover;
+        
+    }
+    .main-image {
+        height: 180px;
+    }
+    .hotelList-address {
+        padding: 10px 0;
+        font-size: 14px;
+        font-weight: 600;
+    }
     .hotelList-review {
         padding: 10px 0;
     }
@@ -142,12 +228,12 @@ export default {
     }
     .hotelList-rating {
         text-align: center;
-        width: 20%;
+        width: 30%;
         border: 1px solid cadetblue;
         background-color: cadetblue;
         color: white;
         border-radius: 5px;
-        padding: 5px 0;
+        padding: 10px 0;
         font-weight: 600;
     }
     .content1{
@@ -158,12 +244,16 @@ export default {
     }
     .hotelOffer-image {
         display: table-cell;
-        background-image: url(../../assets/hotel1.jpg);
         width: 100px;
         background-position: 50%;
         background-size: cover;
         height: 140px;
         
+    }
+    .hotelOffer-image img {
+        width: 100%;
+        height: 140px;
+        object-fit: cover;
     }
     .hotelOffer-row {
         width: 80%;
@@ -197,6 +287,7 @@ export default {
     }
     .hotelOffer-name {
         letter-spacing: 1px;
+        font-size: 12px;
     }
     .hotelOffer-item h3 {
         font-size: 14px;
@@ -230,8 +321,10 @@ export default {
     .hotelList-image{
         width: 50%;
     }
-    .hotelList-image img{
+    .main-image img{
         width: 100%;
+        height: 180px;
+        object-fit: cover;
     }
     .hotelList-item {
         display: flex;
@@ -243,6 +336,7 @@ export default {
         font-weight: 600;
         letter-spacing: 1px;
         font-size: 14px;
+        padding: 5px 0;
     }
     .hotelList-name {
         font-weight: 600;
@@ -253,6 +347,12 @@ export default {
 </style>
 
 <style >
+    .filter-main {
+        padding: 5px !important;
+    }
+    .content1 .el-rate {
+        padding: 5px 0
+    }
     .hotelContent .el-rate__icon {
         margin-right: 0 !important;
     }
