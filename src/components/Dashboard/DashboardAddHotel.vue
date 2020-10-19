@@ -6,12 +6,14 @@
         <el-divider><h2 class="add-hotel__title">Đăng Ký Khách Sạn</h2></el-divider>
       </div>
       <el-form ref="form" :model="hotel">
+        <!-- Name -->
         <el-form-item>
           <h4 class="form__description-title">Đặt tên cho Khách Sạn</h4>
           <el-card shadow="hover">
             <el-input v-model="hotel.name" maxlength="100" show-word-limit></el-input>
           </el-card>
         </el-form-item>
+        <!-- Address -->
         <el-form-item>
           <h4 class="form__description-title">Địa Chỉ</h4>
           <el-card shadow="hover">
@@ -19,6 +21,7 @@
           </el-card>
         </el-form-item>
         <el-row :gutter="24">
+          <!-- City -->
           <el-col :span="8">
             <el-form-item>
               <h4 class="form__description-title">Thành Phố</h4>
@@ -29,6 +32,7 @@
               </el-card>
             </el-form-item>
           </el-col>
+          <!-- District -->
           <el-col :span="8">
             <el-form-item>
               <h4 class="form__description-title">Quận/Huyện</h4>
@@ -39,6 +43,7 @@
               </el-card>
             </el-form-item>
           </el-col>
+          <!-- Ward -->
           <el-col :span="8">
             <el-form-item>
               <h4 class="form__description-title">Phường/Xã</h4>
@@ -50,12 +55,14 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <!-- Hotel Des. -->
         <el-form-item>
           <h4 class="form__description-title">Mô tả</h4>
           <el-card shadow="hover">
             <el-input type="textarea" :rows="4"  maxlength="5000" show-word-limit v-model="hotel.description"></el-input>
           </el-card>
         </el-form-item>
+        <!-- Photos -->
         <el-form-item>
           <h4 class="form__description-title">Hình ảnh</h4>
           <el-upload accept="image/png, image/jpeg, image/jpg" action="#" list-type="picture-card" :auto-upload="false" ref="upload">

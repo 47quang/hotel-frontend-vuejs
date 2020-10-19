@@ -101,4 +101,7 @@ export const mutations = {
   // FETCH_WARDS_BY_PROVINCE_ID(state, payload) {
   //   state.wardsByProvinceId = payload
   // }
+  FETCH_ALL_ATTRIBUTE_OPTIONS(state, payload) {
+    state.allAttributeOptions = payload;
+  }
 };

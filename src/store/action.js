@@ -715,4 +715,18 @@ export const actions = {
       })
     })
   },  
+  fetchAllAttributeOptions(ctx) {
+    return new Promise((resolve, reject) => {
+      client
+        .get(`${BASE_URL}/api.attribute-option`)
+        .then(resp => resp.data)
+        .then(body => {
+          ctx.commit('FETCH_ALL_ATTRIBUTE_OPTIONS', body.data)
+          resolve(body.data);
+        })
+        .catch(err => {
+          reject(err);
+        })
+    })
+  }
 };
