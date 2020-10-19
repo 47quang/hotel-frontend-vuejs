@@ -168,7 +168,6 @@ export default {
     },
     handleOnChange(file, fileList){
       this.fileList = fileList;
-      console.log('---- Upload: ', this.$refs.upload.uploadFiles);
     },
     async handleUpload(e) {
       e.preventDefault();
