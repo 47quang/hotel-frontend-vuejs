@@ -13,7 +13,7 @@
                   <img :src="hotel.images[1]" alt="">
                 </div>
                 <div class="Sub-image2">
-                  <div class="thumbnail">
+                  <div style="padding-right:3px" class="thumbnail">
                     <img :src="hotel.images[2]" alt="">
                   </div>
                   <div class="thumbnail">
@@ -350,8 +350,9 @@ export default {
 
 .Info-image .Sub-image2 {
   width: 100%;
-  height: 135px;
+  height: 132px;
   display: flex;
+  padding-top: 3px
 }
 
 
@@ -366,7 +367,7 @@ export default {
 }
 .Sub-image2 .thumbnail img{
   width: 100%;
-  height: 135px;
+  height: 132px;
   object-fit: cover;
 }
 
