@@ -27,13 +27,13 @@
                 <el-col :span="11" class="ChildRoom-include">
                   <div class="include-header">Mô tả phòng</div>
                 </el-col>
-                <el-col :span="3" class="ChildRoom-capacity">
+                <el-col :span="2" class="ChildRoom-capacity">
                   <div class="capacity-header">Sức chứa</div>
                 </el-col>
                 <el-col :span="5" class="ChildRoom-price">
                   <div class="price-header">Giá phòng</div>
                 </el-col>
-                <el-col :span="5" class="ChildRoom-book">
+                <el-col :span="6" class="ChildRoom-book">
                   <div class="book-header">Đặt nhiều nhất</div>
                 </el-col>
               </el-row>
@@ -44,7 +44,7 @@
                     <div style="padding: 10px"><strong>Mô tả:</strong> {{ room.description }}</div>
                   </div>
                 </el-col>
-                <el-col :span="3" class="ChildRoom-capacity-content">
+                <el-col :span="2" class="ChildRoom-capacity-content">
                   <div style="padding: 15px 10px; text-align:center">
                     <i class="el-icon-user-solid"></i> x {{ room.capacity }}
                   </div>
@@ -54,7 +54,7 @@
                     {{ room.regularPrice | formatCurrency }}
                   </div>
                 </el-col>
-                <el-col :span="5" class="ChildRoom-book-content">
+                <el-col :span="6" class="ChildRoom-book-content">
                   <el-button
                     type="primary"
                     class="reverseNow"

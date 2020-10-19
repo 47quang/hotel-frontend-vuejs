@@ -110,6 +110,7 @@ export default {
 </script>
 
 <style scoped>
+
 @media (max-width: 768px) {
   .table {
     width: 75% !important;
@@ -120,6 +121,10 @@ export default {
   };
   .button-select {
     width: 45% !important;
+  }
+  .el-select-dropdown {
+    top: 290px;
+    left: 154px;
   }
 
 }

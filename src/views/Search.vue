@@ -7,7 +7,7 @@
         <el-row class="filter-row">
           <el-col class="filter" :span="18">
             <div class="filter-wrapper">
-               <h4>Lọc chỗ nghỉ theo </h4>
+               <h4 style="width: 300px">Lọc chỗ nghỉ theo </h4>
             <el-select class="filter"  v-model="value" clearable placeholder="Giá">
                 <el-option
                   :value="price"
@@ -18,23 +18,23 @@
                                 v-model="range"
                                 range
                                 show-stops
-                                :max="30">
+                                :max="20">
                             </el-slider>  
                           </el-col>
                           <el-col class="price" :span="12">
-                            TỐI THIỂU : {{minPrice}} $
+                            TỐI THIỂU : {{minPrice }}
                           </el-col>
                           <el-col class="price" :span="12">
-                            TỐI ĐA: {{maxPrice}} $
+                            TỐI ĐA: {{maxPrice }} 
                           </el-col>
                         </el-row>
                   </el-option>
               </el-select>
-              <el-select class="filter"  v-model="star" clearable placeholder="Rating">
+              <el-select class="filter"  v-model="star" clearable placeholder="Xếp hạng">
                 <el-option
                   v-for="item in ratings"
                   :key="item.rating"
-                  :value="item.rating+' score '">
+                  :value="item.rating">
                     <el-rate
                       v-model="item.rating"
                       disabled
@@ -83,7 +83,7 @@
             
     </el-main>
   </el-container>
-  <HotelList></HotelList>
+  <HotelList :star="star" :range="range"></HotelList>
   <Footer></Footer>
    
 </div>
@@ -102,7 +102,7 @@ export default {
         search:'',
         star: '',
         value:'',
-        range: [5,20],
+        range: [0,30],
         ratings: [
             {
               rating: 1
@@ -124,13 +124,13 @@ export default {
   },
   computed:{
     price() {
-      return  this.minPrice+'$'+ ' - ' + this.maxPrice+'$'
+      return  this.minPrice   + ' - ' + this.maxPrice 
     },
     minPrice(){
-      return this.range[0]*10 
+      return this.range[0]*200000 
     },
     maxPrice() {
-      return this.range[1]*10 
+      return this.range[1]*200000 
     }
   },
   
@@ -173,7 +173,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 80%;
+    width: 90%;
   }
   .filter-row{
     width: 80% !important; 

@@ -163,6 +163,7 @@ export const actions = {
         .then(resp => resp.data)
         .then(body => {
           ctx.commit('FETCH_DISTRICT', body.data);
+          localStorage.setItem('districts',JSON.stringify(body.data))
           resolve(body);
         })
         .catch(err => {
@@ -185,6 +186,21 @@ export const actions = {
         })
     })
   },
+  // fetchWardsByProvinceId(ctx,payload) {
+  //   return new Promise((resolve, reject) => {
+  //     client
+  //       .get(`${BASE_URL}/api.ward?provinceId=${payload}`)
+  //       .then(resp => resp.data)
+  //       .then(body => {
+         
+  //         ctx.commit('FETCH_WARDS_BY_PROVINCE_ID', body.data);
+  //         resolve(body);
+  //       })
+  //       .catch(err => {
+  //         reject(err);
+  //       })
+  //   })
+  // },
   deleteHotel(ctx, payload) {
     return new Promise((resolve, reject) => {
       client

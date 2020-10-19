@@ -5,8 +5,26 @@
         <el-row class="Info-row">
           <el-col class="Info1">
             <div class="Info-image">
-              <div class="Main-image"></div>
-              <div class="Sub-image"></div>
+              <div class="Main-image">
+                <img :src="hotel.images[0]" alt="">
+              </div>
+              <div class="Sub-image">
+                <div class="Sub-image1">
+                  <img :src="hotel.images[1]" alt="">
+                </div>
+                <div class="Sub-image2">
+                  <div class="thumbnail">
+                    <img :src="hotel.images[2]" alt="">
+                  </div>
+                  <div class="thumbnail">
+                    <img :src="hotel.images[3]" alt="">
+                  </div>
+                  
+                </div>
+  
+                
+              </div>
+              
             </div>
             <div class="InfoDetail">
               <div class="HeaderCerebrum">
@@ -161,16 +179,17 @@
 export default {
   data() {
     return {
-      hotel: {},
+      
     };
   },
-  mounted() {
-    this.hotel = this.$store.state.hotelById;
-  },
+ 
   computed: {
     round() {
       return Math.round(this.hotel.rating * 100) / 100;
     },
+    hotel() {
+      return this.$store.state.hotelById
+    }
   },
 };
 </script>
@@ -312,17 +331,55 @@ export default {
   padding: 10px 0;
   width: 100%;
   display: flex;
+
 }
 .Info-image .Main-image {
-  background-image: url('../../assets/hotel2.jpg');
-  width: 50%;
-  height: 400px;
+  padding-right: 5px;
+  width: 60%;
+  height: 360px;
 }
 .Info-image .Sub-image {
-  background-image: url('../../assets/hotel3.jpg');
-  width: 50%;
-  height: 400px;
+  width: 40%;
+  height: 360px;
 }
+
+.Info-image .Sub-image1 {
+  width: 100%;
+  height: 225px;
+}
+
+.Info-image .Sub-image2 {
+  width: 100%;
+  height: 135px;
+  display: flex;
+}
+
+
+
+.Sub-image1 img {
+  width: 100%;
+  height: 225px;
+  object-fit: cover;
+}
+.Sub-image .thumbnail {
+  width: 50%;
+}
+.Sub-image2 .thumbnail img{
+  width: 100%;
+  height: 135px;
+  object-fit: cover;
+}
+
+
+
+.Main-image img {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+}
+
+
+
 .InfoDetail {
   padding: 10px;
   border: 1px solid rgb(221, 223, 226);
