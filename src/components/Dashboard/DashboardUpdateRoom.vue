@@ -113,10 +113,12 @@
           list-type="picture-card"
           :auto-upload="false"
           ref="upload"
+          :file-list="fileList"
+          :on-change="handleOnChange"
         >
           <i slot="default" class="el-icon-plus"></i>
           <div slot="file" slot-scope="{ file }">
-            <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
+            <img class="el-upload-list__item-thumbnail" :src="file.url" :fit="'contain'" alt="" />
             <span class="el-upload-list__item-actions">
               <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
                 <i class="el-icon-zoom-in"></i>
@@ -124,7 +126,7 @@
               <span
                 v-if="!disabled"
                 class="el-upload-list__item-delete"
-                @click="handleRemove()"
+                @click="handleRemove(file)"
               >
                 <i class="el-icon-delete"></i>
               </span>
@@ -158,29 +160,25 @@ export default {
       dialogImageUrl: '',
       dialogVisible: false,
       disabled: false,
+      fileList: [],
     };
-  },
-  computed: {
-    room(){
-      return this.$store.state.roomById;
-    }
   },
   methods: {
     async submitForm(formName) {
-      const files = this.$refs.upload.uploadFiles.map((f) => f.raw);
+      const files = this.$refs.upload.uploadFiles.filter(f => f.raw).map((f) => f.raw);
       const formData = this.parseFormData(files);
       const { data } = await this.$store.dispatch('uploadImage', formData);
-      this.room.images = data;
-      this.$refs[formName].validate((valid) => {
+      this.room.images = this.$refs.upload.uploadFiles.filter(f => !f.raw).map(f => f.url).concat(data);
+      
+      this.$refs[formName].validate(async(valid) => {
         if (valid) {
-          console.log('this room: ', this.room);
           this.$store.dispatch('updateRoomById', {roomId: this.$route.params.roomId, room: this.room});
           this.$message({
             showClose: true,
             message: 'Đã cập nhật phòng thành công.',
             type: 'success',
           });
-          this.$store.dispatch('fetchRoomsByHotelId', this.$route.params.id);
+          await this.$store.dispatch('fetchRoomsByHotelId', this.$route.params.id);
           this.$router.push(`/hotel/${this.$route.params.id}/room`);
         } else {
           this.$message({
@@ -206,12 +204,16 @@ export default {
           return;
         });
     },
-    handleRemove() {
-      this.$refs.upload.clearFiles();
+    handleRemove(file) {
+      const index = this.fileList.findIndex(f => f.url == file.url);
+      this.fileList.splice(index, 1);
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
+    },
+    handleOnChange(file, fileList){
+      this.fileList = fileList;
     },
     parseFormData(files) {
       let formData = new FormData();
@@ -224,8 +226,21 @@ export default {
       this.$router.push(`/hotel/${this.$route.params.id}/room`);
     }
   },
-  async mounted() {
-    this.$store.dispatch('fetchRoomById', this.$route.params.roomId);
+  computed: {
+    room(){
+      return this.$store.state.roomById;
+    }
+  },
+  watch: {
+    '$store.state.roomById': function(nVal) {
+      this.fileList = nVal.images.map((i, index) => ({
+        name: `${nVal.name.normalize()}-image-${index}`,
+        url: i,
+      }));
+    }
+  },
+  async created() {
+    await this.$store.dispatch('fetchRoomById', this.$route.params.roomId);
   },
 };
 </script>
