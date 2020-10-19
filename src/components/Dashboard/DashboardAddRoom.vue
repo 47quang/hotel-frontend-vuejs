@@ -111,50 +111,26 @@
               Các tiện nghi này có trong hầu hết các chỗ nghỉ thành công của chúng tôi.
             </h4>
           </div>
-          <el-row v-for="(attribute, index) in room.attributes" :key="index" :style="{marginBottom: '20px'}">
-            <el-col :span="10" class="form__add-attribute-select">
-              <el-form-item label="Thuộc Tính:">
-                <el-select
-                  class="attribute-select__selector"
-                  v-model="attribute.attributeId"
-                  clearable
-                  @change="handleSelectAttribute(index)"
-                  placeholder="Vui Lòng Thuộc Tính của Phòng"
-                >
-                  <el-option
-                    v-for="attr in attributes"
-                    :key="attr.id"
-                    :label="attr.name"
-                    :value="attr.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="10" class="form__add-attribute-select">
-              <el-form-item label="Thuộc Tính Phụ:">
-                <el-select
-                  class="attribute-select__selector"
-                  v-model="attribute.attributeOptionId"
-                  clearable
-                  placeholder="Vui Lòng Thuộc Tính Phụ"
-                >
-                  <el-option
-                    v-for="option in attribute.attributeOptions"
-                    :key="option.id"
-                    :label="option.name"
-                    :value="option.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="4">
-              <i class="el-icon-circle-close" @click="handleRemoveAttribute(attribute)"></i>
+          <el-row :gutter="24" v-for="(attribute, index) in room.attributes" :key="index" :style="{marginBottom: '20px'}">
+            <el-col :span="12" v-for="attr in attributes" :key="attr.id" class="form__add-attribute-select">
+              <h4 class="form__description-content" @click="handleSelectAttribute(attr.id)">
+                {{attr.name}}
+              </h4>
+              <el-select
+                class="attribute-select__selector"
+                v-model="attribute.attributeOptionId"
+                clearable
+                placeholder="Vui Lòng Chọn Tùy Chọn"
+              >
+                <el-option
+                  v-for="option in attributeOptions"
+                  :key="option.id"
+                  :label="option.name"
+                  :value="option.id"
+                ></el-option>
+              </el-select>
             </el-col>
           </el-row>
-        </el-row>
-        <el-row>
-          <i class="el-icon-circle-plus"></i>
-          <strong class="form__add-attribute-btn" @click="handleAddAttribute"> Thêm thuộc tính phòng</strong>
         </el-row>
       </el-form-item>
       <!-- Upload images -->
@@ -239,12 +215,16 @@ export default {
       dialogImageUrl: '',
       dialogVisible: false,
       disabled: false,
+      attributeOptions: []
     };
   },
   computed: {
     attributes() {
       return this.$store.state.attributes;
     },
+    allAttributeOptions(){
+      return this.$store.state.allAttributeOptions;
+    }
   },
   methods: {
     async submitForm(formName) {
@@ -313,17 +293,20 @@ export default {
       return formData;
     },
     async handleSelectAttribute(index) {
-      const attribute = this.room.attributes[index];
-      if (attribute.attributeId === undefined) return;
-      attribute.attributeOptions = await this.$store.dispatch('fetchAttributeOptionById', attribute.attributeId);
-      this.$set(this.room.attributes, index, attribute); //Khi thay đổi data là một object trong 1 array thì sẽ không reactive
+      // const attribute = this.room.attributes[index];
+      console.log('index', index)
+      // if (attribute.attributeId === undefined) return;
+      // attribute.attributeOptions = await this.$store.dispatch('fetchAttributeOptionById', attribute.attributeId);
+      this.attributeOptions = await this.$store.dispatch('fetchAttributeOptionById', index);
+      // this.$set(this.room.attributes, index, this.attribute); //Khi thay đổi data là một object trong 1 array thì sẽ không reactive
     },
     backRoomListing() {
       this.$router.push(`/hotel/${this.$route.params.id}/room`);
     }
   },
   async mounted() {
-    this.$store.dispatch('fetchAttributes');
+    await this.$store.dispatch('fetchAttributes');
+    await this.$store.dispatch('fetchAllAttributeOptions');
   },
 };
 </script>
