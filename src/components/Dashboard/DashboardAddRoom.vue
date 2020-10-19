@@ -104,33 +104,23 @@
       </el-form-item>
       <!-- Add Attributes -->
       <el-form-item>
-        <el-row :gutter="24" class="form__add-attribute">
-          <div>
-            <h4 class="form__description-title">Tiêu chuẩn</h4>
-            <h4 class="form__description-content">
-              Các tiện nghi này có trong hầu hết các chỗ nghỉ thành công của chúng tôi.
-            </h4>
-          </div>
-          <el-row :gutter="24" v-for="(attribute, index) in room.attributes" :key="index" :style="{marginBottom: '20px'}">
-            <el-col :span="12" v-for="attr in attributes" :key="attr.id" class="form__add-attribute-select">
-              <h4 class="form__description-content" @click="handleSelectAttribute(attr.id)">
-                {{attr.name}}
-              </h4>
-              <el-select
-                class="attribute-select__selector"
-                v-model="attribute.attributeOptionId"
-                clearable
-                placeholder="Vui Lòng Chọn Tùy Chọn"
-              >
-                <el-option
-                  v-for="option in attributeOptions"
-                  :key="option.id"
-                  :label="option.name"
-                  :value="option.id"
-                ></el-option>
-              </el-select>
-            </el-col>
-          </el-row>
+        <el-row v-for="(attribute, index) in attributes" :key="index">
+          <h4 class="form__description-content" @click="handleSelectAttribute(attribute.id)">
+            {{ attribute.name }}
+          </h4>
+          <el-select
+            class="attribute-select__selector"
+            v-model="attribute.attributeOptionId"
+            clearable
+            placeholder="Vui Lòng Chọn Tùy Chọn"
+          >
+            <el-option
+              v-for="option in filterAttributeOption(attribute.id)"
+              :key="option.id"
+              :label="option.name"
+              :value="option.id"
+            ></el-option>
+          </el-select>
         </el-row>
       </el-form-item>
       <!-- Upload images -->
@@ -160,11 +150,7 @@
               <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
                 <i class="el-icon-zoom-in"></i>
               </span>
-              <span
-                v-if="!disabled"
-                class="el-upload-list__item-delete"
-                @click="handleRemove()"
-              >
+              <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove()">
                 <i class="el-icon-delete"></i>
               </span>
             </span>
@@ -215,23 +201,27 @@ export default {
       dialogImageUrl: '',
       dialogVisible: false,
       disabled: false,
-      attributeOptions: []
+      attributes: [],
     };
   },
   computed: {
-    attributes() {
-      return this.$store.state.attributes;
-    },
-    allAttributeOptions(){
+    allAttributeOptions() {
       return this.$store.state.allAttributeOptions;
-    }
+    },
   },
   methods: {
+    filterAttributeOption(id) {
+      return this.$store.state.allAttributeOptions.filter((o) => o.attributeId === id);
+    },
     async submitForm(formName) {
       const files = this.$refs.upload.uploadFiles.map((f) => f.raw);
       const formData = this.parseFormData(files);
       const { data } = await this.$store.dispatch('uploadImage', formData);
       this.room.images = data;
+      this.room.attributes = this.attributes.map((a) => ({
+        attributeId: a.id,
+        ...a,
+      }));
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$store.dispatch('createRoom', this.room);
@@ -252,15 +242,17 @@ export default {
         }
       });
     },
-    handleAddAttribute(){
+    handleAddAttribute() {
       this.room.attributes.push({
         attributeId: '',
         attributeOptionId: '',
-      })
+      });
     },
-    handleRemoveAttribute(attribute){
-      const {attributeId, attributeOptionId} = attribute;
-      const index = this.room.attributes.findIndex(a => a.attributeId === attributeId && a.attributeOptionId === attributeOptionId);
+    handleRemoveAttribute(attribute) {
+      const { attributeId, attributeOptionId } = attribute;
+      const index = this.room.attributes.findIndex(
+        (a) => a.attributeId === attributeId && a.attributeOptionId === attributeOptionId
+      );
       if (index === undefined) return;
       this.room.attributes.splice(index, 1);
     },
@@ -294,7 +286,7 @@ export default {
     },
     async handleSelectAttribute(index) {
       // const attribute = this.room.attributes[index];
-      console.log('index', index)
+      console.log('index', index);
       // if (attribute.attributeId === undefined) return;
       // attribute.attributeOptions = await this.$store.dispatch('fetchAttributeOptionById', attribute.attributeId);
       this.attributeOptions = await this.$store.dispatch('fetchAttributeOptionById', index);
@@ -302,10 +294,11 @@ export default {
     },
     backRoomListing() {
       this.$router.push(`/hotel/${this.$route.params.id}/room`);
-    }
+    },
   },
   async mounted() {
     await this.$store.dispatch('fetchAttributes');
+    this.attributes = this.$store.state.attributes.map((a) => ({ ...a, attributeOptionId: '' }));
     await this.$store.dispatch('fetchAllAttributeOptions');
   },
 };
@@ -395,7 +388,7 @@ export default {
   font-size: 14px;
   margin: 0 0 10px;
 }
-.add-room__back{
+.add-room__back {
   font-size: 25px;
   cursor: pointer;
 }

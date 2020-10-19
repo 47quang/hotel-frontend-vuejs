@@ -43,7 +43,7 @@ export default new Vuex.Store({
     attributeById: {},
     dialogSignInVisible: false,
     dialogSignUpVisible: false,
-    allAttributeOptions: {}
+    allAttributeOptions: []
   },
   mutations,
   actions,
