@@ -1,5 +1,5 @@
 <template>
-  <el-container class="dashboard">
+  <div class="dashboard">
     <el-header class="dashboard__header">
       <div class="dashboard__operations">
         <div class="logo dashboard__operations hidden-md-and-down">
@@ -99,7 +99,7 @@
         <el-button type="primary" @click="handleTelegram">Xác Nhận</el-button>
       </span>
     </el-dialog>
-  </el-container>
+  </div>
 </template>
 <script>
 import { encrypt } from '../../utils/crypto';
@@ -139,7 +139,6 @@ a {
   color: #fff;
 }
 .dashboard {
-  width: 100%;
   background-color: #1174a6;
   padding: 0 10%;
 }
