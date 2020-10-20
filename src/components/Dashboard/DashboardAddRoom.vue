@@ -104,23 +104,26 @@
       </el-form-item>
       <!-- Add Attributes -->
       <el-form-item>
-        <el-row v-for="(attribute, index) in attributes" :key="index">
-          <h4 class="form__description-content" @click="handleSelectAttribute(attribute.id)">
-            {{ attribute.name }}
-          </h4>
-          <el-select
-            class="attribute-select__selector"
-            v-model="attribute.attributeOptionId"
-            clearable
-            placeholder="Vui Lòng Chọn Tùy Chọn"
-          >
-            <el-option
-              v-for="option in filterAttributeOption(attribute.id)"
-              :key="option.id"
-              :label="option.name"
-              :value="option.id"
-            ></el-option>
-          </el-select>
+        <h4 class="form__description-title">Các Tiện Nghi của Phòng</h4>
+        <el-row :gutter="24">
+          <el-col :span="12" v-for="(attribute, index) in attributes" :key="index">
+            <h4 class="form__description-content" @click="handleSelectAttribute(attribute.id)">
+              {{ attribute.name }}
+            </h4>
+            <el-select
+              class="attribute-select__selector"
+              v-model="attribute.attributeOptionId"
+              clearable
+              placeholder="Vui Lòng Chọn Tùy Chọn"
+            >
+              <el-option
+                v-for="option in filterAttributeOption(attribute.id)"
+                :key="option.id"
+                :label="option.name"
+                :value="option.id"
+              ></el-option>
+            </el-select>
+          </el-col>
         </el-row>
       </el-form-item>
       <!-- Upload images -->
@@ -380,7 +383,7 @@ export default {
   padding-right: 0 !important;
 }
 .attribute-select__selector {
-  width: 50%;
+  width: 70%;
 }
 .form__add-attribute-btn {
   cursor: pointer;
