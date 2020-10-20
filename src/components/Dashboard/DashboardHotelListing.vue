@@ -255,6 +255,10 @@ export default {
   display: flex; 
   justify-content: center;
 }
+.el-row {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
 @media (max-width: 992px) {
   .hotel-card__content {
     padding-left: 20px !important;
