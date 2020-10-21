@@ -161,7 +161,7 @@
         <el-table :data="tableData" style="width: 100%">
           <el-table-column fixed prop="name" label="Tên phòng" width="150"> </el-table-column>
           <el-table-column prop="quantity" label="Số lượng" width="120"> </el-table-column>
-          <el-table-column prop="price" label="Giá" width="120"> </el-table-column>
+          <el-table-column prop="price" label="Giá" width="120"></el-table-column>
           <el-table-column prop="start" label="Ngày bắt đầu" width="150"> </el-table-column>
           <el-table-column prop="end" label="Ngày kết thúc" width="300"> </el-table-column>
           <el-table-column fixed="right" label="Thao tác" width="120">
@@ -245,6 +245,8 @@ export default {
           orderLines.splice(orderLineIndex, 1);
           this.$store.commit('UPDATE_ORDERLINE', orderLines);
         }
+        this.total = 0;
+        this.getTotal(this.orderLines);
       })
       .catch(() => {
         return;
@@ -276,14 +278,17 @@ export default {
       for (const order of Array.from(orderLines)) {
         this.total += order.price * order.quantity;
       }
-    }
+      return this.total = this.$options.filters.formatCurrency(this.total);
+    },
+  },
+  created(){
+    this.getTotal(this.orderLines);
   },
   async mounted() {
     await this.$store.dispatch('fetchHotelById', this.orderLines[0].hotelId); 
     await this.$store.dispatch('fetchWardById', this.hotel.wardId);
     await this.$store.dispatch('fetchDistrictById', this.hotel.districtId);
     await this.$store.dispatch('fetchProvinceById', this.hotel.provinceId);
-    await this.getTotal(this.orderLines);
   },
 };
 </script>
