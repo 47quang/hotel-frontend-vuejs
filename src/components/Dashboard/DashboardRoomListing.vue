@@ -66,7 +66,7 @@
             ></el-button>
           </div>
           <div class="room-card__body">
-            <div class="room-card__info">
+            <div class="room-card__info hidden-xs-only">
               <div>
                 <el-tag class="room-card__tag" :type="'success'" effect="dark"><span class="room-card__content-title">Số Lượng Phòng</span></el-tag>
                 <span class="text-justify">{{room.stock}}</span>
@@ -80,6 +80,21 @@
                 <span class="text-justify">{{room.regularPrice | formatCurrency}}</span>
               </div>
               <div>
+                <el-tag class="room-card__tag" :type="'danger'" effect="dark"><span class="room-card__content-title">Giá Giảm</span></el-tag>
+                <span class="text-justify">{{room.salePrice | formatCurrency}}</span>
+              </div>
+            </div>
+            <!-- Small Screens -->
+            <div class="room-card__info--small hidden-sm-and-up">
+              <div class="room-card__justify">
+                <el-tag class="room-card__tag" :type="'success'" effect="dark"><span class="room-card__content-title">Số Lượng Phòng</span></el-tag>
+                <span class="text-justify">{{room.stock}}</span>
+                <el-tag class="room-card__tag" :type="'warning'" effect="dark"><span class="room-card__content-title">Sức Chứa Mỗi Phòng</span></el-tag>
+                <span class="text-justify">{{room.capacity}}</span>
+              </div>
+              <div class="room-card__justify">
+                <el-tag class="room-card__tag" effect="dark"><span class="room-card__content-title">Giá Gốc</span></el-tag>
+                <span class="text-justify">{{room.regularPrice | formatCurrency}}</span>
                 <el-tag class="room-card__tag" :type="'danger'" effect="dark"><span class="room-card__content-title">Giá Giảm</span></el-tag>
                 <span class="text-justify">{{room.salePrice | formatCurrency}}</span>
               </div>
@@ -339,9 +354,22 @@ export default {
   justify-content: flex-start;
   align-items: flex-end;
 }
+.room-card__info--small {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: baseline;
+  margin-top: 10px;
+}
 .room-card__info {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+.room-card__justify {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
 }
 .room-card__tag--image {
   background-color: #ffa726 !important;
