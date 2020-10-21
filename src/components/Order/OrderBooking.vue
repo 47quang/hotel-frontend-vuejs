@@ -86,7 +86,7 @@
               </div>
               <el-image v-for="image in hotel.images" :key="image" :fit="'cover'"
                 v-else
-                style="width: 150px; height: 150px"
+                class="booking__hotel-des"
                 :src="image"
                 :preview-src-list="hotel.images"
               >
@@ -233,12 +233,22 @@ export default {
       } else return true;
     },
     handleRemove(index, row) {
-      const orderLines = this.$store.state.orderLines;
-      const orderLineIndex = orderLines.findIndex((l) => l.id == row.id);
-      if (orderLineIndex != -1) {
-        orderLines.splice(orderLineIndex, 1);
-        this.$store.commit('UPDATE_ORDERLINE', orderLines);
-      }
+      this.$confirm('Sẽ xóa phòng ra khỏi giỏ hàng. Tiếp tục?', 'Cảnh Báo', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Hủy bỏ',
+        type: 'warning',
+      })
+      .then(() => {
+        const orderLines = this.$store.state.orderLines;
+        const orderLineIndex = orderLines.findIndex((l) => l.id == row.id);
+        if (orderLineIndex != -1) {
+          orderLines.splice(orderLineIndex, 1);
+          this.$store.commit('UPDATE_ORDERLINE', orderLines);
+        }
+      })
+      .catch(() => {
+        return;
+      });
     },
     async handlePurchase() {
       for (let i = 0; i < this.orderLines.length - 1; i++) {
@@ -408,5 +418,10 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+.booking__hotel-des {
+  width: 150px; 
+  height: 150px; 
+  padding: 5%;
 }
 </style>
