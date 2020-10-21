@@ -39,11 +39,9 @@
             </div>
             <div class="hotel-card__content-description">
               <el-tag class="hotel-card__tag" :type="'danger'" effect="dark"><span class="hotel-card__content-title">Hình ảnh</span></el-tag>
-              <el-carousel height="800px" direction="vertical" :autoplay="false">
-                <el-carousel-item v-for="image in hotel.images" :key="image">
-                  <el-image class="hotel-card__image" :src="image"></el-image>
-                </el-carousel-item>
-              </el-carousel>
+              <div class="hotel-card__content-images">
+                <el-image class="hotel-card__image" v-for="image in hotel.images" :key="image" :src="image" :fit="'contain'"></el-image>
+              </div>
             </div>
           </div>
           <router-link v-if="checkPath()" :to="`/hotel/${hotel.id}/room`" class="edit-hotel">Chỉnh Sửa Thông Tin</router-link>
@@ -233,7 +231,6 @@ export default {
   text-align: justify;
   line-height: 1.2;
   margin: 10px;
-  font-weight: 700;
 }
 .hotel-card__content {
   padding-left: 0px !important;
@@ -245,11 +242,15 @@ export default {
 .hotel-card__content-description {
   padding-top: 20px;
 }
+.hotel-card__content-images{
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
 .hotel-card__image {
-  padding-top: 20px;
-  max-width: 100%;
-  height: 100%;
-  object-fit: cover;
+  padding: 1%;
+  width: 30%;
+  height: 30%;
 }
 .handle-empty-hotel {
   display: flex; 
