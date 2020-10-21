@@ -41,7 +41,7 @@
               <el-badge :value="orderLines.length" class="item">
                 <i
                   class="el-icon-shopping-cart-full"
-                  :style="{ color: 'white', fontSize: '30px' }"
+                  :style="{ color: 'white', fontSize: '30px', lineHeight: '50px' }"
                   @click="jumpBooking"
                 ></i>
               </el-badge>
@@ -79,7 +79,7 @@ export default {
   },
   computed: {
     orderLines(){
-      return this.$store.state.orderLines;
+      return this.$store.state.orderLines || 0;
     }
   },
   methods:{
