@@ -196,7 +196,10 @@ export default {
   color: #1174a6;
   text-decoration: none;
 }
-
+.el-row {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
 
 /* Responsive */
 @media (max-width: 768px){

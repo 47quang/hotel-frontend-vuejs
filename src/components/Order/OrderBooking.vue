@@ -1,13 +1,13 @@
 <template>
   <div>
-    <el-row class="booking" :gutter="24">
-      <el-col :span="16">
+    <el-row class="booking hidden-md-and-down" :gutter="24">
+      <el-col :span="14">
         <!-- Payment Method(s) -->
         <el-card>
           <h4 class="booking__form-title">Chọn cách thanh toán</h4>
           <el-radio :value="1" :label="1">Thanh toán sau</el-radio>
         </el-card>
-
+        <!-- Customers Booking Form -->
         <el-card class="booking__card">
           <h4 class="booking__form-title">Vui lòng điền thông tin của bạn</h4>
           <el-form :label-position="'top'">
@@ -16,7 +16,7 @@
               prop="fullname"
               label="Họ và Tên:"
               :rules="[
-                { required: false, message: 'Vui lòng điền họ và tên của bạn', trigger: 'blur' },
+                { required: true, message: 'Vui lòng điền họ và tên của bạn', trigger: 'blur' },
               ]"
             >
               <el-input v-model="order.fullname"></el-input>
@@ -26,7 +26,7 @@
               prop="email"
               label="Email:"
               :rules="[
-                { required: false, message: 'Vui lòng nhập email của bạn', trigger: 'blur' },
+                { required: true, message: 'Vui lòng nhập email của bạn', trigger: 'blur' },
                 {
                   type: 'email',
                   message: 'Vui lòng nhập đúng email của bạn',
@@ -41,55 +41,58 @@
               prop="phone"
               label="Số Điện Thoại:"
               :rules="[
-                { required: false, message: 'Vui lòng nhập số điện thoại của bạn', trigger: 'blur' },
+                { required: true, message: 'Vui lòng nhập số điện thoại của bạn', trigger: 'blur' },
               ]"
             >
               <el-input v-model="order.phone"></el-input>
             </el-form-item>
           </el-form>
         </el-card>
-
+        <!-- Add To Cart -->
         <el-card class="booking__card">
           <h4 class="booking__form-title">Giỏ hàng</h4>
           <el-table :data="tableData" style="width: 100%">
             <el-table-column fixed prop="name" label="Tên phòng" width="150"> </el-table-column>
             <el-table-column prop="quantity" label="Số lượng" width="120"> </el-table-column>
             <el-table-column prop="price" label="Giá" width="120"> </el-table-column>
-            <el-table-column prop="start" label="Ngày bắt đầu" width="120"> </el-table-column>
+            <el-table-column prop="start" label="Ngày bắt đầu" width="150"> </el-table-column>
             <el-table-column prop="end" label="Ngày kết thúc" width="300"> </el-table-column>
-
             <el-table-column fixed="right" label="Thao tác" width="120">
               <template slot-scope="scope">
-                <el-button @click="handleRemove(scope.$index, scope.row)" type="text" size="small"
+                <el-button @click="handleRemove(scope.$index, scope.row)" type="danger" size="small" plain icon="el-icon-delete"
                   >Xóa</el-button
                 >
               </template>
             </el-table-column>
           </el-table>
+          <!-- Get Total -->
+          <h4 class="booking__form-title">
+            Tổng Hóa Đơn:
+            <span class="booking__pricing-footer">{{this.total}}</span>
+          </h4>
         </el-card>
-
+        <!-- Confirm Booking -->
         <div class="booking__confirm booking__card">
           <el-button class="booking__btn" @click="handlePurchase">Thanh toán</el-button>
         </div>
-        <!-- Customers Booking Form -->
       </el-col>
-      <el-col :span="8">
-        <!-- Hotel Short Description -->
+      <!-- Hotel Short Description -->
+      <el-col :span="10">
         <el-card>
           <el-row class="booking__hotel-info" :gutter="24">
-            <el-col :span="8">
+            <el-col class="booking__hotel-images" :span="12">
               <div v-if="hasImages()" slot="error" class="image-slot">
                 <i class="el-icon-picture-outline"></i>
               </div>
-              <el-image
+              <el-image v-for="image in hotel.images" :key="image" :fit="'cover'"
                 v-else
                 style="width: 150px; height: 150px"
-                :src="hotel.images"
+                :src="image"
                 :preview-src-list="hotel.images"
               >
               </el-image>
             </el-col>
-            <el-col :span="16" class="booking__hotel-details">
+            <el-col :span="12" class="booking__hotel-details">
               <h4 class="booking__hotel-name">{{ this.hotel.name }}</h4>
               <div class="booking__hotel-address">
                 <span
@@ -101,33 +104,81 @@
             </el-col>
           </el-row>
         </el-card>
-        <!-- Room Details -->
-        <el-card class="booking__room-info booking__card">
-          <div class="booking__room-details">
-            <h4>Room name</h4>
-            <h4 class="booking__room-date">
-              Date that the customer stays and leaves, how many nights they stay
-              <span class="booking__room-change">Change</span>
-            </h4>
-          </div>
-          <div class="booking__room-capacity">
-            <i class="el-icon-user booking__room-icon"></i>
-            <h4>Capacity</h4>
-          </div>
-        </el-card>
-        <!-- Pricing -->
-        <el-card class="booking__pricing booking__card">
-          <div slot="header" class="booking__pricing-header">
-            <h4>Original Price (x room x x nights)</h4>
-            <h4>Sell Price (x room x x nights)</h4>
-          </div>
-          <div class="booking__pricing-footer">
-            <h4>Total</h4>
-            <h4>Include Tax</h4>
-          </div>
-        </el-card>
       </el-col>
     </el-row>
+
+    <!-- Small screens -->
+    <div class="booking hidden-lg-and-up">
+      <!-- Payment Method(s) -->
+      <el-card>
+        <h4 class="booking__form-title">Chọn cách thanh toán</h4>
+        <el-radio :value="1" :label="1">Thanh toán sau</el-radio>
+      </el-card>
+      <!-- Customers Booking Form -->
+      <el-card class="booking__card">
+        <h4 class="booking__form-title">Vui lòng điền thông tin của bạn</h4>
+        <el-form :label-position="'top'">
+          <el-form-item
+            class="booking__form-content"
+            prop="fullname"
+            label="Họ và Tên:"
+            :rules="[
+              { required: true, message: 'Vui lòng điền họ và tên của bạn', trigger: 'blur' },
+            ]"
+          >
+            <el-input v-model="order.fullname"></el-input>
+          </el-form-item>
+          <el-form-item
+            class="booking__form-content"
+            prop="email"
+            label="Email:"
+            :rules="[
+              { required: true, message: 'Vui lòng nhập email của bạn', trigger: 'blur' },
+              {
+                type: 'email',
+                message: 'Vui lòng nhập đúng email của bạn',
+                trigger: ['blur', 'change'],
+              },
+            ]"
+          >
+            <el-input v-model="order.email"></el-input>
+          </el-form-item>
+          <el-form-item
+            class="booking__form-content"
+            prop="phone"
+            label="Số Điện Thoại:"
+            :rules="[
+              { required: true, message: 'Vui lòng nhập số điện thoại của bạn', trigger: 'blur' },
+            ]"
+          >
+            <el-input v-model="order.phone"></el-input>
+          </el-form-item>
+        </el-form>
+      </el-card>
+      <!-- Add To Cart -->
+      <el-card class="booking__card">
+        <h4 class="booking__form-title">Giỏ hàng</h4>
+        <el-table :data="tableData" style="width: 100%">
+          <el-table-column fixed prop="name" label="Tên phòng" width="150"> </el-table-column>
+          <el-table-column prop="quantity" label="Số lượng" width="120"> </el-table-column>
+          <el-table-column prop="price" label="Giá" width="120"> </el-table-column>
+          <el-table-column prop="start" label="Ngày bắt đầu" width="150"> </el-table-column>
+          <el-table-column prop="end" label="Ngày kết thúc" width="300"> </el-table-column>
+          <el-table-column fixed="right" label="Thao tác" width="120">
+            <template slot-scope="scope">
+              <el-button @click="handleRemove(scope.$index, scope.row)" type="danger" size="small" plain icon="el-icon-delete"
+                >Xóa</el-button
+              >
+            </template>
+          </el-table-column>
+        </el-table>
+        <!-- Get Total -->
+        <h4 class="booking__form-title">
+          Tổng Hóa Đơn:
+          <span class="booking__pricing-footer">{{this.total}}</span>
+        </h4>
+      </el-card>
+    </div>
   </div>
 </template>
 <script>
@@ -150,6 +201,7 @@ export default {
           },
         ],
       },
+      total: 0
     };
   },
   computed: {
@@ -210,12 +262,18 @@ export default {
         console.log('---- Error: ', err);
       }
     },
+    getTotal(orderLines) {
+      for (const order of Array.from(orderLines)) {
+        this.total += order.price * order.quantity;
+      }
+    }
   },
   async mounted() {
-    await this.$store.dispatch('fetchHotelById', 6); //Hardcode
+    await this.$store.dispatch('fetchHotelById', this.orderLines[0].hotelId); 
     await this.$store.dispatch('fetchWardById', this.hotel.wardId);
     await this.$store.dispatch('fetchDistrictById', this.hotel.districtId);
     await this.$store.dispatch('fetchProvinceById', this.hotel.provinceId);
+    await this.getTotal(this.orderLines);
   },
 };
 </script>
@@ -340,5 +398,15 @@ export default {
 }
 .booking__pricing-footer {
   padding: 16px;
+}
+.el-row {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+.booking__hotel-images{
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 </style>
