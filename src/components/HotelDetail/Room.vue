@@ -245,6 +245,12 @@ export default {
       const orderLine = JSON.parse(localStorage.getItem('orderLine')) || [];
       orderLine.push(payload);
       this.$store.commit('UPDATE_ORDERLINE', orderLine);
+      this.$message({
+        showClose: true,
+        message: 'Đã thêm thành công.',
+        type: 'success'
+      });
+      this.dialogDetailVisible = false;
     },
     renderCellCalender(month, day) {
       const transaction = this.roomDetail.transaction.find((t) => {
