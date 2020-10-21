@@ -73,7 +73,7 @@ export const mutations = {
     state.orderById = payload;
   },
   UPDATE_ORDERLINE(state, payload) {
-    localStorage.setItem('orderLine', JSON.stringify([]));
+    localStorage.setItem('orderLine', JSON.stringify(payload));
     state.orderLines = payload;
   },
   CUSTOMER_UPDATE(state, payload) {
