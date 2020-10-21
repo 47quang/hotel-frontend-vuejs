@@ -82,7 +82,21 @@
                     <el-row>
                       <el-calendar>
                         <template slot="dateCell" slot-scope="{ date, data }">
-                          <div :class="data.isSelected ? 'is-selected' : ''">
+                          <div
+                            :class="data.isSelected ? 'is-selected' : ''"
+                            :style="
+                              renderCellCalender(...data.day.split('-').slice(1))
+                                ? {
+                                    width: '100%',
+                                    height: '100%',
+                                  }
+                                : {
+                                    backgroundColor: 'rgb(221, 223, 226)',
+                                    width: '100%',
+                                    height: '100%',
+                                  }
+                            "
+                          >
                             <div>
                               {{
                                 data.day
@@ -98,9 +112,9 @@
                                   ? room.stock -
                                       renderCellCalender(...data.day.split('-').slice(1)).sum >
                                     0
-                                    ? '✔️'
+                                    ? ''
                                     : '❌'
-                                  : '➖'
+                                  : ''
                               }}
                             </div>
                           </div>
@@ -397,5 +411,14 @@ export default {
 .el-range-separator::before {
   content: none !important;
   background-color: #fff;
+}
+.el-calendar-table .el-calendar-day {
+  padding: 0px !important;
+}
+.el-calendar-table .el-calendar-day > div {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-direction: column !important;
 }
 </style>
