@@ -35,12 +35,11 @@ export const actions = {
           resolve(body);
         })
         .catch((err) => {
-          reject(err);
-          alert('Your username was wrong! Please re-try');
+          reject(err.response.data);
         });
     });
   },
-    ownerSignIn(ctx, payload) {
+  ownerSignIn(ctx, payload) {
     return new Promise((resolve, reject) => {
       client
         .post(`${BASE_URL}/api.user/login`, payload)

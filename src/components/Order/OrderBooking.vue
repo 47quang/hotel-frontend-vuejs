@@ -16,7 +16,7 @@
               prop="fullname"
               label="Họ và Tên:"
               :rules="[
-                { required: true, message: 'Vui lòng điền họ và tên của bạn', trigger: 'blur' },
+                { required: false, message: 'Vui lòng điền họ và tên của bạn'},
               ]"
             >
               <el-input v-model="order.fullname"></el-input>
@@ -26,12 +26,7 @@
               prop="email"
               label="Email:"
               :rules="[
-                { required: true, message: 'Vui lòng nhập email của bạn', trigger: 'blur' },
-                {
-                  type: 'email',
-                  message: 'Vui lòng nhập đúng email của bạn',
-                  trigger: ['blur', 'change'],
-                },
+                { required: false, message: 'Vui lòng nhập email của bạn'},
               ]"
             >
               <el-input v-model="order.email"></el-input>
@@ -41,7 +36,7 @@
               prop="phone"
               label="Số Điện Thoại:"
               :rules="[
-                { required: true, message: 'Vui lòng nhập số điện thoại của bạn', trigger: 'blur' },
+                { required: false, message: 'Vui lòng nhập số điện thoại của bạn'},
               ]"
             >
               <el-input v-model="order.phone"></el-input>
@@ -79,30 +74,27 @@
       <!-- Hotel Short Description -->
       <el-col :span="10">
         <el-card>
-          <el-row class="booking__hotel-info" :gutter="24">
-            <el-col class="booking__hotel-images" :span="12">
-              <div v-if="hasImages()" slot="error" class="image-slot">
-                <i class="el-icon-picture-outline"></i>
-              </div>
-              <el-image v-for="image in hotel.images" :key="image" :fit="'cover'"
-                v-else
-                class="booking__hotel-des"
+          <h4 class="booking__hotel-name">{{ this.hotel.name }}</h4>
+          <div class="booking__hotel-address">
+            <span
+              >{{ this.hotel.address }}, {{ this.wardById.name }}, {{ this.districtById.name }},
+              {{ this.provinceById.name }}</span
+            >
+          </div>
+          <div class="booking__hotel-description">{{ this.hotel.description }}</div>
+          <div v-if="hasImages()" slot="error" class="image-slot">
+            <i class="el-icon-picture-outline"></i>
+          </div>
+          <el-carousel v-else height="300px" indicator-position="outside" class="booking__hotel-images">
+            <el-carousel-item  v-for="image in hotel.images" :key="image" :fit="'contain'">
+              <el-image
                 :src="image"
                 :preview-src-list="hotel.images"
               >
               </el-image>
-            </el-col>
-            <el-col :span="12" class="booking__hotel-details">
-              <h4 class="booking__hotel-name">{{ this.hotel.name }}</h4>
-              <div class="booking__hotel-address">
-                <span
-                  >{{ this.hotel.address }}, {{ this.wardById.name }}, {{ this.districtById.name }},
-                  {{ this.provinceById.name }}</span
-                >
-              </div>
-              <div class="booking__hotel-description">{{ this.hotel.description }}</div>
-            </el-col>
-          </el-row>
+            </el-carousel-item>
+          </el-carousel>
+          
         </el-card>
       </el-col>
     </el-row>
@@ -123,7 +115,7 @@
             prop="fullname"
             label="Họ và Tên:"
             :rules="[
-              { required: true, message: 'Vui lòng điền họ và tên của bạn', trigger: 'blur' },
+              { required: false, message: 'Vui lòng điền họ và tên của bạn'},
             ]"
           >
             <el-input v-model="order.fullname"></el-input>
@@ -133,12 +125,7 @@
             prop="email"
             label="Email:"
             :rules="[
-              { required: true, message: 'Vui lòng nhập email của bạn', trigger: 'blur' },
-              {
-                type: 'email',
-                message: 'Vui lòng nhập đúng email của bạn',
-                trigger: ['blur', 'change'],
-              },
+              { required: false, message: 'Vui lòng nhập email của bạn'},
             ]"
           >
             <el-input v-model="order.email"></el-input>
@@ -148,7 +135,7 @@
             prop="phone"
             label="Số Điện Thoại:"
             :rules="[
-              { required: true, message: 'Vui lòng nhập số điện thoại của bạn', trigger: 'blur' },
+              { required: false, message: 'Vui lòng nhập số điện thoại của bạn'},
             ]"
           >
             <el-input v-model="order.phone"></el-input>
@@ -186,10 +173,10 @@ export default {
   data() {
     return {
       order: {
-        fullname: '',
+        fullname: this.$store.state.myCustomer.fullname,
         hotelId: 0,
-        email: '',
-        phone: '',
+        email: this.$store.state.myCustomer.email,
+        phone: this.$store.state.myCustomer.phone,
         orderLines: [
           {
             quantity: 1,
@@ -267,11 +254,23 @@ export default {
         phone: this.order.phone,
         orderLines: this.orderLines,
       };
-      try {
-        await this.$store.dispatch('createOrder', payload);
-        this.$store.commit('UPDATE_ORDERLINE', []);
-      } catch (err) {
-        console.log('---- Error: ', err);
+      if (!JSON.parse(localStorage.getItem('accessToken'))){
+        this.$message({
+          showClose: true,
+          message: 'Vui lòng Đăng Nhập để đặt phòng!',
+          type: 'warning'
+        });
+      }
+      else {
+        try {
+          await this.$store.dispatch('createOrder', payload);
+          this.$store.commit('UPDATE_ORDERLINE', []);
+          this.alertSuccess();
+          this.$router.push('/');
+        } 
+        catch (err) {
+          this.alertErr();          
+        }
       }
     },
     getTotal(orderLines) {
@@ -279,6 +278,20 @@ export default {
         this.total += order.price * order.quantity;
       }
       return this.total = this.$options.filters.formatCurrency(this.total);
+    },
+    alertErr() {
+      this.$message({
+        showClose: true,
+        message: 'Đã có lỗi xảy ra!',
+        type: 'error'
+      });
+    },
+    alertSuccess() {
+      this.$message({
+        showClose: true,
+        message: "Gửi Xác Nhận Đặt Phòng Thành Công!",
+        type: "success"
+      });
     },
   },
   created(){
@@ -352,7 +365,7 @@ export default {
 }
 .booking__hotel-description {
   color: #2a2a2e;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.4;
   padding-top: 20px;
   overflow-wrap: break-word;
@@ -419,14 +432,11 @@ export default {
   margin-right: 0px !important;
 }
 .booking__hotel-images{
-  display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  margin-top: 20px;
 }
 .booking__hotel-des {
   width: 150px; 
   height: 150px; 
-  padding: 5%;
+  padding: 3%;
 }
 </style>

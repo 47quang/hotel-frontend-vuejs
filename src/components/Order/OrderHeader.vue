@@ -2,22 +2,32 @@
   <div>
     <el-menu class="navbar" mode="horizontal">
       <el-menu-item index="1">
+        <router-link :to="'/'">
         <img
           src="https://cdn6.agoda.net/images/MVC/default/agoda-logo-booking-page.png"
           srcset="https://cdn6.agoda.net/images/MVC/default/agoda-logo-booking-page.png 1x, https://cdn6.agoda.net/images/MVC/default/agoda-logo-booking-page@2x.png 2x"
           data-element-name="desktop-agoda-header-nolink"
           class="Imagestyled__ImageStyled-nh0bpz-0 kYUYnb HeaderLogostyled__LogoImage-sc-1aet91z-0 cXVDqe"
         />
+        </router-link>
       </el-menu-item>
       <el-menu-item class="navbar__steps" index="2">
-        <!-- <el-steps :space="300" :active="0" finish-status="success" align-center>
-          <el-step title="Thông Tin Khách Hàng"></el-step>
-          <el-step title="Chi tiết Thanh Toán"></el-step>
-          <el-step title="Xác Nhận Đặt Phòng"></el-step>
-        </el-steps> -->
+        <!-- Intend to leave it blank -->
       </el-menu-item>
-      <el-menu-item index="3">
+      <el-menu-item index="3" v-if="!myCustomer.fullname">
         <cus-login />
+      </el-menu-item>
+      <el-menu-item index="3" v-else>
+        <el-dropdown style="cursor: pointer" trigger="click">
+          <span class="el-dropdown-link">
+            {{myCustomer.lastname}} {{myCustomer.firstname}}<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item @click.native="customerUpdate" icon="el-icon-user">Hồ sơ của {{myCustomer.firstname}}</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-time">Lịch sử đặt phòng</el-dropdown-item>
+            <el-dropdown-item @click.native="signOut" icon="el-icon-switch-button">Đăng xuất</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </el-menu-item>
     </el-menu>
   </div>
@@ -27,6 +37,20 @@ import CusLogin from '../CusLogin'
 export default {
   components: {
     CusLogin
+  },
+  computed: {
+    myCustomer(){
+      return this.$store.state.myCustomer
+    }
+  },
+  methods: {
+    signOut() {
+      this.$store.dispatch('customerSignOut');
+      this.$router.go(-1);
+    },
+    customerUpdate() {
+      this.$router.push('/customer-update')
+    }
   }
 }
 </script>
