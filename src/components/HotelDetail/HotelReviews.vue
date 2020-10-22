@@ -131,8 +131,7 @@ export default {
         padding: 30px 10px;
     }
     .review-row {
-        width: 80%;
-        margin: 0 auto;
+        width: 100%;
         padding-top: 40px;
         border-top: 1px solid rgb(221,223,226);
     }

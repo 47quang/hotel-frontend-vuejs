@@ -51,7 +51,7 @@
                 </el-col>
                 <el-col :span="5" class="ChildRoom-price-content">
                   <div class="finalPrice">
-                    {{ room.regularPrice | formatCurrency }}
+                    {{ room.salePrice | formatCurrency }}
                   </div>
                 </el-col>
                 <el-col :span="6" class="ChildRoom-book-content">
@@ -59,7 +59,7 @@
                     type="primary"
                     class="reverseNow"
                     @click="dialogDatePickerVisible = true"
-                    >Xem lịch đặt phòng</el-button
+                    >Lịch đặt phòng</el-button
                   >
                   <el-dialog title="Chọn ngày" :visible.sync="dialogDatePickerVisible" width="20%">
                     <el-date-picker
@@ -392,8 +392,7 @@ export default {
   margin: 0 auto;
 }
 .Room .RoomGrid-content {
-  width: 80%;
-  margin: 0 auto;
+  width: 100%;
   padding: 10px;
 }
 .Room-title {
