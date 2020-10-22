@@ -7,8 +7,8 @@
         <div class="search">
           <el-select
             class="add-hotel__select-info"
-            v-model="form.provinceId"
-            clearable 
+            v-model="provinceId"
+            clearable
             filterable
             placeholder="Vui Lòng Chọn Tỉnh Thành"
           >
@@ -21,28 +21,6 @@
             </el-option>
           </el-select>
         </div>
-        <div class="date">
-          <el-date-picker
-            v-model="form.date"
-            type="daterange"
-            range-separator=""
-            start-placeholder="Start date"
-            end-placeholder="End date"
-          >
-          </el-date-picker>
-        </div>
-        <div class="select">
-          <el-select v-model="form.value" placeholder="Select">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
-            </el-option>
-          </el-select>
-          <button class="button-select" @click="searchHotel()">TÌM</button>
-        </div>
       </div>
     </div>
   </div>
@@ -52,11 +30,7 @@
 export default {
   data() {
     return {
-      form: {
-        provinceId: '',
-        date: '',
-        value: '',
-      },
+      provinceId: '',
       options: [
         {
           value: 'Phòng 1 người',
@@ -82,29 +56,24 @@ export default {
     },
   },
   methods: {
-    async searchHotel() {
-      const checkProvinceId = this.form.provinceId;
-      if(!checkProvinceId) {
-        this.alertErr()
-      }
-      else(
-         await this.$store.dispatch('searchHotel', this.form),
-         this.$router.push('/search')
-      )
-    },
-     alertErr() {
+    alertErr() {
       this.$message({
         showClose: true,
         message: 'Vui lòng chọn tỉnh thành !',
-        type: 'error'
+        type: 'error',
       });
     },
   },
+  watch: {
+    "provinceId": async function(nVal) {
+      await this.$store.dispatch('searchHotel', {provinceId: nVal});
+      this.$router.push('/search');
+    }
+  }
 };
 </script>
 
 <style scoped>
-
 @media (max-width: 768px) {
   .table {
     width: 75% !important;
@@ -112,7 +81,7 @@ export default {
   }
   .select .el-select {
     width: 55% !important;
-  };
+  }
   .button-select {
     width: 45% !important;
   }
@@ -120,7 +89,6 @@ export default {
     top: 290px;
     left: 154px;
   }
-
 }
 .carousel {
   background-image: url(../assets/carousel.png);
@@ -145,26 +113,26 @@ p {
 }
 .table {
   width: 50%;
-  margin: 0 auto;
+  margin: auto;
   background-color: rgba(221, 210, 210, 0.5);
   position: absolute;
   top: 50%;
+  padding: 30px 0;
   right: 50%;
   transform: translate(50%, -50%);
   border-radius: 5px;
   max-width: 750px;
 }
 .search {
-  margin: 30px auto 10px auto;
+  margin: auto;
   width: 80%;
   cursor: pointer;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.3);
 }
 
 .search .el-select {
-  width: 100%
+  width: 100%;
 }
-
 
 .date {
   margin: 10px auto;
@@ -181,11 +149,10 @@ p {
   color: white;
   background-color: #5392f9;
   text-decoration: none;
-  width: 35%;
+  width: 100%;
   cursor: pointer;
   font-size: 18px;
   line-height: 75px;
-  margin-left: 10px;
   border-radius: 5px;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.3);
 }
@@ -200,7 +167,7 @@ p {
   .button-select {
     width: 45% !important;
   }
-} 
+}
 .search .el-select input {
   height: 80px;
 }
