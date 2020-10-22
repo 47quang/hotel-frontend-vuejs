@@ -17,7 +17,8 @@
           <el-col :span="24">
             <div class="avatar">
               <el-col class="avatar-content" :span="17">
-                <el-avatar class="hidden-md-and-down" :size="70" :src="owner.preview"></el-avatar>
+                <el-avatar v-if="owner.avatar" class="hidden-md-and-down" :size="70" :src="owner.avatar"></el-avatar>
+                <el-avatar v-else  class="hidden-md-and-down" :size="70" :src="owner.avatar"></el-avatar>
                 <p>
                   Hình ảnh thật sự có tác dụng. Hãy chọn một bức ảnh rõ ràng và thân thiện để tăng
                   lượng khách đặt phòng.
@@ -48,23 +49,23 @@
 
         <el-row>
           <h3 style="padding: 20px 0">Chỉnh sửa thông tin</h3>
-          <el-col :span="12">
+          <el-col class="InfoOwner-col" :span="12">
             <div class="firstName">Tên</div>
             <el-input v-model="owner.firstname"></el-input>
           </el-col>
-          <el-col :span="12">
+          <el-col class="InfoOwner-col" :span="12">
             <div class="lastName">Họ</div>
             <el-input v-model="owner.lastname"></el-input>
           </el-col>
-          <el-col :span="12">
+          <el-col class="InfoOwner-col" :span="12">
             <div class="phone">Số điện thoại</div>
             <el-input v-model="owner.phone"></el-input>
           </el-col>
-          <el-col :span="12">
+          <el-col class="InfoOwner-col" :span="12">
             <div class="email">Email</div>
             <el-input v-model="owner.email"></el-input>
           </el-col>
-          <el-col :span="12">
+          <el-col class="InfoOwner-col" :span="12">
             <div class="address">Địa chỉ</div>
             <el-input v-model="owner.address"></el-input>
           </el-col>
@@ -83,6 +84,14 @@
 </template>
 
 <style scoped>
+@media (max-width: 768px) {
+  .el-row .InfoOwner-col {
+    padding-right: 20px !important;
+}
+}
+.hidden-md-and-down {
+  display: block !important;
+}
 .saveInfo {
   color: white;
   background-color: #1174a6;
@@ -132,8 +141,8 @@
   width: 80%;
   margin: 0 auto;
 }
-.el-col {
-  padding-right: 20px;
+.InfoOwner-col {
+  padding-right: 20px !important;
   font-weight: 600;
 }
 .firstName {
@@ -192,18 +201,17 @@
     font-size: 15px;
   }
 }
-@media (min-width: 768px) and (max-width: 991px) {
-  .el-col {
-    padding-right: 0px !important;
-  }
+
+</style>
+<style>
+
+.avatar-content .el-avatar {
+  width: 100px !important;
 }
-@media (min-width: 992px) and (max-width: 1200px) {
-  .el-col {
-    padding-right: 0px !important;
-  }
+.el-avatar img {
+  width: 100% !important;
 }
 </style>
-
 <script>
 export default {
   data() {
@@ -217,11 +225,12 @@ export default {
         email: this.$store.state.curOwner.email,
         preview:
           "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-        avatar: ""
+        avatar: this.$store.state.curOwner.avatar
       },
       success: ""
     };
   },
+ 
   computed: {
     avatarUpdate() {
       return this.$store.state.curOwner.avatar;
@@ -236,7 +245,22 @@ export default {
     async handleUpdateOwner() {
       console.log(this.owner);
       await this.$store.dispatch("updateUser", this.owner);
-    }
+      this.alertSuccess();
+    },
+    alertSuccess() {
+            this.$message({
+                showClose: true,
+                message: 'Update dữ liệu thành công!',
+                type: 'success'
+            });
+    },
+    alertErr() {
+            this.$message({
+                showClose: true,
+                message: 'Update dữ liệu thất bại!',
+                type: 'error'
+            });
+          },
   }
 };
 </script>
