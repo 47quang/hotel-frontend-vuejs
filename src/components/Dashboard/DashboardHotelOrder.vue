@@ -122,9 +122,18 @@
                     <span style="margin-left: 10px">{{ scope.row.end | formatDate }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column prop="quantity" label="Số lượng" width="150"> </el-table-column>
-                <el-table-column prop="price" label="Giá" width="150"> </el-table-column>
+                <el-table-column prop="quantity" label="Số lượng" width="100"></el-table-column>
+                <el-table-column prop="price" label="Giá" width="180"> 
+                  <template slot-scope="scope">
+                    <span style="margin-left: 10px">{{ scope.row.price | formatCurrency }}</span>
+                  </template>
+                </el-table-column>
               </el-table>
+              <!-- Get Total -->
+              <h4 class="booking__form-title">
+                Tổng Hóa Đơn:
+                <span class="booking__pricing-footer">{{getTotal(orderById)}}</span>
+              </h4>
             </div>
 
             <span v-if="checkOrderDone(orderById.status)" slot="footer" class="dialog-footer">
@@ -178,7 +187,8 @@ export default {
           value: 'all'
         },
       ],
-      value: 'all'
+      value: 'all',
+      total: 0
     };
   },
   computed: {
@@ -201,6 +211,7 @@ export default {
   methods: {
     async fetchOrder(orderId) {
       await this.$store.dispatch('fetchOrderById', orderId);
+      // await this.getTotal(this.orderById.orderLines);
       this.dialogVisible = true;
     },
     async confirmOrder(order) {
@@ -262,6 +273,17 @@ export default {
       } else {
         console.log('command', command);
       }
+    },
+    getTotal(orderLines) {
+      console.log('orderLines:', orderLines)
+      this.total = 0;
+      for (const order of Array.from(orderLines)) {
+        this.total += order.price * order.quantity;
+      }
+      console.log('total:', this.total)
+      console.log('formated total:',this.$options.filters.formatCurrency(this.total))
+
+      return this.$options.filters.formatCurrency(this.total);
     },
   },
   async mounted() {
