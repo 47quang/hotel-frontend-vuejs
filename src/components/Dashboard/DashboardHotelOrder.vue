@@ -132,7 +132,7 @@
               <!-- Get Total -->
               <h4 class="booking__form-title">
                 Tổng Hóa Đơn:
-                <span class="booking__pricing-footer">{{getTotal(orderById)}}</span>
+                <span class="booking__pricing-footer">{{getTotal(orderById.orderLines || [])}}</span>
               </h4>
             </div>
 
@@ -211,7 +211,6 @@ export default {
   methods: {
     async fetchOrder(orderId) {
       await this.$store.dispatch('fetchOrderById', orderId);
-      // await this.getTotal(this.orderById.orderLines);
       this.dialogVisible = true;
     },
     async confirmOrder(order) {
@@ -275,14 +274,9 @@ export default {
       }
     },
     getTotal(orderLines) {
-      console.log('orderLines:', orderLines)
-      this.total = 0;
-      for (const order of Array.from(orderLines)) {
-        this.total += order.price * order.quantity;
-      }
-      console.log('total:', this.total)
-      console.log('formated total:',this.$options.filters.formatCurrency(this.total))
-
+      this.total = orderLines.reduce((cur, i) => {
+        return cur + i.price * i.quantity;
+      }, 0);
       return this.$options.filters.formatCurrency(this.total);
     },
   },

@@ -12,7 +12,6 @@
                   <img src="../../assets/e6.jpg" alt="" />
                 </div>
               </div>
-
               <div class="MasterRoom-infoPhotoThumbnail">
                 <div class="infoPhotoThumbnail1">
                   <img src="../../assets/thumbnail1.jpg" alt="" />
@@ -243,6 +242,11 @@ export default {
         id: uuidv4(),
       };
       const orderLine = JSON.parse(localStorage.getItem('orderLine')) || [];
+      const e = orderLine.find(l => l.hotelId !== payload.hotelId);
+      if (e) {
+        alert('abcabc');
+        return;
+      }
       orderLine.push(payload);
       this.$store.commit('UPDATE_ORDERLINE', orderLine);
       this.$message({

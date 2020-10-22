@@ -20,7 +20,6 @@
                         <div class="review-content-body">
                             {{review.content}}
                         </div>
-                        
                     </el-col>
                 </div>
             </el-row>
@@ -72,7 +71,6 @@ export default {
 
     },
     created() {
-        // this.$store.dispatch('fetchCustomer')
         this.$store.dispatch('fetchReviews',this.idHotel);
         this.$store.dispatch('fetchTags')
         

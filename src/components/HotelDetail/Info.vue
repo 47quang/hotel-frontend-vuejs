@@ -6,25 +6,21 @@
           <el-col class="Info1">
             <div class="Info-image">
               <div class="Main-image">
-                <img :src="hotel.images[0]" alt="">
+                <img :src="hotel.images[0]" alt="" />
               </div>
               <div class="Sub-image">
                 <div class="Sub-image1">
-                  <img :src="hotel.images[1]" alt="">
+                  <img :src="hotel.images[1]" alt="" />
                 </div>
                 <div class="Sub-image2">
                   <div style="padding-right:3px" class="thumbnail">
-                    <img :src="hotel.images[2]" alt="">
+                    <img :src="hotel.images[2]" alt="" />
                   </div>
                   <div class="thumbnail">
-                    <img :src="hotel.images[3]" alt="">
+                    <img :src="hotel.images[3]" alt="" />
                   </div>
-                  
                 </div>
-  
-                
               </div>
-              
             </div>
             <div class="InfoDetail">
               <div class="HeaderCerebrum">
@@ -34,9 +30,7 @@
                 <div></div>
                 <el-rate :value="round" disabled show-score text-color="#ff9900"> </el-rate>
               </div>
-              <div class="Header_Location">
-                <strong>Địa chỉ</strong>: {{ hotel.address }}
-              </div>
+              <div class="Header_Location"><strong>Địa chỉ</strong>: {{ hotel.address }}</div>
               <div class="Header_Location">
                 <strong>Mô tả khách sạn</strong>: {{ hotel.description }}
               </div>
@@ -177,19 +171,13 @@
 
 <script>
 export default {
-  data() {
-    return {
-      
-    };
-  },
- 
   computed: {
     round() {
       return Math.round(this.hotel.rating * 100) / 100;
     },
     hotel() {
-      return this.$store.state.hotelById
-    }
+      return this.$store.state.hotelById;
+    },
   },
 };
 </script>
@@ -328,7 +316,6 @@ export default {
   padding: 10px 0;
   width: 100%;
   display: flex;
-
 }
 .Info-image .Main-image {
   padding-right: 5px;
@@ -349,10 +336,8 @@ export default {
   width: 100%;
   height: 132px;
   display: flex;
-  padding-top: 3px
+  padding-top: 3px;
 }
-
-
 
 .Sub-image1 img {
   width: 100%;
@@ -362,21 +347,17 @@ export default {
 .Sub-image .thumbnail {
   width: 50%;
 }
-.Sub-image2 .thumbnail img{
+.Sub-image2 .thumbnail img {
   width: 100%;
   height: 132px;
   object-fit: cover;
 }
-
-
 
 .Main-image img {
   width: 100%;
   height: 360px;
   object-fit: cover;
 }
-
-
 
 .InfoDetail {
   padding: 10px;

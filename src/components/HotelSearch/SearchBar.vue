@@ -9,20 +9,14 @@
                 class="cus-input"
                 placeholder="Tìm theo tên khách sạn"
                 suffix-icon="el-icon-search"
-                v-model="hotelName">
+                v-model="hotelName"
+              >
               </el-input>
             </div>
           </el-col>
           <el-col :span="4">
             <div class="select-sticky">
               <button class="button-select" @click="handleSearch">TÌM</button>
-              <el-badge :value="orderLines.length" class="item">
-                <i
-                  class="el-icon-shopping-cart-full"
-                  :style="{ color: 'white', fontSize: '30px', lineHeight: '50px', cursor: 'pointer' }"
-                  @click="jumpBooking"
-                ></i>
-              </el-badge>
             </div>
           </el-col>
         </el-row>
@@ -39,27 +33,20 @@ export default {
       value: this.$store.state.hotel.number || '',
     };
   },
-  computed: {
-    orderLines() {
-      return this.$store.state.orderLines || 0;
-    },
-  },
   methods: {
     jumpBooking() {
-      const checkAccessToken = JSON.parse(localStorage.getItem('accessToken'))
-      if(!checkAccessToken) {
+      const checkAccessToken = JSON.parse(localStorage.getItem('accessToken'));
+      if (!checkAccessToken) {
         this.alertErr();
-      }else(
-        this.$router.push(`/booking`)
-      )
+      } else this.$router.push(`/booking`);
     },
     alertErr() {
-            this.$message({
-                showClose: true,
-                message: 'Quý khách cần phải đăng nhập để thực hiện tác vụ này!',
-                type: 'error'
-            });
-        },
+      this.$message({
+        showClose: true,
+        message: 'Quý khách cần phải đăng nhập để thực hiện tác vụ này!',
+        type: 'error',
+      });
+    },
     handleSearch() {
       this.$store.commit('UPDATE_FILTER_HOTEL', this.hotelName);
     },
