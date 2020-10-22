@@ -148,7 +148,11 @@
         <el-table :data="tableData" style="width: 100%">
           <el-table-column fixed prop="name" label="Tên phòng" width="150"> </el-table-column>
           <el-table-column prop="quantity" label="Số lượng" width="120"> </el-table-column>
-          <el-table-column prop="price" label="Giá" width="120"></el-table-column>
+          <el-table-column prop="price" label="Giá" width="120">
+            <template slot-scope="scope">
+              <span>{{ scope.row.price | formatCurrency }}</span>
+            </template>
+          </el-table-column>
           <el-table-column prop="start" label="Ngày bắt đầu" width="150"> </el-table-column>
           <el-table-column prop="end" label="Ngày kết thúc" width="300"> </el-table-column>
           <el-table-column fixed="right" label="Thao tác" width="120">
