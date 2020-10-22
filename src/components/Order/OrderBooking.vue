@@ -280,12 +280,6 @@ export default {
         }
       }
     },
-    getTotal(orderLines) {
-      for (const order of Array.from(orderLines)) {
-        this.total += order.price * order.quantity;
-      }
-      return this.total = this.$options.filters.formatCurrency(this.total);
-    },
     alertErr() {
       this.$message({
         showClose: true,
