@@ -5,12 +5,6 @@
       <p>Nhận giá tốt nhất cho >2.000.000 chỗ nghỉ, trên toàn cầu</p>
       <div class="table">
         <div class="search">
-          <!-- <el-input
-                        class="cus-input"
-                        placeholder="Nhập điểm du lịch"
-                        suffix-icon="el-icon-search"
-                        v-model="country">
-                    </el-input> -->
           <el-select
             class="add-hotel__select-info"
             v-model="form.provinceId"

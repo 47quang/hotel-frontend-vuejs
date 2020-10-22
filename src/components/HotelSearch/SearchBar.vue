@@ -3,41 +3,20 @@
     <el-container>
       <el-main class="searchBar">
         <el-row>
-          <el-col :span="8">
+          <el-col :span="20">
             <div class="search-sticky">
               <el-input
                 class="cus-input"
-                placeholder="Nhập điểm du lịch"
+                placeholder="Tìm theo tên khách sạn"
                 suffix-icon="el-icon-search"
-                v-model="country"
+                v-model="hotelName"
               >
               </el-input>
             </div>
           </el-col>
-          <el-col :span="8">
-            <div class="date-sticky">
-              <el-date-picker
-                v-model="date"
-                type="daterange"
-                range-separator=""
-                start-placeholder="Start date"
-                end-placeholder="End date"
-              >
-              </el-date-picker>
-            </div>
-          </el-col>
-          <el-col :span="8">
+          <el-col :span="4">
             <div class="select-sticky">
-              <el-select v-model="value" placeholder="Select">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                </el-option>
-              </el-select>
-              <button class="button-select">TÌM</button>
+              <button class="button-select" @click="handleSearch">TÌM</button>
               <el-badge :value="orderLines.length" class="item">
                 <i
                   class="el-icon-shopping-cart-full"
@@ -57,36 +36,23 @@
 export default {
   data() {
     return {
-      country: this.$store.state.hotel.country || '',
-      date: this.$store.state.hotel.date || '',
-
-      options: [
-        {
-          value: 'Phòng 1 người',
-          label: 'Phòng 1 người',
-        },
-        {
-          value: 'Phòng 2 người',
-          label: 'Phòng 2 người',
-        },
-        {
-          value: 'Phòng 3 người',
-          label: 'Phòng 3 người',
-        },
-      ],
+      hotelName: this.$store.state.hotel.hotelName || '',
       value: this.$store.state.hotel.number || '',
     };
   },
   computed: {
-    orderLines(){
+    orderLines() {
       return this.$store.state.orderLines || 0;
-    }
+    },
   },
-  methods:{
-    jumpBooking(){
+  methods: {
+    jumpBooking() {
       this.$router.push(`/booking`);
-    }
-  }
+    },
+    handleSearch() {
+      this.$store.commit('UPDATE_FILTER_HOTEL', this.hotelName);
+    },
+  },
 };
 </script>
 
@@ -115,7 +81,7 @@ export default {
   color: white;
   background-color: #5392f9;
   text-decoration: none;
-  width: 35%;
+  width: 70%;
   cursor: pointer;
   font-size: 18px;
   margin-left: 10px;
@@ -193,5 +159,10 @@ export default {
 }
 .date-sticky .el-date-editor .el-range-separator {
   line-height: 70px;
+}
+.item {
+  position: absolute;
+  top: 50%;
+  right: 0;
 }
 </style>

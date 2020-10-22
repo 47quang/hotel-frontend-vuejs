@@ -103,5 +103,8 @@ export const mutations = {
   // }
   FETCH_ALL_ATTRIBUTE_OPTIONS(state, payload) {
     state.allAttributeOptions = payload;
+  },
+  UPDATE_FILTER_HOTEL(state, payload) {
+    state.filterHotel = payload;
   }
 };

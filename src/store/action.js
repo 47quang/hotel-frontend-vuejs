@@ -95,11 +95,16 @@ export const actions = {
   },
   searchHotel(ctx, payload) {
     const {
-      provinceId
+      provinceId,
+      name
     } = payload;
+    let query = `${BASE_URL}/api.hotel?provinceId=${provinceId}`;
+    if (name) {
+      query +=`&name=${name}`;
+    }
     return new Promise((resolve, reject) => {
       client
-        .get(`${BASE_URL}/api.hotel?provinceId=${provinceId}`)
+        .get(query)
         .then((resp) => resp.data)
         .then((body) => {
           localStorage.setItem('hotelSearch', JSON.stringify(body.data))
@@ -263,7 +268,7 @@ export const actions = {
         .then(resp => resp.data)
         .then(body => {
           ctx.commit('FETCH_PROVINCE_BY_ID', body.data)
-          resolve(body);
+          resolve(body.data);
         })
         .catch(err => {
           reject(err);
