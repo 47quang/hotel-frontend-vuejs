@@ -16,7 +16,6 @@
               </span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item @click.native="customerUpdate" icon="el-icon-user">Hồ sơ của {{myCustomer.firstname}}</el-dropdown-item>
-                <el-dropdown-item icon="el-icon-time">Lịch sử đặt phòng</el-dropdown-item>
                 <el-dropdown-item @click.native="signOut" icon="el-icon-switch-button">Đăng xuất</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>

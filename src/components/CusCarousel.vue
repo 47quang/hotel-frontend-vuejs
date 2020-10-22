@@ -121,7 +121,7 @@ p {
   right: 50%;
   transform: translate(50%, -50%);
   border-radius: 5px;
-  max-width: 750px;
+  max-width: 680px;
 }
 .search {
   margin: auto;

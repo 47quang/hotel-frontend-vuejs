@@ -30,12 +30,12 @@
               <el-input  type="address" v-model="form.address"  autocomplete="off"></el-input>
             </el-form-item> -->
             <el-button class="modal-register" type="primary" @click="submit()">Tạo tài khoản</el-button>
-            <div class="da-co-tai-khoan-position">
+            <!-- <div class="da-co-tai-khoan-position">
                <div class="da-co-tai-khoan">
               <p>Bạn đã có tài khoản</p>
               <el-button class="modal-login" type="primary">Đăng nhập</el-button>
             </div>
-            </div>
+            </div> -->
            
           </el-form>
           <div class="bg-form">
@@ -80,9 +80,6 @@ export default {
     .dialog-register .el-dialog__body .el-form {
       width: 100% !important;
     }
-    .da-co-tai-khoan {
-      padding: 10px 0
-    }
     .register-component .el-dialog {
       margin-top: 50vh !important;
     }
@@ -111,34 +108,37 @@ export default {
   }
   .bg-form img{
     position: absolute;
-    left: 37px;
+    left: 15%;
     top: 50%;
-    transform: translateY(-50%)
+    width: 70%;
+    transform: translateY(-50%);
   }
   .modal-register{
     width: 80%;
-    margin: 20px auto 20px;
-    
+    margin: 20px auto 20px; 
+    display: flex;
+    justify-content: center;
   }
-  .da-co-tai-khoan{
+  .da-co-tai-khoan {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 80%;
-    margin: 0 auto;
+    margin: 10px auto !important;
   }
+ 
  
 </style>
 
 <style>
+  
   .register-component .el-dialog__wrapper{
     overflow: hidden;
-    
   }
   .register-component .el-dialog{
     margin: 10px auto 0 !important;
   }
-    .dialog-register .el-dialog__header{
+  .dialog-register .el-dialog__header{
     display:none;
   }
     .dialog-register .el-dialog__footer{
@@ -153,7 +153,8 @@ export default {
     width: 50% !important;
   }
   .dialog-register .el-dialog__body .el-form .el-form-item__content{
-    margin: 0 40px !important
+    width: 80%;
+    margin: 0 auto !important;
     
   }
   .dialog-register .el-dialog__body .el-form .el-form-item{

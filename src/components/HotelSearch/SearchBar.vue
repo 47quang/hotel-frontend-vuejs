@@ -9,8 +9,7 @@
                 class="cus-input"
                 placeholder="Tìm theo tên khách sạn"
                 suffix-icon="el-icon-search"
-                v-model="hotelName"
-              >
+                v-model="hotelName">
               </el-input>
             </div>
           </el-col>
@@ -20,7 +19,7 @@
               <el-badge :value="orderLines.length" class="item">
                 <i
                   class="el-icon-shopping-cart-full"
-                  :style="{ color: 'white', fontSize: '30px', lineHeight: '50px' }"
+                  :style="{ color: 'white', fontSize: '30px', lineHeight: '50px', cursor: 'pointer' }"
                   @click="jumpBooking"
                 ></i>
               </el-badge>
@@ -47,8 +46,20 @@ export default {
   },
   methods: {
     jumpBooking() {
-      this.$router.push(`/booking`);
+      const checkAccessToken = JSON.parse(localStorage.getItem('accessToken'))
+      if(!checkAccessToken) {
+        this.alertErr();
+      }else(
+        this.$router.push(`/booking`)
+      )
     },
+    alertErr() {
+            this.$message({
+                showClose: true,
+                message: 'Quý khách cần phải đăng nhập để thực hiện tác vụ này!',
+                type: 'error'
+            });
+        },
     handleSearch() {
       this.$store.commit('UPDATE_FILTER_HOTEL', this.hotelName);
     },
