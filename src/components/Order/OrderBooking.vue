@@ -239,6 +239,13 @@ export default {
         return;
       });
     },
+    
+    getTotal(orderLines) {
+      for (const order of Array.from(orderLines)) {
+        this.total += order.price * order.quantity;
+      }
+      return this.total = this.$options.filters.formatCurrency(this.total);
+    },
     async handlePurchase() {
       for (let i = 0; i < this.orderLines.length - 1; i++) {
         if (this.orderLines[i].hotelId != this.orderLines[i + 1].hotelId) {

@@ -323,10 +323,7 @@ export default {
   border-radius: 4px;
   margin: 10px 10px 10px 0;
 }
-.Info-row {
-  margin: 0 auto;
-  width: 80%;
-}
+
 .Info-image {
   padding: 10px 0;
   width: 100%;
