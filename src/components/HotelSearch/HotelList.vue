@@ -1,10 +1,14 @@
 <template>
   <div>
     <el-container>
-      <el-main>
+      <el-main :style="{ overflow: 'visible' }">
         <el-row class="hotelOffer-row">
-          <el-col class="hotel-suggest" style="padding: 0 5px" :span="7">
-            <h2>Đề xuất cho bạn ở {{province.name}}</h2>
+          <el-col
+            class="hotel-suggest"
+            :style="{ padding: '0 5px', position: 'sticky', top: 0 }"
+            :span="7"
+          >
+            <h2>Đề xuất cho bạn ở {{ province.name }}</h2>
             <div v-for="s of hotelSuggestion" :key="s.id" class="hotelOffer-item">
               <div class="hotelOffer-image">
                 <img :src="s.images[0]" alt="" />
@@ -51,20 +55,14 @@
                 </div>
               </div>
               <div class="hotelList-content">
-                <el-col :span="16" class="content1">
+                <el-col :span="24" class="content1">
                   <div class="hotelList-name">{{ hotel.name }}</div>
                   <el-rate v-model="hotel.rating" disabled text-color="#ff9900"> </el-rate>
-                  <div class="hotelList-address">{{ hotel.address }}</div>
+                  <div class="hotelList-description">
+                    <strong>Mô tả: </strong>{{ hotel.description }}
+                  </div>
+                  <div class="hotelList-address"><strong>Địa chỉ: </strong>{{ hotel.address }}</div>
                   <div class="hotelList-district">{{ hotel.districtInfo.name }}</div>
-                </el-col>
-                <el-col :span="8" class="content2">
-                  <div class="hotelList-rating">
-                    {{ hotel.rating }}
-                  </div>
-                  <div style="font-weight:600" class="hotelList-review">
-                    {{ hotel.review }}
-                  </div>
-
                   <div class="hotelList-price">
                     <p style="color: sivler">Giá mỗi đêm rẻ nhất từ</p>
                     {{ hotel.minPrice | formatCurrency }}
@@ -107,24 +105,24 @@ export default {
         return h;
       });
     },
-    province(){
-        return this.$store.state.provinceById;
+    province() {
+      return this.$store.state.provinceById;
     },
     filterHotel() {
-      console.log(this.$store.state.filterHotel);
       for (let i = 1; i <= 5; i++) {
         if (this.star === i) {
           return this.fetchHotel.filter(
             (h) =>
               h.rating >= i &&
+              h.rating < i + 1 &&
               this.range[0] * 200000 <= h.minPrice &&
               h.minPrice <= this.range[1] * 200000
           );
         }
       }
-      return this.fetchHotel.filter(
-        (h) => this.range[0] * 200000 <= h.minPrice && h.minPrice <= this.range[1] * 200000
-      ).filter(h => h.name.includes(this.$store.state.filterHotel));
+      return this.fetchHotel
+        .filter((h) => this.range[0] * 200000 <= h.minPrice && h.minPrice <= this.range[1] * 200000)
+        .filter((h) => h.name.includes(this.$store.state.filterHotel));
     },
 
     fetchDistrict() {
@@ -132,7 +130,7 @@ export default {
     },
 
     hotelSuggestion() {
-      return this.fetchHotel.slice(0,4);
+      return this.fetchHotel.slice(0, 4);
     },
   },
 };
@@ -142,7 +140,6 @@ export default {
 @media (max-width: 768px) {
   .hotel-suggest {
     display: none;
-    position: sticky;
   }
   .hotel-detail {
     width: 100%;
@@ -192,6 +189,7 @@ export default {
   bottom: 0;
   right: 0;
   padding: 10px;
+  text-align: end;
 }
 .hotelList-price p {
   color: gray;
@@ -210,6 +208,7 @@ export default {
 .content1 {
   padding: 10px 15px;
   height: 300px;
+  position: relative;
   border-left: 1px solid #dddfe2;
   border-right: 1px solid #dddfe2;
 }
@@ -279,9 +278,8 @@ a {
 }
 /* hotelLIst */
 .hotelList-content {
-  /* display: flex;
-        justify-content: space-between; */
   width: 100%;
+  position: relative;
 }
 .hotelList-item {
   box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.15);
@@ -310,6 +308,14 @@ a {
 .hotelList-name {
   font-weight: 600;
   letter-spacing: 1px;
+}
+
+.hotelList-description {
+  height: 140px;
+  display: -webkit-box;
+  -webkit-line-clamp: 8;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 </style>
 
