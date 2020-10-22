@@ -1,11 +1,9 @@
 <template>
   <div>
     <el-button class="login" type="text" @click="dialogFormVisible = true">Đăng nhập</el-button>
-
     <el-dialog class="dialog-login" :visible.sync="dialogFormVisible">
       <el-form :model="form">
         <h2>Đăng nhập</h2>
-
         <el-form-item label="Username" :label-width="formLabelWidth">
           <el-input v-model="form.username" autocomplete="off"></el-input>
         </el-form-item>
@@ -17,12 +15,11 @@
             autocomplete="off"
           ></el-input>
         </el-form-item>
-
         <el-button class="modal-login" type="primary" @click="signin">Đăng nhập</el-button>
-        <div class="chua-co-tai-khoan">
+        <!-- <div class="chua-co-tai-khoan">
           <p>Bạn chưa có tài khoản</p>
           <el-button class="modal-register" type="primary">Đăng ký</el-button>
-        </div>
+        </div> -->
       </el-form>
       <div class="bg-form">
         <img src="../assets/form.svg" alt />
@@ -78,13 +75,18 @@ export default {
   .dialog-login .el-dialog__body .el-form {
     width: 100% !important;
   }
-  .chua-co-tai-khoan {
-    padding: 10px 0;
-  }
   .login-component .el-dialog {
     margin-top: 50vh !important;
   }
+  .chua-co-tai-khoan {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+  margin: 10px auto !important;
+ }
 }
+
 h2 {
   text-align: left;
   margin: 20px 40px;
@@ -105,21 +107,18 @@ h2 {
 }
 .bg-form img {
   position: absolute;
-  left: 37px;
+  left: 15%;
   top: 50%;
+  width: 70%;
   transform: translateY(-50%);
 }
 .modal-login {
   width: 80%;
   margin: 20px auto 20px;
+  display : flex;
+  justify-content: center;
 }
-.chua-co-tai-khoan {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 80%;
-  margin: 0 auto;
-}
+
 </style>
 <style>
 @media (max-width: 768px) {
@@ -127,6 +126,7 @@ h2 {
     margin-top: 30vh !important;
   }
 }
+
 .login-component .el-dialog__wrapper {
   overflow: hidden;
 }
@@ -151,7 +151,9 @@ h2 {
   width: 50% !important;
 }
 .dialog-login .el-dialog__body .el-form .el-form-item__content {
-  margin: 0 40px !important;
+  width: 80%;
+  margin: 0 auto !important;
+
 }
 .dialog-login .el-dialog__body .el-form .el-form-item {
   margin: 0 !important;

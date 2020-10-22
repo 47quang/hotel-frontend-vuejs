@@ -11,21 +11,6 @@
       <el-col class="sticky" id="add-to-cart" :span="7">
           <el-card class="booking__card">
           <h4 class="booking__form-title" style="font-size: 18px; color:#409eff; margin: 0">Giỏ hàng</h4>
-        <!-- <el-table :data="tableData" style="width: 100%">
-          <el-table-column fixed prop="name" label="Tên phòng" width="100"> </el-table-column>
-          <el-table-column prop="quantity" label="SL" width="50"> </el-table-column>
-          <el-table-column prop="price" label="Giá" width="100"></el-table-column>
-          <el-table-column prop="start" label="Ngày nhận" width="100"></el-table-column>
-          <el-table-column prop="end" label="Ngày trả" width="100"> </el-table-column>
-          <el-table-column fixed="right" label="Thao tác" width="100">
-            <template slot-scope="scope">
-              <el-button @click="handleRemove(scope.$index, scope.row)" type="danger" size="small" plain icon="el-icon-delete"
-                >Xóa</el-button
-              >
-            </template>
-          </el-table-column> 
-        </el-table> -->
-        <!-- Get Total -->
         <div v-for="cart of tableData" :key="cart.id" class="orderline-submit-cart">
           
           <h4 style="margin: 10px 0">{{cart.name}} x {{cart.quantity}}</h4>
@@ -44,7 +29,7 @@
           <span class="booking__pricing-footer">{{this.total}}</span>
         </h4>
         <div class="booking__confirm booking__card">
-          <el-button class="booking__btn" @click="handlePurchase">Thanh toán</el-button>
+          <el-button class="booking__btn" @click="jumpBooking">Thanh toán</el-button>
         </div>
       </el-card>
         <div></div>
@@ -113,6 +98,21 @@ export default {
   },
 
   methods: {
+    jumpBooking() {
+      const checkAccessToken = JSON.parse(localStorage.getItem('accessToken'))
+      if(!checkAccessToken) {
+        this.alertErr();
+      }else(
+        this.$router.push(`/booking`)
+      )
+    },
+    alertErr() {
+            this.$message({
+                showClose: true,
+                message: 'Quý khách cần phải đăng nhập để thực hiện tác vụ này!',
+                type: 'error'
+            });
+        },
     handleRemove(id) {
       this.$confirm('Sẽ xóa phòng ra khỏi giỏ hàng. Tiếp tục?', 'Cảnh Báo', {
         confirmButtonText: 'OK',
@@ -153,9 +153,10 @@ export default {
     await this.$store.dispatch('fetchWardById', this.hotel.wardId);
     await this.$store.dispatch('fetchDistrictById', this.hotel.districtId);
     await this.$store.dispatch('fetchProvinceById', this.hotel.provinceId);
+   
   },
   beforeUpdate() {
-     window.document.onscroll = () => {
+      window.document.onscroll = () => {
       let sticky = document.getElementById('add-to-cart');
       if(window.pageYOffset > sticky.offsetTop){
          sticky.classList.add('sticky');

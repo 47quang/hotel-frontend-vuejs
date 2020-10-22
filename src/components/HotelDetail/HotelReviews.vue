@@ -54,14 +54,13 @@ export default {
             ) 
         },
         updateReview() {
-             const checkAccessToken = JSON.parse(localStorage.getItem('accessToken'))
+            const checkAccessToken = JSON.parse(localStorage.getItem('accessToken'))
             if(!checkAccessToken){
                 this.alertErr()
             }
             else(
                  this.$router.push(`/customer-review`)
             ) 
-           
         },
         alertErr() {
             this.$message({
@@ -73,8 +72,7 @@ export default {
 
     },
     created() {
-       
-        this.$store.dispatch('fetchCustomer')
+        // this.$store.dispatch('fetchCustomer')
         this.$store.dispatch('fetchReviews',this.idHotel);
         this.$store.dispatch('fetchTags')
         
@@ -90,9 +88,7 @@ export default {
         tags() {
             return this.$store.state.tags
         },
-        // customer() {
-        //     return this.$store.state.customer
-        // } 
+        
     }
 }
 </script>
