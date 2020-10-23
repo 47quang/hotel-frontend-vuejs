@@ -127,7 +127,6 @@ export default {
       });
     },
     fixReview(id) {
-      console.log(id);
       this.reviewById = this.$store.state.reviewsByCustomer.find((r) => r.id == id);
       this.dialogReviewVisible = true;
     },
