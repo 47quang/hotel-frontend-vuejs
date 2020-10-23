@@ -23,14 +23,29 @@
                             </el-col>
                          </div>
                          <div style="text-align: right; padding: 10px 0" >
-                             <el-button @click="updateReview(review.id)" type="success">CẬP NHẬT</el-button>
+                             <el-button @click="fixReview" type="success">CẬP NHẬT</el-button>
                              <el-button @click="deleteReview(review.id)" type="danger">Xóa</el-button>
+                             <el-dialog title="Review" :visible.sync="dialogReviewVisible">
+                                <el-form :model="review">
+                                    <el-form-item label="Đánh giá" :label-width="formLabelWidth">
+                                        <el-input v-model="review.rating" autocomplete="off"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="Nội dung" :label-width="formLabelWidth">
+                                        <el-input v-model="review.content" autocomplete="off"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="Hình ảnh" :label-width="formLabelWidth">
+                                        <el-input v-model="review.images" autocomplete="off"></el-input>
+                                    </el-form-item>
+                                </el-form>
+                            <span slot="footer" class="dialog-footer">
+                                <el-button @click="dialogReviewVisible = false">Cancel</el-button>
+                                <el-button type="primary" @click="dialogReviewVisible = false">Confirm</el-button>
+                            </span>
+                            </el-dialog>
                          </div>
-                        
-                        
                    </div>
                    
-                </div>
+                </div>s
                 
             </el-main>
         </el-container>
@@ -43,7 +58,13 @@ import CusNavbar from '../components/CusNavbar'
 export default {
     data() {
         return {
-
+            review: {
+                content:'',
+                rating: '',
+                images: [],
+            },
+            dialogReviewVisible : false,
+            formLabelWidth: '80px',
         }
     },
     components: {
@@ -53,7 +74,6 @@ export default {
         this.$store.dispatch('fetchReviewsByCustomer', this.$store.state.myCustomer.id)
         this.$store.dispatch('fetchTags');
         this.$store.dispatch('fetchAllHotels')
-        
     },
     computed: {
         reviews() {
@@ -104,7 +124,11 @@ export default {
         },
         updateReview(id) {
             console.log(id)
+        },
+        fixReview() {
+            this.dialogReviewVisible = true
         }
+        
 }
 </script>
 

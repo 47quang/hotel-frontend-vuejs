@@ -117,7 +117,8 @@
                             </span>
                             </el-dialog>
                         </div>
-                        <el-button type="primary" @click="updateCustomer">Lưu</el-button>
+                        <el-button style="padding: 12px 25px; font-weight: 600" type="primary" @click="updateCustomer">Lưu</el-button>
+                        <el-button style="font-weight: 600" type="warning" @click="backToHomePage">Trở về trang chủ</el-button>
                         
                         
                     </el-col>
@@ -194,6 +195,9 @@ export default {
                 type: 'error'
             });
         },
+        backToHomePage() {
+            this.$router.push('/')
+        }
     }
 }
 </script>
