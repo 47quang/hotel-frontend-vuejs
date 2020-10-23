@@ -26,8 +26,19 @@
             <el-form-item>
               <h4 class="form__description-title">Thành Phố</h4>
               <el-card shadow="hover">
-                <el-select class="add-hotel__select-info" v-model="hotel.provinceId" clearable @change="handleSelectProvince" placeholder="Vui Lòng Chọn Tỉnh Thành">
-                  <el-option v-for="province in provinces" :key="province.id" :label="province.name" :value="province.id"></el-option>
+                <el-select
+                  class="add-hotel__select-info"
+                  v-model="hotel.provinceId"
+                  clearable
+                  @change="handleSelectProvince"
+                  placeholder="Vui Lòng Chọn Tỉnh Thành"
+                >
+                  <el-option
+                    v-for="province in provinces"
+                    :key="province.id"
+                    :label="province.name"
+                    :value="province.id"
+                  ></el-option>
                 </el-select>
               </el-card>
             </el-form-item>
@@ -37,8 +48,19 @@
             <el-form-item>
               <h4 class="form__description-title">Quận/Huyện</h4>
               <el-card shadow="hover">
-                <el-select class="add-hotel__select-info" v-model="hotel.districtId" clearable @change="handleSelectDistrict" placeholder="Vui Lòng Chọn Quận Huyện">
-                  <el-option v-for="district in districts" :key="district.id" :label="district.name" :value="district.id"></el-option>
+                <el-select
+                  class="add-hotel__select-info"
+                  v-model="hotel.districtId"
+                  clearable
+                  @change="handleSelectDistrict"
+                  placeholder="Vui Lòng Chọn Quận Huyện"
+                >
+                  <el-option
+                    v-for="district in districts"
+                    :key="district.id"
+                    :label="district.name"
+                    :value="district.id"
+                  ></el-option>
                 </el-select>
               </el-card>
             </el-form-item>
@@ -48,8 +70,19 @@
             <el-form-item>
               <h4 class="form__description-title">Phường/Xã</h4>
               <el-card shadow="hover">
-                <el-select class="add-hotel__select-info" v-model="hotel.wardId" clearable placeholder="Vui Lòng Chọn Phường Xã">
-                  <el-option v-for="ward in wards" :key="ward.id" :label="ward.name" :value="ward.id"> </el-option>
+                <el-select
+                  class="add-hotel__select-info"
+                  v-model="hotel.wardId"
+                  clearable
+                  placeholder="Vui Lòng Chọn Phường Xã"
+                >
+                  <el-option
+                    v-for="ward in wards"
+                    :key="ward.id"
+                    :label="ward.name"
+                    :value="ward.id"
+                  >
+                  </el-option>
                 </el-select>
               </el-card>
             </el-form-item>
@@ -59,13 +92,26 @@
         <el-form-item>
           <h4 class="form__description-title">Mô tả</h4>
           <el-card shadow="hover">
-            <el-input type="textarea" :rows="4"  maxlength="5000" show-word-limit v-model="hotel.description"></el-input>
+            <el-input
+              type="textarea"
+              :rows="4"
+              maxlength="5000"
+              show-word-limit
+              v-model="hotel.description"
+            ></el-input>
           </el-card>
         </el-form-item>
         <!-- Photos -->
         <el-form-item>
           <h4 class="form__description-title">Hình ảnh</h4>
-          <el-upload accept="image/png, image/jpeg, image/jpg" action="#" list-type="picture-card" :auto-upload="false" ref="upload">
+          <el-upload
+            accept="image/png, image/jpeg, image/jpg"
+            action="#"
+            list-type="picture-card"
+            :auto-upload="false"
+            ref="upload"
+            :on-change="handleOnChange"
+          >
             <i slot="default" class="el-icon-plus"></i>
             <div slot="file" slot-scope="{ file }">
               <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
@@ -73,12 +119,14 @@
                 <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
                   <i class="el-icon-zoom-in"></i>
                 </span>
-                <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove()">
+                <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove(file)">
                   <i class="el-icon-delete"></i>
                 </span>
               </span>
             </div>
-            <div slot="tip" class="el-upload__tip">định dạng jpg/png và kích thước ảnh nhỏ hơn 5MB</div>
+            <div slot="tip" class="el-upload__tip">
+              định dạng jpg/png và kích thước ảnh nhỏ hơn 5MB
+            </div>
           </el-upload>
           <el-dialog :visible.sync="dialogVisible">
             <img width="100%" :src="dialogImageUrl" alt="" />
@@ -106,6 +154,7 @@ export default {
       dialogImageUrl: '',
       dialogVisible: false,
       disabled: false,
+      fileList: [],
     };
   },
   methods: {
@@ -113,15 +162,19 @@ export default {
       if (provinceId == undefined) return;
       this.$store.dispatch('fetchDistrict', provinceId);
     },
-    handleSelectDistrict(districtId){
+    handleSelectDistrict(districtId) {
       this.$store.dispatch('fetchWards', districtId);
     },
-    handleRemove() {
-      this.$refs.upload.clearFiles();
+    handleRemove(file) {
+      const index = this.fileList.findIndex((f) => f.url == file.url);
+      this.fileList.splice(index, 1);
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
+    },
+    handleOnChange(file, fileList) {
+      this.fileList = fileList;
     },
     parseFormData(files) {
       let formData = new FormData();
@@ -142,8 +195,7 @@ export default {
         this.alertSuccess();
         this.$store.dispatch('fetchHotels', this.curOwner.id);
         this.$router.push(`/dashboard/${this.curOwner.id}/listing`);
-      }
-      catch(err) {
+      } catch (err) {
         this.alertErr();
       }
     },
@@ -151,29 +203,29 @@ export default {
       this.$message({
         showClose: true,
         message: 'Đã thêm khách sạn thành công.',
-        type: 'success'
+        type: 'success',
       });
     },
     alertErr() {
       this.$message({
         showClose: true,
         message: 'Đã có lỗi xảy ra, vui lòng thử lại.',
-        type: 'error'
+        type: 'error',
       });
     },
     backListing() {
       this.$confirm('Bài đăng vẫn chưa hoàn tất. Tiếp tục?', 'Cảnh Báo', {
         confirmButtonText: 'OK',
         cancelButtonText: 'Hủy bỏ',
-        type: 'warning'
+        type: 'warning',
       })
-      .then(() => {
-        this.$router.push(`/dashboard/${this.curOwner.id}/listing`);
-      })
-      .catch(() => {
-        return;
-      })
-    }
+        .then(() => {
+          this.$router.push(`/dashboard/${this.curOwner.id}/listing`);
+        })
+        .catch(() => {
+          return;
+        });
+    },
   },
   computed: {
     provinces() {
@@ -187,7 +239,7 @@ export default {
     },
     curOwner() {
       return this.$store.state.curOwner;
-    }
+    },
   },
   created() {
     this.$store.dispatch('fetchProvince');
@@ -206,7 +258,7 @@ export default {
 .add-hotel__select-info {
   width: 100%;
 }
-.add-hotel__back{
+.add-hotel__back {
   font-size: 25px;
   padding-top: 20px;
 }

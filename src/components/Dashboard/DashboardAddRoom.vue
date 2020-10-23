@@ -145,6 +145,7 @@
           list-type="picture-card"
           :auto-upload="false"
           ref="upload"
+          :on-change="handleOnChange"
         >
           <i slot="default" class="el-icon-plus"></i>
           <div slot="file" slot-scope="{ file }">
@@ -153,12 +154,14 @@
               <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
                 <i class="el-icon-zoom-in"></i>
               </span>
-              <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove()">
+              <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove(file)">
                 <i class="el-icon-delete"></i>
               </span>
             </span>
           </div>
-          <div slot="tip" class="el-upload__tip">định dạng jpg/png và kích thước ảnh nhỏ hơn 5MB</div>
+          <div slot="tip" class="el-upload__tip">
+            định dạng jpg/png và kích thước ảnh nhỏ hơn 5MB
+          </div>
         </el-upload>
         <el-dialog :visible.sync="dialogVisible">
           <img width="100%" :src="dialogImageUrl" alt="" />
@@ -273,8 +276,12 @@ export default {
           return;
         });
     },
-    handleRemove() {
-      this.$refs.upload.clearFiles();
+    handleRemove(file) {
+      const index = this.fileList.findIndex((f) => f.url == file.url);
+      this.fileList.splice(index, 1);
+    },
+    handleOnChange(file, fileList) {
+      this.fileList = fileList;
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
