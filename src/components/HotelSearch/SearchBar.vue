@@ -16,7 +16,7 @@
           </el-col>
           <el-col :span="4">
             <div class="select-sticky">
-              <button class="button-select" @click="handleSearch">TÌM</button>
+              <button :style="{height: '46px'}" class="button-select" @click="handleSearch">TÌM</button>
             </div>
           </el-col>
         </el-row>
