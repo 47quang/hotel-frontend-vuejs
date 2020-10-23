@@ -266,13 +266,6 @@ export default {
     checkOrderDone(orderStatus) {
       return orderStatus !== 'done';
     },
-    handleCommand(command) {
-      if (command == 'new') {
-        console.log('command', command);
-      } else {
-        console.log('command', command);
-      }
-    },
     getTotal(orderLines) {
       this.total = orderLines.reduce((cur, i) => {
         return cur + i.price * i.quantity;

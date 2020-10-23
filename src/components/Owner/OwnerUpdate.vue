@@ -237,11 +237,9 @@ export default {
   methods: {
     handleAvatarSuccess(res, file) {
       this.owner.preview = URL.createObjectURL(file.raw);
-      console.log("Res: ", res.data[0]);
       this.owner.avatar = res.data[0];
     },
     async handleUpdateOwner() {
-      console.log(this.owner);
       await this.$store.dispatch("updateUser", this.owner);
       this.alertSuccess();
     },

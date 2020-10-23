@@ -115,7 +115,6 @@ export default {
   },
   computed: {
     attributeOptions() {
-      console.log('attributeOption:', Array.from(this.$store.state.attributeOptions))
       return Array.from(this.$store.state.attributeOptions);
     },
     attributes() {

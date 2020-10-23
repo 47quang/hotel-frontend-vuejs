@@ -163,9 +163,6 @@ export default {
         CusNavbar,
         Footer
     },
-    created() {
-        console.log(this.$store.state.myCustomer)
-    },
     computed: {
         myCustomer() {
             return this.$store.state.myCustomer
@@ -174,7 +171,6 @@ export default {
     methods: {
         handleAvatarSuccess(res, file) {
             this.form.preview = URL.createObjectURL(file.raw);
-            console.log("Res: ", res.data[0]);
             this.form.avatar = res.data[0];
         },
         async updateCustomer() {

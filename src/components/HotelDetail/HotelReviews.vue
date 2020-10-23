@@ -13,7 +13,7 @@
                 <div v-for="review of reviews" :key="review.id" class="review-body">
                     <el-col :span="6" class="review-detail">
                         <div class="review-rating">{{review.rating}}.0</div>
-                        <div class="review-customer">Khách: {{reviewForm.customerName}}</div>
+                        <div class="review-customer">Khách: {{(review.customer && review.customer.fullname) || 'Người dùng vô danh'}}</div>
                     </el-col>
                     <el-col :span="18" class="review-content">
                         <div class="review-content-tag">"{{review.tag.name}}"</div>

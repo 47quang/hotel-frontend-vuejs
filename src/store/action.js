@@ -429,7 +429,6 @@ export const actions = {
         .get(`${BASE_URL}/api.review?hotelId=${payload}`)
         .then(resp => resp.data)
         .then(body => {
-          console.log(body.data)
           ctx.commit('FETCH_REVIEWS', body.data);
           resolve(body);
         })
@@ -596,7 +595,6 @@ export const actions = {
         .put(`${BASE_URL}/api.customer/${payload.id}`, payload)
         .then((resp) => resp.data)
         .then((body) => {
-          console.log(body.data)
           localStorage.setItem('customer', JSON.stringify(body.data));
           ctx.commit('CUSTOMER_UPDATE', body.data);
           resolve(body);

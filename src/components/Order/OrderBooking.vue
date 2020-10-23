@@ -15,9 +15,7 @@
               class="booking__form-content"
               prop="fullname"
               label="Họ và Tên:"
-              :rules="[
-                { required: false, message: 'Vui lòng điền họ và tên của bạn'},
-              ]"
+              :rules="[{ required: false, message: 'Vui lòng điền họ và tên của bạn' }]"
             >
               <el-input v-model="order.fullname"></el-input>
             </el-form-item>
@@ -25,9 +23,7 @@
               class="booking__form-content"
               prop="email"
               label="Email:"
-              :rules="[
-                { required: false, message: 'Vui lòng nhập email của bạn'},
-              ]"
+              :rules="[{ required: false, message: 'Vui lòng nhập email của bạn' }]"
             >
               <el-input v-model="order.email"></el-input>
             </el-form-item>
@@ -35,9 +31,7 @@
               class="booking__form-content"
               prop="phone"
               label="Số Điện Thoại:"
-              :rules="[
-                { required: false, message: 'Vui lòng nhập số điện thoại của bạn'},
-              ]"
+              :rules="[{ required: false, message: 'Vui lòng nhập số điện thoại của bạn' }]"
             >
               <el-input v-model="order.phone"></el-input>
             </el-form-item>
@@ -54,7 +48,12 @@
             <el-table-column prop="end" label="Ngày kết thúc" width="300"> </el-table-column>
             <el-table-column fixed="right" label="Thao tác" width="120">
               <template slot-scope="scope">
-                <el-button @click="handleRemove(scope.$index, scope.row)" type="danger" size="small" plain icon="el-icon-delete"
+                <el-button
+                  @click="handleRemove(scope.$index, scope.row)"
+                  type="danger"
+                  size="small"
+                  plain
+                  icon="el-icon-delete"
                   >Xóa</el-button
                 >
               </template>
@@ -63,14 +62,13 @@
           <!-- Get Total -->
           <h4 class="booking__form-title">
             Tổng Hóa Đơn:
-            <span class="booking__pricing-footer">{{this.total}}</span>
+            <span class="booking__pricing-footer">{{ this.total }}</span>
           </h4>
           <!-- Confirm Booking -->
           <div class="booking__confirm booking__card">
             <el-button class="booking__btn" @click="handlePurchase">Thanh toán</el-button>
           </div>
         </el-card>
-        
       </el-col>
       <!-- Hotel Short Description -->
       <el-col :span="10">
@@ -86,16 +84,16 @@
           <div v-if="hasImages()" slot="error" class="image-slot">
             <i class="el-icon-picture-outline"></i>
           </div>
-          <el-carousel v-else height="300px" indicator-position="outside" class="booking__hotel-images">
-            <el-carousel-item  v-for="image in hotel.images" :key="image" :fit="'contain'">
-              <el-image
-                :src="image"
-                :preview-src-list="hotel.images"
-              >
-              </el-image>
+          <el-carousel
+            v-else
+            height="300px"
+            indicator-position="outside"
+            class="booking__hotel-images"
+          >
+            <el-carousel-item v-for="image in hotel.images" :key="image" :fit="'contain'">
+              <el-image :src="image" :preview-src-list="hotel.images"> </el-image>
             </el-carousel-item>
           </el-carousel>
-          
         </el-card>
       </el-col>
     </el-row>
@@ -115,9 +113,7 @@
             class="booking__form-content"
             prop="fullname"
             label="Họ và Tên:"
-            :rules="[
-              { required: false, message: 'Vui lòng điền họ và tên của bạn'},
-            ]"
+            :rules="[{ required: false, message: 'Vui lòng điền họ và tên của bạn' }]"
           >
             <el-input v-model="order.fullname"></el-input>
           </el-form-item>
@@ -125,9 +121,7 @@
             class="booking__form-content"
             prop="email"
             label="Email:"
-            :rules="[
-              { required: false, message: 'Vui lòng nhập email của bạn'},
-            ]"
+            :rules="[{ required: false, message: 'Vui lòng nhập email của bạn' }]"
           >
             <el-input v-model="order.email"></el-input>
           </el-form-item>
@@ -135,9 +129,7 @@
             class="booking__form-content"
             prop="phone"
             label="Số Điện Thoại:"
-            :rules="[
-              { required: false, message: 'Vui lòng nhập số điện thoại của bạn'},
-            ]"
+            :rules="[{ required: false, message: 'Vui lòng nhập số điện thoại của bạn' }]"
           >
             <el-input v-model="order.phone"></el-input>
           </el-form-item>
@@ -158,7 +150,12 @@
           <el-table-column prop="end" label="Ngày kết thúc" width="300"> </el-table-column>
           <el-table-column fixed="right" label="Thao tác" width="120">
             <template slot-scope="scope">
-              <el-button @click="handleRemove(scope.$index, scope.row)" type="danger" size="small" plain icon="el-icon-delete"
+              <el-button
+                @click="handleRemove(scope.$index, scope.row)"
+                type="danger"
+                size="small"
+                plain
+                icon="el-icon-delete"
                 >Xóa</el-button
               >
             </template>
@@ -167,7 +164,7 @@
         <!-- Get Total -->
         <h4 class="booking__form-title">
           Tổng Hóa Đơn:
-          <span class="booking__pricing-footer">{{this.total}}</span>
+          <span class="booking__pricing-footer">{{ this.total }}</span>
         </h4>
         <!-- Confirm Booking -->
         <div class="booking__confirm booking__card">
@@ -197,7 +194,7 @@ export default {
           },
         ],
       },
-      total: 0
+      total: 0,
     };
   },
   computed: {
@@ -224,7 +221,6 @@ export default {
     hasImages() {
       if (this.hotel.images == undefined) return;
       if (this.hotel.images.length != 0) {
-        console.log('false');
         return false;
       } else return true;
     },
@@ -234,35 +230,37 @@ export default {
         cancelButtonText: 'Hủy bỏ',
         type: 'warning',
       })
-      .then(() => {
-        const orderLines = this.$store.state.orderLines;
-        const orderLineIndex = orderLines.findIndex((l) => l.id == row.id);
-        if (orderLineIndex != -1) {
-          orderLines.splice(orderLineIndex, 1);
-          this.$store.commit('UPDATE_ORDERLINE', orderLines);
-        }
-        this.total = 0;
-        this.getTotal(this.orderLines);
-      })
-      .catch(() => {
-        return;
-      });
+        .then(() => {
+          const orderLines = this.$store.state.orderLines;
+          const orderLineIndex = orderLines.findIndex((l) => l.id == row.id);
+          if (orderLineIndex != -1) {
+            orderLines.splice(orderLineIndex, 1);
+            this.$store.commit('UPDATE_ORDERLINE', orderLines);
+          }
+          this.total = 0;
+          this.getTotal(this.orderLines);
+        })
+        .catch(() => {
+          return;
+        });
     },
-    
+
     getTotal(orderLines) {
       for (const order of Array.from(orderLines)) {
         this.total += order.price * order.quantity;
       }
-      return this.total = this.$options.filters.formatCurrency(this.total);
+      return (this.total = this.$options.filters.formatCurrency(this.total));
     },
     async handlePurchase() {
+      if ((this.orderLines || []).length) {
+        console.log('Đơn hàng trống');
+      }
       for (let i = 0; i < this.orderLines.length - 1; i++) {
         if (this.orderLines[i].hotelId != this.orderLines[i + 1].hotelId) {
           console.log('Không hợp lệ');
           return;
         }
       }
-      console.log(this.orderLines[0].hotelId);
       const payload = {
         fullname: this.order.fullname,
         hotelId: this.orderLines[0].hotelId,
@@ -270,22 +268,20 @@ export default {
         phone: this.order.phone,
         orderLines: this.orderLines,
       };
-      if (!JSON.parse(localStorage.getItem('accessToken'))){
+      if (!JSON.parse(localStorage.getItem('accessToken'))) {
         this.$message({
           showClose: true,
           message: 'Vui lòng Đăng Nhập để đặt phòng!',
-          type: 'warning'
+          type: 'warning',
         });
-      }
-      else {
+      } else {
         try {
           await this.$store.dispatch('createOrder', payload);
           this.$store.commit('UPDATE_ORDERLINE', []);
           this.alertSuccess();
           this.$router.push('/');
-        } 
-        catch (err) {
-          this.alertErr();          
+        } catch (err) {
+          this.alertErr();
         }
       }
     },
@@ -293,22 +289,26 @@ export default {
       this.$message({
         showClose: true,
         message: 'Đã có lỗi xảy ra!',
-        type: 'error'
+        type: 'error',
       });
     },
     alertSuccess() {
       this.$message({
         showClose: true,
-        message: "Gửi Xác Nhận Đặt Phòng Thành Công!",
-        type: "success"
+        message: 'Gửi Xác Nhận Đặt Phòng Thành Công!',
+        type: 'success',
       });
     },
   },
-  created(){
+  created() {
     this.getTotal(this.orderLines);
+    if (this.$store.state.orderLines || []) {
+      // this.$router.go(-1);
+      window.history.go(-1);
+    }
   },
   async mounted() {
-    await this.$store.dispatch('fetchHotelById', this.orderLines[0].hotelId); 
+    await this.$store.dispatch('fetchHotelById', this.orderLines[0].hotelId);
     await this.$store.dispatch('fetchWardById', this.hotel.wardId);
     await this.$store.dispatch('fetchDistrictById', this.hotel.districtId);
     await this.$store.dispatch('fetchProvinceById', this.hotel.provinceId);
@@ -441,12 +441,12 @@ export default {
   margin-left: 0px !important;
   margin-right: 0px !important;
 }
-.booking__hotel-images{
+.booking__hotel-images {
   margin-top: 20px;
 }
 .booking__hotel-des {
-  width: 150px; 
-  height: 150px; 
+  width: 150px;
+  height: 150px;
   padding: 3%;
 }
 </style>

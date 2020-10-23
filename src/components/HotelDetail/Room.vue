@@ -206,7 +206,6 @@ export default {
               : max;
         }
       });
-      console.log(max);
       return max;
     },
   },
@@ -239,7 +238,7 @@ export default {
         id: uuidv4(),
       };
       const orderLine = JSON.parse(localStorage.getItem('orderLine')) || [];
-      const e = orderLine.find(l => l.hotelId !== payload.hotelId);
+      const e = orderLine.find((l) => l.hotelId !== payload.hotelId);
       if (e) {
         alert('abcabc');
         return;
@@ -249,7 +248,7 @@ export default {
       this.$message({
         showClose: true,
         message: 'Đã thêm thành công.',
-        type: 'success'
+        type: 'success',
       });
       this.dialogDetailVisible = false;
     },
@@ -332,7 +331,7 @@ export default {
 .MasterRoom-infoPhoto {
   position: relative;
   cursor: pointer;
-  transition: transform .3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
   z-index: 9999;
 }
 .MasterRoom-infoPhoto:hover {

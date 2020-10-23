@@ -288,12 +288,7 @@ export default {
       return formData;
     },
     async handleSelectAttribute(index) {
-      // const attribute = this.room.attributes[index];
-      console.log('index', index);
-      // if (attribute.attributeId === undefined) return;
-      // attribute.attributeOptions = await this.$store.dispatch('fetchAttributeOptionById', attribute.attributeId);
       this.attributeOptions = await this.$store.dispatch('fetchAttributeOptionById', index);
-      // this.$set(this.room.attributes, index, this.attribute); //Khi thay đổi data là một object trong 1 array thì sẽ không reactive
     },
     backRoomListing() {
       this.$router.push(`/hotel/${this.$route.params.id}/room`);

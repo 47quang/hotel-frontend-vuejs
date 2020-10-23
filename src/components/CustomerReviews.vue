@@ -122,9 +122,6 @@ export default {
             });
             },
         },
-        updateReview(id) {
-            console.log(id)
-        },
         fixReview() {
             this.dialogReviewVisible = true
         }

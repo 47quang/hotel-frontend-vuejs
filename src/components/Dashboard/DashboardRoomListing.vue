@@ -150,7 +150,6 @@ export default {
       return this.$store.state.provinceById;
     },
     filteredRooms() {
-      console.log('rooms', this.rooms)
       return (Array.from(this.rooms) || []).filter(room => {
         return room.name.toLowerCase().includes(this.search.toLowerCase())
       })
