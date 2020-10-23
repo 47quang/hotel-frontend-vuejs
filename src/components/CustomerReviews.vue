@@ -46,7 +46,38 @@
                     </el-card>
                   </el-form-item>
                   <el-form-item label="Hình ảnh" :label-width="formLabelWidth">
-                    <el-input v-model="reviewById.images" autocomplete="off"></el-input>
+                    <el-upload
+                      accept="image/png, image/jpeg, image/jpg"
+                      action="#"
+                      list-type="picture-card"
+                      :file-list="fileList"
+                      :auto-upload="false"
+                      :ref="`upload_${review.id}`"
+                      :on-change="handleOnChange"
+                    >
+                      <i slot="default" class="el-icon-plus"></i>
+                      <div slot="file" slot-scope="{ file }">
+                        <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
+                        <span class="el-upload-list__item-actions">
+                          <span
+                            class="el-upload-list__item-preview"
+                            @click="handlePictureCardPreview(file)"
+                          >
+                            <i class="el-icon-zoom-in"></i>
+                          </span>
+                          <span
+                            v-if="!disabled"
+                            class="el-upload-list__item-delete"
+                            @click="handleRemove(file)"
+                          >
+                            <i class="el-icon-delete"></i>
+                          </span>
+                        </span>
+                      </div>
+                      <div slot="tip" class="el-upload__tip">
+                        định dạng jpg/png và kích thước ảnh nhỏ hơn 5MB
+                      </div>
+                    </el-upload>
                   </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
@@ -66,35 +97,34 @@
 import CusNavbar from '../components/CusNavbar';
 
 export default {
+  components: {
+    CusNavbar,
+  },
   data() {
     return {
       reviewById: {},
       dialogReviewVisible: false,
       formLabelWidth: '80px',
+      tags: [],
+      reviews: [],
+      hotels: [],
+      dialogImageUrl: '',
+      dialogVisible: false,
+      disabled: false,
+      fileList: [],
     };
   },
-  components: {
-    CusNavbar,
-  },
-  created() {
-    this.$store.dispatch('fetchReviewsByCustomer', this.$store.state.myCustomer.id);
-    this.$store.dispatch('fetchTags');
-    this.$store.dispatch('fetchAllHotels');
-  },
-  computed: {
-    reviews() {
-      return this.$store.state.reviewsByCustomer.map((r) => {
-        r.tag = this.tags.find((t) => t.id == r.tagId);
-        r.hotel = this.hotels.find((h) => h.id == r.hotelId);
-        return r;
-      });
-    },
-    tags() {
-      return this.$store.state.tags;
-    },
-    hotels() {
-      return this.$store.state.allHotels;
-    },
+  async created() {
+    await this.$store.dispatch('fetchReviewsByCustomer', this.$store.state.myCustomer.id);
+    await this.$store.dispatch('fetchTags');
+    await this.$store.dispatch('fetchAllHotels');
+    this.tags = this.$store.state.tags;
+    this.hotels = this.$store.state.allHotels;
+    this.reviews = this.$store.state.reviewsByCustomer.map((r) => {
+      r.tag = this.tags.find((t) => t.id == r.tagId);
+      r.hotel = this.hotels.find((h) => h.id == r.hotelId);
+      return r;
+    });
   },
   methods: {
     deleteReview(id) {
@@ -112,6 +142,17 @@ export default {
           this.alertErr();
         });
     },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
+    },
+    handleRemove(file) {
+      const index = this.fileList.findIndex((f) => f.url == file.url);
+      this.fileList.splice(index, 1);
+    },
+    handleOnChange(file, fileList) {
+      this.fileList = fileList;
+    },
     alertSuccess() {
       this.$message({
         showClose: true,
@@ -128,12 +169,30 @@ export default {
     },
     fixReview(id) {
       this.reviewById = this.$store.state.reviewsByCustomer.find((r) => r.id == id);
+      this.fileList = (this.reviewById.images || []).map((i, index) => ({
+        name: `${this.reviewById.id}-image-${index}`,
+        url: i,
+      }));
       this.dialogReviewVisible = true;
     },
     async handleUpdateReview() {
+      const files = this.$refs[`upload_${this.reviewById.id}`][0].uploadFiles.filter((f) => f.raw).map((f) => f.raw);
+      const formData = this.parseFormData(files);
+      const { data } = await this.$store.dispatch('uploadImage', formData);
+      this.reviewById.images = this.$refs[`upload_${this.reviewById.id}`][0].uploadFiles
+        .filter((f) => !f.raw)
+        .map((f) => f.url)
+        .concat(data);
       await this.$store.dispatch('updateReview', this.reviewById);
       this.alertUpdateSuccess();
       this.dialogReviewVisible = false;
+    },
+    parseFormData(files) {
+      let formData = new FormData();
+      for (const file of files) {
+        formData.append('image', file);
+      }
+      return formData;
     },
     alertUpdateSuccess() {
       this.$message({

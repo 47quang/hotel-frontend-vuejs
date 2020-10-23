@@ -580,7 +580,7 @@ export const actions = {
   updateReview(ctx, payload) {
     return new Promise((resolve, reject) => {
       client
-        .put(`${BASE_URL}/api.review/${payload.id}`, payload.review)
+        .put(`${BASE_URL}/api.review/${payload.id}`, payload)
         .then(resp => resp.data)
         .then(body => {
           resolve(body);
