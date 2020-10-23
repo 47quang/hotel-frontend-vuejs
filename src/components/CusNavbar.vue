@@ -1,6 +1,6 @@
 <template>
     <div class="nav">
-      <div class="logo">
+      <div style="cursor: pointer" @click="backToHomePage"  class="logo">
         <img src="../assets/logo.png" alt="">
       </div>
       <div style="display: flex" class=button>
@@ -47,6 +47,9 @@
       },
       customerUpdate() {
         this.$router.push('/customer-update')
+      },
+      backToHomePage() {
+        this.$router.push('/')
       }
     }
     
@@ -96,6 +99,9 @@
   }
   .el-dropdown-menu {
       width: 170px !important;
+  }
+  .avatarCustomer {
+    line-height: 1;
   }
   .avatarCustomer img {
     width: 40px;

@@ -185,9 +185,9 @@ export default {
 }
 .sticky {
   position: fixed;
-  top: 0;
+  top: 10px;
   z-index: 10;
-  right: 0;
+  right: 15px;
 }
 .orderline-submit-cart {
   border-bottom: 1px solid silver;
