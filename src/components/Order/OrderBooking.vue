@@ -279,7 +279,7 @@ export default {
           await this.$store.dispatch('createOrder', payload);
           this.$store.commit('UPDATE_ORDERLINE', []);
           this.alertSuccess();
-          this.$router.push('/');
+          this.$router.go(-1);
         } catch (err) {
           this.alertErr();
         }
