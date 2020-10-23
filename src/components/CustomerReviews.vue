@@ -206,10 +206,6 @@ export default {
 </script>
 
 <style scope>
-.el-form-item {
-  display: flex;
-  align-items: center;
-}
 .el-rate {
   text-align: left;
 }
