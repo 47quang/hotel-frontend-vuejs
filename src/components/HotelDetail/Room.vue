@@ -74,7 +74,9 @@
                       >Xem</el-button
                     >
                   </el-dialog>
-                  <el-dialog title="Lịch đặt phòng" :visible.sync="dialogDetailVisible" width="50%">
+                  
+                </el-col>
+                <el-dialog title="Lịch đặt phòng" :visible.sync="dialogDetailVisible" width="50%">
                     <el-row>
                       <el-calendar>
                         <template slot="dateCell" slot-scope="{ date, data }">
@@ -148,7 +150,6 @@
                       >
                     </span>
                   </el-dialog>
-                </el-col>
               </el-row>
             </el-col>
           </el-col>
@@ -302,6 +303,7 @@ export default {
 .ChildRoom-book-content {
   text-align: center;
 }
+
 .room-dropdown {
   padding: 10px;
   text-align: center;
@@ -407,6 +409,9 @@ export default {
 }
 </style>
 <style>
+.ChildRoom-book-content .el-dialog {
+  width: 30% !important;
+}
 .el-range-separator::before {
   content: none !important;
   background-color: #fff;
