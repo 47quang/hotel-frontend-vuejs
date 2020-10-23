@@ -3,7 +3,7 @@
     <el-button
       size="mini"
       type="success"
-      @click="dialogVisible = true">Cập Nhật</el-button>
+      @click="handleSelect(attributeOptionId)">Cập Nhật</el-button>
     <el-dialog
       title="Cập Nhật Thuộc Tính"
       :visible.sync="dialogVisible"
@@ -36,7 +36,13 @@ export default {
       attributeOption: {
         name: ''
       },
+      attributeOptionName: ''
     };
+  },
+  computed: {
+    attributeOptions() {
+      return Array.from(this.$store.state.attributeOptions);
+    },
   },
   methods: {
     handleCancel(formName) {
@@ -86,6 +92,13 @@ export default {
         message: 'Thiếu thông tin. Vui lòng điền đầy đủ!',
         type: 'warning'
       });
+    },
+    async handleSelect(attributeOptionId){
+      this.attributeOptionName = this.attributeOptions.filter(attrOption => {
+        return attrOption.id === attributeOptionId;
+      });
+      this.attributeOption.name = this.attributeOptionName[0].name;
+      this.dialogVisible = true;
     }
   }
 }

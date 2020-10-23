@@ -4,7 +4,7 @@
       size="mini"
       type="success"
       plain
-      @click="dialogVisible = true">Cập Nhật</el-button>
+      @click="handleSelect(attributeId)">Cập Nhật</el-button>
     <el-dialog
       title="Cập Nhật Thuộc Tính"
       :visible.sync="dialogVisible"
@@ -35,8 +35,9 @@ export default {
     return {
       dialogVisible: false,
       attribute: {
-        name: ''
+        name: this.attributeName
       },
+      attributeName: ''
     };
   },
   methods: {
@@ -87,8 +88,13 @@ export default {
         message: 'Thiếu thông tin. Vui lòng điền đầy đủ!',
         type: 'warning'
       });
+    },
+    async handleSelect(attributeId){
+      this.attributeName = await this.$store.dispatch('fetchAttributeById', attributeId);
+      this.attribute.name = this.attributeName.name;
+      this.dialogVisible = true;
     }
-  }
+  },
 }
 </script>
 <style scoped>
