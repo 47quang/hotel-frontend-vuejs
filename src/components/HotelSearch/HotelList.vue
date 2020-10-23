@@ -86,8 +86,8 @@ export default {
     };
   },
   async created() {
-    this.$store.dispatch('fetchProvinceById', this.fetchHotel[0].provinceId);
-    this.$store.dispatch('fetchDistrict', this.fetchHotel[0].provinceId);
+    this.$store.dispatch('fetchProvinceById', this.$route.params.id);
+    this.$store.dispatch('fetchDistrict', this.$route.params.id);
   },
   methods: {
     async detailHotel(id) {

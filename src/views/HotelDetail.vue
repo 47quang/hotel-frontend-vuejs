@@ -39,7 +39,10 @@
         <div></div>
       </el-col>
       <el-dialog title="Thông báo" :visible.sync="centerDialogVisible" width="20%" center>
-        <span>Trong giỏ hàng của bạn đang chứa các phòng của khách sạn khác, chúng đã bị xóa khỏi giỏ hàng khi bạn chuyển trang</span>
+        <span
+          >Trong giỏ hàng của bạn đang chứa các phòng của khách sạn khác, chúng đã bị xóa khỏi giỏ
+          hàng khi bạn chuyển trang</span
+        >
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="centerDialogVisible = false">Đóng</el-button>
         </span>
@@ -163,10 +166,12 @@ export default {
   beforeUpdate() {
     window.document.onscroll = () => {
       let sticky = document.getElementById('add-to-cart');
-      if (window.pageYOffset > sticky.offsetTop) {
-        sticky.classList.add('sticky');
-      } else {
-        sticky.classList.remove('sticky');
+      if (sticky) {
+        if (window.pageYOffset > sticky.offsetTop) {
+          sticky.classList.add('sticky');
+        } else {
+          sticky.classList.remove('sticky');
+        }
       }
     };
   },
