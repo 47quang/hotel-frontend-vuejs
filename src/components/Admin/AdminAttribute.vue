@@ -94,7 +94,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <admin-add-attribute-option :attributeId="attributeId" :attributeOptions="attributeOptions"/>
+        <admin-add-attribute-option :attributeId="attributeId"/>
       </el-card>
     </div>
   </div>
