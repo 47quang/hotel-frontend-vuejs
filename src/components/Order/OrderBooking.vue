@@ -65,11 +65,12 @@
             Tổng Hóa Đơn:
             <span class="booking__pricing-footer">{{this.total}}</span>
           </h4>
+          <!-- Confirm Booking -->
+          <div class="booking__confirm booking__card">
+            <el-button class="booking__btn" @click="handlePurchase">Thanh toán</el-button>
+          </div>
         </el-card>
-        <!-- Confirm Booking -->
-        <div class="booking__confirm booking__card">
-          <el-button class="booking__btn" @click="handlePurchase">Thanh toán</el-button>
-        </div>
+        
       </el-col>
       <!-- Hotel Short Description -->
       <el-col :span="10">
@@ -168,6 +169,10 @@
           Tổng Hóa Đơn:
           <span class="booking__pricing-footer">{{this.total}}</span>
         </h4>
+        <!-- Confirm Booking -->
+        <div class="booking__confirm booking__card">
+          <el-button class="booking__btn" @click="handlePurchase">Thanh toán</el-button>
+        </div>
       </el-card>
     </div>
   </div>
