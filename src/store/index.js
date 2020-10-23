@@ -31,7 +31,7 @@ export default new Vuex.Store({
     roomById: {},
     reviews: [],
     customerById: {},
-    orderLines,
+    orderLines: orderLines || [],
     tags: [],
     reviewsByCustomer:[],
     allHotels:[],
