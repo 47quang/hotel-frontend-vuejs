@@ -34,11 +34,17 @@
             <el-tag class="room-card__tag" effect="dark"><span class="room-card__content-title">Mô tả</span></el-tag>
             <p class="text-justify">{{hotel.description}}</p>
           </div>
-          <div class="room-card__content-description">
-            <el-tag class="room-card__tag--rating room-card__tag" :type="'warning'" effect="dark"><span class="room-card__content-title">Đánh giá</span></el-tag>
-            <span class="text-justify">{{hotel.rating | formatRating}}</span>
-          </div>
-          <div class="room-card__content-description">
+          <el-row :gutter="22">
+            <el-col :span="11" class="room-card__content-description">
+              <el-tag class="room-card__tag--rating room-card__tag" :type="'warning'" effect="dark"><span class="room-card__content-title">Đánh giá</span></el-tag>
+              <span class="text-justify">{{hotel.rating | formatRating}}</span>
+            </el-col>
+            <el-col :span="11" class="room-card__content-description">
+              <el-tag class="room-card__tag--rating room-card__tag" :type="'info'" effect="dark"><span class="room-card__content-title">Số lượng phòng</span></el-tag>
+              <span class="text-justify">{{roomQuantity}}</span>
+            </el-col>
+          </el-row>
+          <div class="room-card__content-description room-card__content-image">
             <el-tag class="room-card__tag" :type="'danger'" effect="dark"><span class="room-card__content-title">Hình ảnh</span></el-tag>
             <div class="hotel-card__images">
               <el-image class="room-card__image" v-for="image in hotel.images" :key="image" :src="image" :fit="'contain'"></el-image>
@@ -105,11 +111,14 @@
             </div>
             <div class="room-card__content-description">
               <el-tag class="room-card__tag room-card__tag--image" :type="'warning'" effect="dark"><span class="room-card__content-title">Hình ảnh</span></el-tag>
+              <div class="image__description-helper">
+                <h4>* Mẹo: Click vào từng hình để phòng to.</h4>
+              </div>
               <div v-if="isImageEmpty(room.images)" class="handle-empty-image">
                 <el-image style="width: 50%; height: 50%" :src="'https://cdn.dribbble.com/users/992274/screenshots/7392790/media/95483df50a0a3324c4cf9ccb1094b825.jpg'"></el-image>
               </div>
               <div class="hotel-card__images">
-                <el-image class="room-card__image" v-for="image in room.images" :key="image" :src="image" :fit="'contain'"></el-image>
+                <el-image class="room-card__image" v-for="image in room.images" :key="image" :src="image" :preview-src-list="room.images" :fit="'contain'"></el-image>
               </div>
             </div>
           </div>
@@ -153,6 +162,9 @@ export default {
       return (Array.from(this.rooms) || []).filter(room => {
         return room.name.toLowerCase().includes(this.search.toLowerCase())
       })
+    },
+    roomQuantity() {
+      return this.$store.state.roomQuantity;
     }
   },
   methods: {
@@ -379,6 +391,14 @@ export default {
 }
 .add-hotel__back {
   cursor: pointer;
+}
+.room-card__content-image {
+  margin-top: 50px;
+}
+.image__description-helper {
+  color: #999;
+  font-size: 12px;
+  margin: 0 0 10px;
 }
 @media (max-width: 992px) {
   .room-card__content {

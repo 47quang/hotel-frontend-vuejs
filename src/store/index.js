@@ -44,6 +44,7 @@ export default new Vuex.Store({
     dialogSignUpVisible: false,
     allAttributeOptions: [],
     filterHotel: '',
+    roomQuantity: 0,
   },
   mutations,
   actions,

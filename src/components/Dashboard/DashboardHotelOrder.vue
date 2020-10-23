@@ -30,14 +30,6 @@
         </div>
         <div class="order-card__body">
           <div>
-            <span class="order-card__content">Email:</span>
-            <span>{{ order.email }}</span>
-          </div>
-          <div class="order-card__content-description">
-            <span class="order-card__content">Phone:</span>
-            <span>{{ order.phone }}</span>
-          </div>
-          <div class="order-card__content-description">
             <span class="order-card__content">Đơn tạo:</span>
             <span>{{ order.createdAt | formatTime }},</span>
             <span> {{ order.createdAt | formatDate }}</span>
@@ -78,29 +70,11 @@
           >
             <div class="order__modal">
               <div class="order-card__content-description">
-                <el-tag class="hotel-card__tag" :type="'warning'" effect="dark"
-                  ><span class="order-card__content-title">Đơn tạo</span></el-tag
-                >
-                <span> {{ orderById.createdAt | formatTime }},</span>
-                <span> {{ orderById.createdAt | formatDate }}</span>
-              </div>
-              <div class="order-card__content-description">
-                <el-tag class="hotel-card__tag" :type="'success'" effect="dark"
-                  ><span class="order-card__content-title">Cập nhật mới nhất</span></el-tag
-                >
-                <span> {{ orderById.updatedAt | formatTime }},</span>
-                <span> {{ orderById.updatedAt | formatDate }}</span>
-              </div>
-              <div class="order-card__content-description">
-                <el-tag class="hotel-card__tag" effect="dark"
-                  ><span class="order-card__content-title">Email</span></el-tag
-                >
+                <span class="order-card__content order-card__content-title-des">Email:</span>
                 <span> {{ order.email }}</span>
               </div>
               <div class="order-card__content-description">
-                <el-tag class="hotel-card__tag" :type="'danger'" effect="dark"
-                  ><span class="order-card__content-title">Phone</span></el-tag
-                >
+                <span class="order-card__content order-card__content-title-des">Phone:</span>
                 <span> {{ order.phone }}</span>
               </div>
               <el-table
@@ -394,5 +368,8 @@ export default {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+.order-card__content-title-des {
+  color: #2a2a2a;
 }
 </style>

@@ -105,5 +105,8 @@ export const mutations = {
   },
   UPDATE_FILTER_HOTEL(state, payload) {
     state.filterHotel = payload;
+  },
+  FETCH_ROOM_QUANTITY(state, payload) {
+    state.roomQuantity = payload;
   }
 };

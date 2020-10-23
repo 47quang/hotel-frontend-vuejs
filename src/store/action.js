@@ -322,6 +322,7 @@ export const actions = {
         .then(resp => resp.data)
         .then(body => {
           ctx.commit('FETCH_ROOMS_BY_HOTEL_ID', body.data);
+          ctx.commit('FETCH_ROOM_QUANTITY', body.total);
           resolve(body);
         })
         .catch(err => {
