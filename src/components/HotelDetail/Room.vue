@@ -332,7 +332,7 @@ export default {
   position: relative;
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
-  z-index: 9999;
+  z-index: 100;
 }
 .MasterRoom-infoPhoto:hover {
   transform: scale(1.2);

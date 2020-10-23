@@ -303,8 +303,8 @@ export default {
   created() {
     this.getTotal(this.orderLines);
     if (this.$store.state.orderLines || []) {
-      // this.$router.go(-1);
       window.history.go(-1);
+      return;
     }
   },
   async mounted() {

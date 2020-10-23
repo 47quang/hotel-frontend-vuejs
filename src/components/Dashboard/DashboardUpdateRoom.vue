@@ -23,7 +23,13 @@
           Những đặc điểm nổi bật của khách sạn để thu hút du khách.
         </h4>
         <el-card shadow="hover">
-          <el-input type="textarea" :rows="4" maxlength="5000" show-word-limit v-model="room.description"></el-input>
+          <el-input
+            type="textarea"
+            :rows="4"
+            maxlength="5000"
+            show-word-limit
+            v-model="room.description"
+          ></el-input>
         </el-card>
       </el-form-item>
       <!-- Room Capacity -->
@@ -132,7 +138,9 @@
               </span>
             </span>
           </div>
-          <div slot="tip" class="el-upload__tip">định dạng jpg/png và kích thước ảnh nhỏ hơn 5MB</div>
+          <div slot="tip" class="el-upload__tip">
+            định dạng jpg/png và kích thước ảnh nhỏ hơn 5MB
+          </div>
         </el-upload>
         <el-dialog :visible.sync="dialogVisible">
           <img width="100%" :src="dialogImageUrl" alt="" />
@@ -165,14 +173,20 @@ export default {
   },
   methods: {
     async submitForm(formName) {
-      const files = this.$refs.upload.uploadFiles.filter(f => f.raw).map((f) => f.raw);
+      const files = this.$refs.upload.uploadFiles.filter((f) => f.raw).map((f) => f.raw);
       const formData = this.parseFormData(files);
       const { data } = await this.$store.dispatch('uploadImage', formData);
-      this.room.images = this.$refs.upload.uploadFiles.filter(f => !f.raw).map(f => f.url).concat(data);
-      
-      this.$refs[formName].validate(async(valid) => {
+      this.room.images = this.$refs.upload.uploadFiles
+        .filter((f) => !f.raw)
+        .map((f) => f.url)
+        .concat(data);
+
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          this.$store.dispatch('updateRoomById', {roomId: this.$route.params.roomId, room: this.room});
+          this.$store.dispatch('updateRoomById', {
+            roomId: this.$route.params.roomId,
+            room: this.room,
+          });
           this.$message({
             showClose: true,
             message: 'Đã cập nhật phòng thành công.',
@@ -205,14 +219,14 @@ export default {
         });
     },
     handleRemove(file) {
-      const index = this.fileList.findIndex(f => f.url == file.url);
+      const index = this.fileList.findIndex((f) => f.url == file.url);
       this.fileList.splice(index, 1);
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
-    handleOnChange(file, fileList){
+    handleOnChange(file, fileList) {
       this.fileList = fileList;
     },
     parseFormData(files) {
@@ -224,23 +238,19 @@ export default {
     },
     backRoomListing() {
       this.$router.push(`/hotel/${this.$route.params.id}/room`);
-    }
+    },
   },
   computed: {
-    room(){
+    room() {
       return this.$store.state.roomById;
-    }
-  },
-  watch: {
-    '$store.state.roomById': function(nVal) {
-      this.fileList = nVal.images.map((i, index) => ({
-        name: `${nVal.name.normalize()}-image-${index}`,
-        url: i,
-      }));
-    }
+    },
   },
   async created() {
     await this.$store.dispatch('fetchRoomById', this.$route.params.roomId);
+    this.fileList = this.$store.state.roomById.images.map((i, index) => ({
+      name: `${this.$store.state.roomById.name.normalize()}-image-${index}`,
+      url: i,
+    }));
   },
 };
 </script>
@@ -323,7 +333,7 @@ export default {
 .attribute-select__selector {
   width: 50%;
 }
-.add-room__back{
+.add-room__back {
   font-size: 25px;
   cursor: pointer;
 }

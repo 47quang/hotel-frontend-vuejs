@@ -171,12 +171,10 @@
 
 <script>
 export default {
+  props: ['hotel'],
   computed: {
     round() {
       return Math.round(this.hotel.rating * 100) / 100;
-    },
-    hotel() {
-      return this.$store.state.hotelById;
     },
   },
 };

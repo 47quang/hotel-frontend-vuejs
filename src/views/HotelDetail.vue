@@ -4,7 +4,7 @@
     <SearchBar></SearchBar>
     <el-row>
       <el-col :span="17">
-        <Info :idHotel="idHotel"></Info>
+        <Info :hotel="hotel"></Info>
         <Room v-for="room in hotel.rooms" :key="room.id" :room="room"></Room>
         <HotelReviews :idHotel="idHotel"></HotelReviews>
       </el-col>
@@ -81,15 +81,16 @@ export default {
           },
         ],
       },
+      hotel: {
+        images: [],
+      },
     };
   },
-  created() {
-    this.$store.dispatch('fetchHotelById', this.idHotel);
+  async created() {
+    await this.$store.dispatch('fetchHotelById', this.idHotel);
+    this.hotel = this.$store.state.hotelById || this.hotel;
   },
   computed: {
-    hotel() {
-      return this.$store.state.hotelById;
-    },
     wardById() {
       return this.$store.state.wardById;
     },
