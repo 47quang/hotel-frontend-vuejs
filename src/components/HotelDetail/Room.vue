@@ -7,17 +7,14 @@
             <el-col :span="5" class="MasterRoom-info">
               <div class="MasterRoom-infoHeader">Hình ảnh mô tả</div>
               <div class="MasterRoom-infoPhoto">
-                <img src="../../assets/e6.jpg" alt="" />
-                <div class="MasterRoom-infoPhotoHover">
-                  <img src="../../assets/e6.jpg" alt="" />
-                </div>
+                <img :src="`${room.images[0]}`" alt="" />
               </div>
               <div class="MasterRoom-infoPhotoThumbnail">
                 <div class="infoPhotoThumbnail1">
-                  <img src="../../assets/thumbnail1.jpg" alt="" />
+                  <img :src="`${room.images[1]}`" alt="" />
                 </div>
                 <div class="infoPhotoThumbnail2">
-                  <img src="../../assets/thumbnail2.jpg" alt="" />
+                  <img :src="`${room.images[2]}`" alt="" />
                 </div>
               </div>
             </el-col>
@@ -330,21 +327,15 @@ export default {
 .ChildRoomsList-room-contents {
   border: 1px solid #f79911;
   background-color: white;
+  height: 100%;
 }
 .MasterRoom-infoPhoto {
   position: relative;
   cursor: pointer;
+  transition: transform .3s ease-in-out;
+  z-index: 9999;
 }
-.MasterRoom-infoPhoto:hover .MasterRoom-infoPhotoHover {
-  display: block;
-  z-index: 10;
-}
-.MasterRoom-infoPhotoHover {
-  display: none;
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 100%;
+.MasterRoom-infoPhoto:hover {
   transform: scale(1.2);
 }
 .MasterRoom-infoPhotoThumbnail {
