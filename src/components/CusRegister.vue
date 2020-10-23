@@ -26,10 +26,7 @@
             <el-form-item label="Số điện thoại" :label-width="formLabelWidth">
               <el-input type="phone" v-model="form.phone" @keyup.enter.native="submit" autocomplete="off"></el-input>
             </el-form-item>
-             <!-- <el-form-item label="Địa chỉ" :label-width="formLabelWidth">
-              <el-input  type="address" v-model="form.address"  autocomplete="off"></el-input>
-            </el-form-item> -->
-            <el-button class="modal-register" type="primary" @click="submit()">Tạo tài khoản</el-button>
+            <el-button class="modal-register" type="primary" @click="submit">Tạo tài khoản</el-button>
             <!-- <div class="da-co-tai-khoan-position">
                <div class="da-co-tai-khoan">
               <p>Bạn đã có tài khoản</p>
@@ -65,9 +62,28 @@ export default {
       };
     },
      methods: {
-      submit(){
-        this.$store.dispatch('register', this.form)
-        
+      async submit(){
+        try {
+          await this.$store.dispatch("register", this.form);
+          this.dialogFormVisible=false;
+          this.alertSuccess();
+        } catch (err) {
+          this.alertErr(err);
+        }
+      },
+      alertErr(err) {
+      this.$message({
+        showClose: true,
+        message: err.message || "Đã có lỗi xảy ra!",
+        type: "error"
+      });
+      },
+      alertSuccess() {
+        this.$message({
+          showClose: true,
+          message: "Đăng ký Thành Công!",
+          type: "success"
+        });
       }
     }
 }

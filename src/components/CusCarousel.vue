@@ -85,10 +85,7 @@ export default {
   .button-select {
     width: 45% !important;
   }
-  .el-select-dropdown {
-    top: 290px;
-    left: 154px;
-  }
+ 
 }
 .carousel {
   background-image: url(../assets/carousel.png);
@@ -166,6 +163,10 @@ p {
 @media (max-width: 768px) {
   .button-select {
     width: 45% !important;
+  }
+   .el-select-dropdown {
+    top: 390px !important;
+    left: 154px !important;
   }
 }
 .search .el-select input {

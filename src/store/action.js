@@ -593,7 +593,7 @@ export const actions = {
   updateCustomer(ctx, payload) {
     return new Promise((resolve, reject) => {
       client
-        .put(`${BASE_URL}/api.customer/${payload.id}`, payload.form)
+        .put(`${BASE_URL}/api.customer/${payload.id}`, payload)
         .then((resp) => resp.data)
         .then((body) => {
           console.log(body.data)
@@ -606,6 +606,7 @@ export const actions = {
         });
     });
   },
+  
   adminSignIn(ctx, payload) {
     return new Promise((resolve, reject) => {
       client

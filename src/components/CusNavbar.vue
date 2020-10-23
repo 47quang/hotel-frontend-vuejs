@@ -3,15 +3,18 @@
       <div class="logo">
         <img src="../assets/logo.png" alt="">
       </div>
-      <div class=button>
+      <div style="display: flex" class=button>
         <router-link class="owner" to="/owner" > Đăng ký cho thuê nhà</router-link>
         <div style="display: inline-block" v-if="!myCustomer.fullname">
           <Login class=login-component></Login>
           <Register class=register-component></Register>
         </div>
-        <div style="display: inline-block; font-weight:600" v-else>
+        <div style="display: flex; align-items:center ; font-weight:600" v-else>
+          <div class="avatarCustomer">
+            <img :src="myCustomer.avatar" alt="">
+          </div>
             <el-dropdown style="cursor: pointer" trigger="click">
-              <span class="el-dropdown-link">
+              <span style="padding-left: 5px;" class="el-dropdown-link">
                 {{myCustomer.lastname}} {{myCustomer.firstname}}<i class="el-icon-arrow-down el-icon--right"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
@@ -76,7 +79,7 @@
     text-decoration: none;
     border: 1px solid #ff567d;
     line-height: 40px;
-    padding: 12px;
+    padding: 0 10px;
     font-weight: 600;
     border-radius: 5px;
     font-size: 14px;
@@ -93,6 +96,12 @@
   }
   .el-dropdown-menu {
       width: 170px !important;
+  }
+  .avatarCustomer img {
+    width: 40px;
+    border-radius: 50%;
+    height: 35px;
+    object-fit: cover;
   }
  
 </style>

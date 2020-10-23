@@ -140,6 +140,7 @@ export default {
             dialogAddressVisible: false,
             dialogPhoneVisible: false,
             form: {
+                id: this.$store.state.myCustomer.id,
                 lastname: this.$store.state.myCustomer.lastname,
                 firstname: this.$store.state.myCustomer.firstname,
                 phone: this.$store.state.myCustomer.phone,
@@ -150,10 +151,11 @@ export default {
                 dateOfBirth: this.$store.state.myCustomer.dateOfBirth,
                 chatId: this.$store.state.myCustomer.chatId,
                 preview:"https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-                avatar: this.$store.state.curOwner.avatar
+                avatar: this.$store.state.myCustomer.avatar
             },
-            customerId: this.$store.state.myCustomer.id,
-            formLabelWidth: '80px'
+            
+            formLabelWidth: '80px',
+            success:"",
         }
     },
     components: {
@@ -175,10 +177,7 @@ export default {
             this.form.avatar = res.data[0];
         },
         async updateCustomer() {
-            await this.$store.dispatch('updateCustomer', {
-                form: this.form,
-                id: this.customerId
-            })
+            await this.$store.dispatch('updateCustomer', this.form)
             this.alertSuccess();
         },
         alertSuccess() {
@@ -263,8 +262,9 @@ export default {
         width: 50%;
     }
     .Avatar img{
-        width: 100%;
+        width: 100px;
         border-radius: 50%;
+        object-fit: cover;
     }
 </style>
 

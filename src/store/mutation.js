@@ -77,7 +77,6 @@ export const mutations = {
     state.orderLines = payload;
   },
   CUSTOMER_UPDATE(state, payload) {
-    
     state.myCustomer = payload;
   },
   ADMIN_SIGN_IN(state, payload) {
