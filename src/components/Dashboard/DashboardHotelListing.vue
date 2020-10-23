@@ -39,13 +39,16 @@
             </div>
             <div class="hotel-card__content-description">
               <el-tag class="hotel-card__tag" :type="'danger'" effect="dark"><span class="hotel-card__content-title">Hình ảnh</span></el-tag>
+              <div class="image__description-helper">
+                <h4>* Mẹo: Click vào từng hình để phòng to.</h4>
+              </div>
               <div class="hotel-card__content-images">
-                <el-image class="hotel-card__image" v-for="image in hotel.images" :key="image" :src="image" :fit="'contain'"></el-image>
+                <el-image class="hotel-card__image" v-for="image in hotel.images" :key="image" :src="image"  :preview-src-list="hotel.images" :fit="'contain'"></el-image>
               </div>
             </div>
           </div>
           <router-link v-if="checkPath()" :to="`/hotel/${hotel.id}/room`" class="edit-hotel">Chỉnh Sửa Thông Tin</router-link>
-          <router-link v-else :to="`/hotel/${hotel.id}/orders`" class="edit-hotel">Chi Tiết Khách Sạn</router-link>
+          <router-link v-else :to="`/hotel/${hotel.id}/orders`" class="edit-hotel">Danh Sách Đơn Hàng</router-link>
         </el-card>
       </div>
     </div>
@@ -259,6 +262,11 @@ export default {
 .el-row {
   margin-left: 0px !important;
   margin-right: 0px !important;
+}
+.image__description-helper {
+  color: #999;
+  font-size: 12px;
+  margin: 0 0 10px;
 }
 @media (max-width: 992px) {
   .hotel-card__content {
