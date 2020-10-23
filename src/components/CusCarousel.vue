@@ -82,9 +82,9 @@ export default {
   .select .el-select {
     width: 55% !important;
   }
-  .button-select {
+  /* .button-select {
     width: 45% !important;
-  }
+  } */
  
 }
 .carousel {
@@ -161,9 +161,9 @@ p {
 
 <style>
 @media (max-width: 768px) {
-  .button-select {
+  /* .button-select {
     width: 45% !important;
-  }
+  } */
    .el-select-dropdown {
     top: 390px !important;
     left: 154px !important;

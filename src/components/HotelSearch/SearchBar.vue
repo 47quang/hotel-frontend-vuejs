@@ -2,8 +2,8 @@
   <div>
     <el-container>
       <el-main class="searchBar">
-        <el-row>
-          <el-col :span="20">
+        <el-row class="searchBar-row">
+          <el-col :span="18">
             <div class="search-sticky">
               <el-input
                 class="cus-input"
@@ -55,10 +55,12 @@ export default {
 </script>
 
 <style scoped>
+
 .searchBar {
   padding: 0;
 }
-.el-row {
+.searchBar .searchBar-row {
+  display: flex;
   width: 80%;
   margin: 0 auto;
   padding: 10px 0;
@@ -72,15 +74,15 @@ export default {
 .search-sticky {
   cursor: pointer;
 }
-.select-sticky {
+.button-col-searchbar {
   display: flex;
 }
 .button-select {
   color: white;
   background-color: #5392f9;
   text-decoration: none;
-  width: 70%;
   cursor: pointer;
+  width: 100%;
   font-size: 18px;
   margin-left: 10px;
   border-radius: 5px;
@@ -93,6 +95,7 @@ export default {
 </style>
 
 <style>
+
 .date-sticky .el-range-separator {
   position: relative !important;
 }

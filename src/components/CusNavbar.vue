@@ -11,7 +11,8 @@
         </div>
         <div style="display: flex; align-items:center ; font-weight:600" v-else>
           <div class="avatarCustomer">
-            <img :src="myCustomer.avatar" alt="">
+            <img v-if="!myCustomer.avatar" :src="preview" alt="">
+            <img v-else :src="myCustomer.avatar" alt="">
           </div>
             <el-dropdown style="cursor: pointer" trigger="click">
               <span style="padding-left: 5px;" class="el-dropdown-link">
@@ -32,6 +33,11 @@
   import Register from '../components/CusRegister'
   import Login from '../components/CusLogin'
   export default {
+    data() {
+      return {
+        preview:'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+      }
+    },
     components: {
       Register, Login
     },
