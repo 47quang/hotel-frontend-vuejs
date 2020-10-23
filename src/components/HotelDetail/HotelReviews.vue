@@ -11,7 +11,7 @@
             <el-button @click="postReview(idHotel)" type="primary">Đăng bài review</el-button>
           </div>
         </div>
-        <div v-for="review of reviews" :key="review.id" class="review-body">
+        <div v-for="review of reviewPagination" :key="review.id" class="review-body">
           <el-col :span="6" class="review-detail">
             <div class="review-rating">{{ review.rating }}.0</div>
             <div class="review-customer">
@@ -26,18 +26,34 @@
           </el-col>
         </div>
       </el-row>
+      <el-row>
+        <el-pagination
+          background
+          layout="pager"
+          :total="reviews.length"
+          @current-change="handleChangePage"
+        >
+        </el-pagination>
+      </el-row>
     </el-main>
   </el-container>
 </template>
 
 <script>
+import _ from 'lodash';
 export default {
   props: ['idHotel'],
   data() {
     return {
       reviews: [],
       tags: [],
+      currentPage: 1,
     };
+  },
+  computed: {
+    reviewPagination(){
+      return _.chunk(this.reviews, 10)[this.currentPage-1];
+    }
   },
   methods: {
     postReview(id) {
@@ -51,6 +67,9 @@ export default {
         return this.alertErr();
       }
       return this.$router.push(`/customer-review`);
+    },
+    handleChangePage(number) {
+      this.currentPage = number;
     },
     alertErr() {
       this.$message({

@@ -302,7 +302,7 @@ export default {
   },
   created() {
     this.getTotal(this.orderLines);
-    if (this.$store.state.orderLines || []) {
+    if ((this.$store.state.orderLines || []).length == 0) {
       window.history.go(-1);
       return;
     }
