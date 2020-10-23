@@ -94,7 +94,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <admin-add-attribute-option :attributeId="attributeId"/>
+        <admin-add-attribute-option :attributeId="attributeId" :attributeOptions="attributeOptions"/>
       </el-card>
     </div>
   </div>
@@ -115,7 +115,8 @@ export default {
   },
   computed: {
     attributeOptions() {
-      return  Array.from(this.$store.state.attributeOptions);
+      console.log('attributeOption:', Array.from(this.$store.state.attributeOptions))
+      return Array.from(this.$store.state.attributeOptions);
     },
     attributes() {
       return Array.from(this.$store.state.attributes);
