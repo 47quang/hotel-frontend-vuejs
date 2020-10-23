@@ -18,7 +18,7 @@
             <div class="avatar">
               <el-col class="avatar-content" :span="17">
                 <el-avatar v-if="owner.avatar" class="hidden-md-and-down" :size="70" :src="owner.avatar"></el-avatar>
-                <el-avatar v-else  class="hidden-md-and-down" :size="70" :src="owner.avatar"></el-avatar>
+                <el-avatar v-else  class="hidden-md-and-down" :size="70" :src="owner.preview"></el-avatar>
                 <p>
                   Hình ảnh thật sự có tác dụng. Hãy chọn một bức ảnh rõ ràng và thân thiện để tăng
                   lượng khách đặt phòng.
@@ -75,9 +75,7 @@
           <el-button class="saveInfo" @click="handleUpdateOwner">Lưu</el-button>
         </el-row>
 
-        <div v-if="!success"></div>
-
-        <el-alert v-else title="Success update" type="success" show-icon></el-alert>
+        
       </el-main>
     </el-container>
   </div>
@@ -260,7 +258,7 @@ export default {
                 message: 'Update dữ liệu thất bại!',
                 type: 'error'
             });
-          },
+    },
   }
 };
 </script>

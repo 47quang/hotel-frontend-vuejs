@@ -5,15 +5,38 @@
             <el-main>
                 <el-row class="UpdateCustomer" style="display: flex">
                     <el-col class="UpdateCustomer_List" :span="6">
-                        <div class="UpdateCustomer_Item UpdateCustomer_Profile">
+                        <div class="UpdateCustomer_Title">
                             <i class="el-icon-user"></i>
-                            Hồ sơ</div>
-                        <div class="UpdateCustomer_Item"><i class="el-icon-time"></i>
-                            Lịch sử đặt phòng</div>
-                             <div class="UpdateCustomer_Item"><i class="el-icon-time"></i>
-                            Quản lý đơn hàng</div>
-                    </el-col>
+                            Ảnh đại diện
+                        </div>
+                        <div style="height: 100px" v-if="form.avatar" class="Avatar">
+                            <img :src="form.avatar" alt="">
+                        </div>
+                        <div v-else class="Avatar">
+                            <img :src="form.preview" alt="">
+                        </div>
 
+                        <div style="text-align: center;" >
+                            <el-upload
+                                class="avatar-uploader hidden-xs-only"
+                                action="https://hotel.eyeteam.vn/api.upload/image"
+                                name="image"
+                                :show-file-list="false"
+                                :on-success="handleAvatarSuccess"
+                                ref="upload"
+                                >CHỌN/ĐỔI HÌNH ĐẠI DIỆN
+                            </el-upload>
+                            <el-upload
+                                class="avatar-uploader hidden-sm-and-up"
+                                action="https://hotel.eyeteam.vn/api.upload/image"
+                                name="image"
+                                :show-file-list="false"
+                                :on-success="handleAvatarSuccess"
+                                ref="upload"
+                                >CHỌN/ĐỔI HÌNH
+                            </el-upload>
+                        </div>
+                    </el-col>
                     <el-col class="UpdateCustomer_Detail" :span="18">
                         <div style="font-size:24px; padding: 0 0 20px 0">Thông Tin Người Dùng</div>
                         <div class="customer-name-wrapper">
@@ -37,26 +60,6 @@
                             </span>
                             </el-dialog>
                         </div>
-                        <!-- <div class="customer-wrapper">
-                            <div>
-                                <div class="customer-title">Username</div>
-                                <div class="customer">{{form.username}}</div>
-                            </div>
-                            <el-button type="text" @click="dialogUserNameVisible = true">Chỉnh sửa</el-button>
-                            <el-dialog title="UserName" :visible.sync="dialogUserNameVisible">
-                                <el-form :model="form">
-                                    
-                                    <el-form-item label="Username" :label-width="formLabelWidth">
-                                        <el-input v-model="form.username" autocomplete="off"></el-input>
-                                    </el-form-item>
-                                </el-form>
-                            <span slot="footer" class="dialog-footer">
-                                <el-button @click="dialogUserNameVisible = false">Cancel</el-button>
-                                <el-button type="primary" @click="dialogUserNameVisible = false">Confirm</el-button>
-                            </span>
-                            </el-dialog>
-                            
-                        </div> -->
                         <div class="customer-wrapper">
                             <div>
                                 <div class="customer-title">Email</div>
@@ -144,9 +147,10 @@ export default {
                 password: this.$store.state.myCustomer.password,
                 address: this.$store.state.myCustomer.address,
                 email: this.$store.state.myCustomer.email,
-                avatar: this.$store.state.myCustomer.avatar,
                 dateOfBirth: this.$store.state.myCustomer.dateOfBirth,
                 chatId: this.$store.state.myCustomer.chatId,
+                preview:"https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+                avatar: this.$store.state.curOwner.avatar
             },
             customerId: this.$store.state.myCustomer.id,
             formLabelWidth: '80px'
@@ -165,18 +169,38 @@ export default {
         }
     },
     methods: {
+        handleAvatarSuccess(res, file) {
+            this.form.preview = URL.createObjectURL(file.raw);
+            console.log("Res: ", res.data[0]);
+            this.form.avatar = res.data[0];
+        },
         async updateCustomer() {
             await this.$store.dispatch('updateCustomer', {
                 form: this.form,
                 id: this.customerId
             })
-        }
+            this.alertSuccess();
+        },
+        alertSuccess() {
+            this.$message({
+                showClose: true,
+                message: 'Update dữ liệu thành công!',
+                type: 'success'
+            });
+        },
+        alertErr() {
+            this.$message({
+                showClose: true,
+                message: 'Update dữ liệu thất bại!',
+                type: 'error'
+            });
+        },
     }
 }
 </script>
 
 <style scoped>
-    .fix {
+    .fix{
         font-weight: 600;
         cursor: pointer
     }
@@ -204,22 +228,14 @@ export default {
         margin-bottom: 20px
     }
     
-    .UpdateCustomer_Item {
-        padding: 20px;
-        color: #5392f9;
-        font-size: 18px;
-        width: 70%;
-        margin: 0 0 0 75px;
-        cursor: pointer;
-        font-weight: 600;
-    }
-     .UpdateCustomer_Profile {
+    .UpdateCustomer_Title {
         background-color: #5392f9;
-        padding: 20px;
+        padding: 15px;
         color: white;
-        font-size: 18px;
+        font-size: 13px;
         width: 70%;
-        margin: 0 0 0 75px;
+        margin: 0 auto;
+        text-align: center;
         cursor: pointer;
         font-weight: 600;
     }
@@ -235,6 +251,20 @@ export default {
         padding: 20px;
         box-shadow: 9px 0px 6px 0px #e9ebee;
         background: linear-gradient(90deg,#f8f7f9,#fff);
+    }
+    .UpdateCustomer_Avatar {
+
+    }
+    .Avatar {
+        display: flex;
+        justify-content: center;
+        padding: 15px;
+        margin: 0 auto;
+        width: 50%;
+    }
+    .Avatar img{
+        width: 100%;
+        border-radius: 50%;
     }
 </style>
 
