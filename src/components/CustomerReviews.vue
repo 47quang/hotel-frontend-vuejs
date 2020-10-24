@@ -106,7 +106,7 @@ export default {
       dialogReviewVisible: false,
       formLabelWidth: '80px',
       tags: [],
-      reviews: [],
+      
       hotels: [],
       dialogImageUrl: '',
       dialogVisible: false,
@@ -120,11 +120,16 @@ export default {
     await this.$store.dispatch('fetchAllHotels');
     this.tags = this.$store.state.tags;
     this.hotels = this.$store.state.allHotels;
-    this.reviews = this.$store.state.reviewsByCustomer.map((r) => {
+   
+  },
+  computed: {
+    reviews() {
+      return this.$store.state.reviewsByCustomer.map((r) => {
       r.tag = this.tags.find((t) => t.id == r.tagId);
       r.hotel = this.hotels.find((h) => h.id == r.hotelId);
       return r;
     });
+    }
   },
   methods: {
     deleteReview(id) {
@@ -247,7 +252,7 @@ export default {
 .review-row {
   width: 80%;
   margin: 0 auto;
-  padding-top: 40px;
+  padding: 40px 10px 0 10px;
   border-top: 1px solid rgb(221, 223, 226);
 }
 .review-header {
