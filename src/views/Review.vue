@@ -134,7 +134,7 @@ export default {
           review: this.review,
           idHotel: this.idHotel,
         });
-        this.$router.push(`/details/${this.idHotel}`)
+        await this.$router.push(`/details/${this.idHotel}`)
         this.alertSuccess();
       } catch (err) {
         this.alertErr();
