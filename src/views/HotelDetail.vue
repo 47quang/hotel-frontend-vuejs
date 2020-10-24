@@ -109,11 +109,20 @@ export default {
   },
 
   methods: {
+     checkPermission() {
+      const check =
+        JSON.parse(localStorage.getItem('accessToken')) &&
+        JSON.parse(localStorage.getItem('customer'));
+      if (check) {
+        return true;
+      }
+      return false;
+    },
     jumpBooking() {
-      const checkAccessToken = JSON.parse(localStorage.getItem('accessToken'));
-      if (!checkAccessToken) {
-        this.alertErr();
-      } else this.$router.push(`/booking`);
+      if (!this.checkPermission()) {
+        return this.alertErr();
+      } 
+      return this.$router.push(`/booking`);
     },
     alertErr() {
       this.$message({
