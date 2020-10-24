@@ -6,21 +6,38 @@
           <el-form :model="form">
             <h2 >Tạo tài khoản</h2>
             <div>
-                <el-form-item label="Họ"  :label-width="formLabelWidth">
+                <el-form-item 
+                prop="lastname"
+                label="Họ"  
+                :label-width="formLabelWidth"
+                :rules="[{required: true, message:'Please input your lastname ', trigger:'blur'}]">
                 <el-input  v-model="form.lastname" autocomplete="off"></el-input>
               </el-form-item>
-                <el-form-item label="Tên"  :label-width="formLabelWidth">
+                <el-form-item 
+                label="Tên"  
+                :label-width="formLabelWidth"
+                prop="firstname"
+                :rules="[{required: true, message:'Please input your firstname ', trigger:'blur'}]">
                   <el-input  v-model="form.firstname" autocomplete="off"></el-input>
                 </el-form-item>
             </div>
             
-            <el-form-item label="Username" :label-width="formLabelWidth">
+            <el-form-item 
+            label="Username" 
+            :label-width="formLabelWidth"
+            prop="username"
+            :rules="[{required: true, message:'Please input your username ', trigger:'blur'}]">
               <el-input v-model="form.username" autocomplete="off"></el-input>
             </el-form-item>
-             <el-form-item label="Mật khẩu" :label-width="formLabelWidth">
+             <el-form-item label="Mật khẩu" :label-width="formLabelWidth"
+             prop="password"
+             :rules="[{required: true, message:'Please input your password ', trigger:'blur'}]">
               <el-input type="password" v-model="form.password" autocomplete="off"></el-input>
             </el-form-item>
-             <el-form-item label="Email" :label-width="formLabelWidth">
+             <el-form-item label="Email" :label-width="formLabelWidth"
+             prop="email"
+             :rules="[{required: true, message:'Please input your email', trigger:'blur'},
+                      {type: 'email', message: 'Please input correct email', trigger: ['blur', 'change'] }]">
               <el-input  v-model="form.email" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="Số điện thoại" :label-width="formLabelWidth">
@@ -142,12 +159,14 @@ export default {
     width: 80%;
     margin: 10px auto !important;
   }
- 
- 
+
 </style>
 
 <style>
-  
+  .register-component .el-form-item__error {
+    top: 10px;
+    left: 100px;
+  }
   .register-component .el-dialog__wrapper{
     overflow: hidden;
   }

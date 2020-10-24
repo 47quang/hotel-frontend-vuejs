@@ -2,12 +2,21 @@
   <div>
     <el-button class="login" type="text" @click="dialogFormVisible = true">Đăng nhập</el-button>
     <el-dialog class="dialog-login" :visible.sync="dialogFormVisible">
-      <el-form :model="form">
+      <el-form :model="form" ref="form">
         <h2>Đăng nhập</h2>
-        <el-form-item label="Username" :label-width="formLabelWidth">
-          <el-input v-model="form.username" autocomplete="off"></el-input>
+        <el-form-item 
+          prop="username" 
+          label="Username" 
+          :label-width="formLabelWidth"
+          :rules="[{required: true, message:'Please input username ', trigger:'blur'}]">
+          <el-input v-model="form.username"  autocomplete="off"></el-input>
+
         </el-form-item>
-        <el-form-item label="Mật khẩu" :label-width="formLabelWidth">
+        <el-form-item
+         prop="password"
+         label="Mật khẩu" 
+         :label-width="formLabelWidth"
+         :rules="[{required: true, message:'Please input your password ', trigger:'blur'}]">
           <el-input
             type="password"
             @keyup.enter.native="signin"
@@ -30,6 +39,7 @@
 
 
 <script>
+import {required, minLength} from 'vuelidate/lib/validators';
 export default {
   data() {
     return {
@@ -40,6 +50,16 @@ export default {
       },
       formLabelWidth: "120px"
     };
+  },
+  validations: {
+        username: {
+          required,
+          minLength: minLength(8)
+        },
+        password: {
+          required,
+          minLength: minLength(8)
+        }
   },
   methods: {
     async signin() {
@@ -86,7 +106,9 @@ export default {
   margin: 10px auto !important;
  }
 }
-
+.dialog-login .el-form-item {
+  padding-bottom: 10px;
+}
 h2 {
   text-align: left;
   margin: 20px 40px;
