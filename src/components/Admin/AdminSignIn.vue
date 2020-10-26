@@ -20,7 +20,7 @@
         <el-form-item>
           <a href="/forget-password">Quên Mật Khẩu</a>
         </el-form-item>
-        <el-button type="danger" class="signin-button-form" @click="adminSignIn('form')">Đăng Nhập</el-button>
+        <el-button type="danger" class="sign-in__btn" @click="adminSignIn('form')">Đăng Nhập</el-button>
       </el-form>
     </el-card>
   </div>
