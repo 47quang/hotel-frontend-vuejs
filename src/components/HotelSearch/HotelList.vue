@@ -101,10 +101,27 @@ export default {
       await this.$store.dispatch('fetchHotelById', id);
       this.$router.push(`/details/${id}`);
     },
+    convertViToEn(str, toUpperCase = false) {
+    str = str.toLowerCase();
+    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+    str = str.replace(/đ/g, "d");
+  
+    str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // Huyền sắc hỏi ngã nặng
+    str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // Â, Ê, Ă, Ơ, Ư
+
+    return toUpperCase ? str.toUpperCase() : str;
+    }
+    
   },
   computed: {
     fetchHotel() {
       return this.$store.state.hotel.map((h) => {
+        h.nameToEn = this.convertViToEn(h.name)
         h.districtInfo = this.fetchDistrict.find((d) => d.id == h.districtId);
         h.thumbnailImage = h.images.filter(
           (i) => h.images.indexOf(i) > 0 && h.images.indexOf(i) <= 8
@@ -129,7 +146,7 @@ export default {
       }
       return this.fetchHotel
         .filter((h) => this.range[0] * 200000 <= h.minPrice && h.minPrice <= this.range[1] * 200000)
-        .filter((h) => h.name.includes(this.$store.state.filterHotel));
+        .filter((h) => h.nameToEn.includes(this.$store.state.filterHotel));
     },
 
     fetchDistrict() {

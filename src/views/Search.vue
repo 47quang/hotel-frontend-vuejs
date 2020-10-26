@@ -108,7 +108,7 @@ h4 {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 15px;
+  padding: 0 5px;
 }
 .filter-row {
   width: 80% !important;

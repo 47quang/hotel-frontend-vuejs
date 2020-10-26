@@ -48,15 +48,15 @@
                             <el-dialog title="Name" :visible.sync="dialogNameVisible">
                                 <el-form :model="form">
                                     <el-form-item label="Họ" :label-width="formLabelWidth">
-                                        <el-input v-model="form.lastname" autocomplete="off"></el-input>
+                                        <el-input @keyup.enter.native="dialogNameVisible = false" v-model="form.lastname" autocomplete="off"></el-input>
                                     </el-form-item>
                                     <el-form-item label="Tên" :label-width="formLabelWidth">
-                                        <el-input v-model="form.firstname" autocomplete="off"></el-input>
+                                        <el-input @keyup.enter.native="dialogNameVisible = false" v-model="form.firstname" autocomplete="off"></el-input>
                                     </el-form-item>
                                 </el-form>
                             <span slot="footer" class="dialog-footer">
                                 <el-button @click="dialogNameVisible = false">Cancel</el-button>
-                                <el-button type="primary" @click="dialogNameVisible = false">Confirm</el-button>
+                                <el-button type="primary"  @click="dialogNameVisible = false">Confirm</el-button>
                             </span>
                             </el-dialog>
                         </div>
@@ -70,7 +70,7 @@
                                 <el-form :model="form">
                                     
                                     <el-form-item label="Email" :label-width="formLabelWidth">
-                                        <el-input v-model="form.email" autocomplete="off"></el-input>
+                                        <el-input @keyup.enter.native="dialogNameVisible = false" v-model="form.email" autocomplete="off"></el-input>
                                     </el-form-item>
                                 </el-form>
                             <span slot="footer" class="dialog-footer">
@@ -89,7 +89,7 @@
                                 <el-form :model="form">
                                     
                                     <el-form-item label="Phone" :label-width="formLabelWidth">
-                                        <el-input v-model="form.phone" autocomplete="off"></el-input>
+                                        <el-input @keyup.enter.native="dialogNameVisible = false" v-model="form.phone" autocomplete="off"></el-input>
                                     </el-form-item>
                                 </el-form>
                             <span slot="footer" class="dialog-footer">
@@ -108,7 +108,7 @@
                                 <el-form :model="form">
                                     
                                     <el-form-item label="Address" :label-width="formLabelWidth">
-                                        <el-input v-model="form.address" autocomplete="off"></el-input>
+                                        <el-input @keyup.enter.native="dialogNameVisible = false" v-model="form.address" autocomplete="off"></el-input>
                                     </el-form-item>
                                 </el-form>
                             <span slot="footer" class="dialog-footer">
