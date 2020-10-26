@@ -115,6 +115,7 @@
               v-model="attribute.attributeOptionId"
               clearable
               placeholder="Vui Lòng Chọn Tùy Chọn"
+              filterable 
             >
               <el-option
                 v-for="option in filterAttributeOption(attribute.id)"
