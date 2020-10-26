@@ -45,12 +45,12 @@
             </template>
           </el-table-column>
         </el-table>
-        <!--  -->
+        <!-- Add Attribute -->
         <admin-add-attribute/>
       </el-card>
     </div>
     <div v-show="hasChosenAttribute" class="attribute-option">
-      <h1>Danh Sách Các Tùy Chọn</h1>
+      <h1>Danh Sách {{this.attribute.name}}</h1>
       <el-card>
         <el-table
           :data="attributeOptions"
@@ -120,6 +120,9 @@ export default {
     attributes() {
       return Array.from(this.$store.state.attributes);
     },
+    attribute() {
+      return this.$store.state.attributeById;
+    }
   },
   components: {
     AdminAddAttributeOption,
@@ -133,6 +136,7 @@ export default {
     async handleEdit(attributeId) {
       this.attributeId = attributeId;
       await this.$store.dispatch('fetchAttributeOptionById', attributeId);
+      await this.$store.dispatch('fetchAttributeById', attributeId);
       this.hasChosenAttribute = true;
     },
     cellStyle({columnIndex}) {
