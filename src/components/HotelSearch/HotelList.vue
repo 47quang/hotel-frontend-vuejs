@@ -93,7 +93,7 @@ export default {
     };
   },
   async created() {
-    this.$store.dispatch('fetchProvinceById', this.$route.params.id);
+    // this.$store.dispatch('fetchProvinceById', this.$route.params.id);
     this.$store.dispatch('fetchDistrict', this.$route.params.id);
   },
   methods: {
