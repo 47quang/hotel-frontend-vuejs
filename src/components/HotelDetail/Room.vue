@@ -312,7 +312,7 @@ export default {
   padding: 10px;
   text-align: center;
   color: #ed5c59;
-  font-size: 24px;
+  font-size: 18px;
 }
 .include-content-badge {
   background-color: #f79911;
@@ -344,9 +344,11 @@ export default {
 }
 .infoPhotoThumbnail1 img {
   width: 100%;
+  height: 100%;
 }
 .infoPhotoThumbnail2 img {
   width: 100%;
+  height: 100%;;
 }
 .infoPhotoThumbnail1 {
   width: 50%;

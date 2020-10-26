@@ -8,21 +8,23 @@
             :style="{ padding: '0 5px', position: 'sticky', top: 0 }"
             :span="7"
           >
-            <h2>Đề xuất cho bạn ở {{ province.name }}</h2>
+            <h2 style="font-size: 22px;">Đề xuất cho bạn</h2>
             <div v-for="s of hotelSuggestion" :key="s.id" class="hotelOffer-item">
               <div class="hotelOffer-image">
                 <img :src="s.images[0]" alt="" />
               </div>
               <div class="hotelOffer-content">
                 <div class="hotelOffer-name">{{ s.name }}</div>
-                <el-rate
+                <div v-if="s.rating < 1" style="color: rgb(247, 186, 42); font-size: 12px;">Chưa xếp hạng</div>
+                <div v-else>
+                  <el-rate
                   v-model="s.rating"
                   disabled
-                  show-score
                   text-color="#ff9900"
-                  score-template="{value} stars"
                 >
                 </el-rate>
+                </div>
+                
                 <div class="minPrice">
                   Giá mỗi đêm rẻ nhất từ
                   <h3>{{ s.minPrice | formatCurrency }}</h3>
@@ -41,8 +43,10 @@
                 <div class="main-image">
                   <img :src="hotel.images[0]" alt="" />
                 </div>
-                <div class="thumbnail-image">
-                  <el-row>
+                <div class="thumbnail-image" :style="{'grid-template-columns': 'repeat('+hotel.thumbnailImage.length / 2+', 1fr)'}">
+                  <div class="img-wrapper" v-for="(thumbnail, index) in hotel.thumbnailImage" :key="index" :style="{'background-image': 'url('+ thumbnail +')'}">
+                  </div>
+                  <!-- <el-row>
                     <el-col
                       v-for="(thumbnail, index) in hotel.thumbnailImage"
                       :key="index"
@@ -51,13 +55,16 @@
                     >
                       <img :src="thumbnail" alt="" />
                     </el-col>
-                  </el-row>
+                  </el-row> -->
                 </div>
               </div>
               <div class="hotelList-content">
                 <el-col :span="24" class="content1">
                   <div class="hotelList-name">{{ hotel.name }}</div>
-                  <el-rate v-model="hotel.rating" disabled text-color="#ff9900"> </el-rate>
+                  <div v-if="hotel.rating < 1" style="color: rgb(247, 186, 42); font-weight: 600"> Chưa xếp hạng</div>
+                  <div v-else>
+                    <el-rate v-model="hotel.rating" disabled text-color="#ff9900"> </el-rate>
+                  </div>
                   <div class="hotelList-description">
                     <strong>Mô tả: </strong>{{ hotel.description }}
                   </div>
@@ -158,6 +165,7 @@ export default {
 .thumbnail-col {
   height: 60px;
   padding: 1px;
+  margin: 1px 0;;
 }
 .thumbnail-col img {
   width: 100%;
@@ -205,6 +213,17 @@ export default {
   padding: 10px 0;
   font-weight: 600;
 }
+.thumbnail-image {
+  display: grid;
+  flex: 1;
+  /* grid-template-columns: repeat(4, 1fr); */
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr))
+}
+.thumbnail-image .img-wrapper {
+  background-size: cover;
+  height: 100%;
+}
+
 .content1 {
   padding: 10px 15px;
   height: 300px;
@@ -287,6 +306,8 @@ a {
 }
 .hotelList-image {
   width: 50%;
+  display: flex;
+  flex-direction: column;
 }
 .main-image img {
   width: 100%;
@@ -295,7 +316,7 @@ a {
 }
 .hotelList-item {
   display: flex;
-  margin: 10px 0;
+  margin: 50px 0;
   border: 1px solid #dddfe2;
 }
 .hotelList-district {
@@ -311,15 +332,18 @@ a {
 }
 
 .hotelList-description {
-  height: 140px;
+  /* height: 140px; */
   display: -webkit-box;
-  -webkit-line-clamp: 8;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 </style>
 
 <style>
+.hotelOffer-content .el-rate__icon {
+  margin-right: 0;
+}
 .filter-main {
   padding: 5px !important;
 }
