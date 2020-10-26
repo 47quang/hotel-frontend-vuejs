@@ -147,6 +147,7 @@
           :auto-upload="false"
           ref="upload"
           :on-change="handleOnChange"
+          multiple
         >
           <i slot="default" class="el-icon-plus"></i>
           <div slot="file" slot-scope="{ file }">
