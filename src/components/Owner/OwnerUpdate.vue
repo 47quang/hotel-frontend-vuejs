@@ -16,12 +16,28 @@
         <el-row>
           <el-col :span="24">
             <div class="avatar">
-              <el-col class="avatar-content" :span="17">
-                <el-avatar v-if="owner.avatar" class="hidden-md-and-down" :size="70" :src="owner.avatar"></el-avatar>
-                <el-avatar v-else  class="hidden-md-and-down" :size="70" :src="owner.preview"></el-avatar>
+              <el-col class="avatar-content hidden-md-and-down" :span="17">
+                <el-avatar v-if="owner.avatar" :size="70" :src="owner.avatar"></el-avatar>
+                <el-avatar v-else :size="70" :src="owner.preview"></el-avatar>
                 <p>
                   Hình ảnh thật sự có tác dụng. Hãy chọn một bức ảnh rõ ràng và thân thiện để tăng
                   lượng khách đặt phòng.
+                </p>
+              </el-col>
+              <!-- Small Screens -->
+              <el-col class="avatar-content hidden-lg-and-up hidden-xs-only" :span="17">
+                <el-avatar v-if="owner.avatar" :size="80" :src="owner.avatar"></el-avatar>
+                <el-avatar v-else :size="80" :src="owner.preview"></el-avatar>
+                <p>
+                  Hãy chọn một bức ảnh rõ ràng và thân thiện để tăng lượng khách đặt phòng.
+                </p>
+              </el-col>
+              <!-- For extra small -->
+              <el-col class="avatar-content hidden-sm-and-up" :span="17">
+                <el-avatar v-if="owner.avatar" :src="owner.avatar" class="avatar__img"></el-avatar>
+                <el-avatar v-else :src="owner.preview" class="avatar__img"></el-avatar>
+                <p>
+                  Hãy chọn một bức ảnh rõ ràng và thân thiện để tăng lượng khách đặt phòng.
                 </p>
               </el-col>
               <el-col class="avatar-update" :span="7">
@@ -71,25 +87,15 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-button>Hủy</el-button>
+          <el-button @click="cancelUpdate">Hủy</el-button>
           <el-button class="saveInfo" @click="handleUpdateOwner">Lưu</el-button>
         </el-row>
-
-        
       </el-main>
     </el-container>
   </div>
 </template>
 
 <style scoped>
-@media (max-width: 768px) {
-  .el-row .InfoOwner-col {
-    padding-right: 20px !important;
-}
-}
-.hidden-md-and-down {
-  display: block !important;
-}
 .saveInfo {
   color: white;
   background-color: #1174a6;
@@ -115,7 +121,7 @@
 }
 .avatar-content {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
 }
 .avatar-content p {
@@ -184,6 +190,10 @@
   height: 178px;
   display: block;
 }
+.avatar__img {
+  height: 80px;
+  width: 140px;
+}
 /* Responsive */
 @media(max-width: 767px) {
   .el-col {
@@ -198,14 +208,21 @@
   .avatar-uploader {
     font-size: 15px;
   }
+  .el-row .InfoOwner-col {
+    padding-right: 20px !important;
+  }
+}
+
+@media(min-width: 768px) and (max-width: 1319px) {
+  .avatar-content .el-avatar {
+    width: 100px !important;
+  }
 }
 
 </style>
 <style>
 
-.avatar-content .el-avatar {
-  width: 100px !important;
-}
+
 .el-avatar img {
   width: 100% !important;
 }
@@ -242,21 +259,35 @@ export default {
     async handleUpdateOwner() {
       await this.$store.dispatch("updateUser", this.owner);
       this.alertSuccess();
+      this.$router.push(`/dashboard/${this.$route.params.id}`);
     },
     alertSuccess() {
-            this.$message({
-                showClose: true,
-                message: 'Update dữ liệu thành công!',
-                type: 'success'
-            });
+      this.$message({
+          showClose: true,
+          message: 'Update dữ liệu thành công!',
+          type: 'success'
+      });
     },
     alertErr() {
-            this.$message({
-                showClose: true,
-                message: 'Update dữ liệu thất bại!',
-                type: 'error'
-            });
+      this.$message({
+          showClose: true,
+          message: 'Update dữ liệu thất bại!',
+          type: 'error'
+      });
     },
+    cancelUpdate() {
+      this.$confirm('Hồ sơ sẽ không được cập nhật. Tiếp tục?', 'Cảnh Báo', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Hủy bỏ',
+        type: 'warning'
+      })
+      .then(() => {
+        this.$router.push(`/dashboard/${this.$route.params.id}`);
+      })
+      .catch(() => {
+        this.alertErr();
+      });
+    }
   }
 };
 </script>
