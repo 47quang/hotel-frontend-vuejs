@@ -5,8 +5,7 @@
     <el-container>
       <el-main class="filter-main">
         <el-row class="filter-row">
-          <el-col :span="12"></el-col>
-          <el-col class="filter" :span="12">
+          <el-col class="filter" :span="24">
             <div class="filter-wrapper">
               <h4>Lọc chỗ nghỉ theo</h4>
               <el-select class="filter" v-model="value" clearable placeholder="Giá">
@@ -106,7 +105,6 @@ h4 {
 
 .filter-wrapper {
   display: flex;
-  justify-content: center;
   align-items: center;
   padding: 0 5px;
 }
