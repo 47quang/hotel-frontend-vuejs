@@ -83,7 +83,7 @@
             <div slot="header" class="owner-card-header">
               <div class="profile-owner-content">
                 <div>
-                  <el-avatar icon="el-icon-user-solid" style="line-height: 1.85; width: 60px; height: 60px; font-size: 30px;"></el-avatar>
+                  <el-avatar :src="curOwner.avatar" style="line-height: 1.85; width: 60px; height: 60px; font-size: 30px;"></el-avatar>
                 </div>
                 <span style="font-weight: 700; font-size: 20px;">{{curOwner.username}}</span>
                 <el-button
