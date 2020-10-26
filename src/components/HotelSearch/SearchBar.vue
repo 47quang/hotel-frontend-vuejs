@@ -14,7 +14,7 @@
               </el-input>
             </div>
           </el-col>
-          <el-col :span="4">
+          <el-col :span="6">
             <div class="select-sticky">
               <button :style="{height: '46px'}" class="button-select" @click="handleSearch">TÌM</button>
             </div>
@@ -84,7 +84,6 @@ export default {
   cursor: pointer;
   width: 100%;
   font-size: 18px;
-  margin-left: 10px;
   border-radius: 5px;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.3);
 }
