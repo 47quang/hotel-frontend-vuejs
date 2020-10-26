@@ -3,7 +3,7 @@
     <el-container>
       <el-main class="searchBar">
         <el-row class="searchBar-row">
-          <el-col :span="18">
+          <el-col  :span="18">
             <div class="search-sticky">
               <el-input 
                 @keyup.enter.native="handleSearch"
@@ -84,7 +84,7 @@ export default {
   padding: 10px 0;
 }
 .el-col {
-  padding: 0 10px;
+  padding: 0 15px;
 }
 .searchBar {
   background-color: #20274d;
