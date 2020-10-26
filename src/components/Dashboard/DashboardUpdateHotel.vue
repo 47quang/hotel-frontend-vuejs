@@ -29,6 +29,7 @@
                   clearable
                   @change="handleSelectProvince"
                   placeholder="Vui Lòng Chọn Tỉnh Thành"
+                  filterable 
                 >
                   <el-option
                     v-for="province in provinces"
@@ -50,6 +51,7 @@
                   clearable
                   @change="handleSelectDistrict"
                   placeholder="Vui Lòng Chọn Quận Huyện"
+                  filterable 
                 >
                   <el-option
                     v-for="district in districts"
@@ -70,6 +72,7 @@
                   v-model="hotel.wardId"
                   clearable
                   placeholder="Vui Lòng Chọn Phường Xã"
+                  filterable 
                 >
                   <el-option
                     v-for="ward in wards"
