@@ -67,7 +67,9 @@ export default {
   watch: {
     "provinceId": async function(nVal) {
       await this.$store.dispatch('searchHotel', {provinceId: nVal});
+
       this.$router.push(`/search/${nVal}`);
+      location.reload()
     }
   }
 };

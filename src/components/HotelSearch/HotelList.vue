@@ -9,7 +9,7 @@
             :span="7"
           >
             <h2 style="font-size: 22px;">Đề xuất cho bạn</h2>
-            <div v-for="s of hotelSuggestion" :key="s.id" class="hotelOffer-item">
+            <div v-for="s of getHotelSuggestion" :key="s.id" class="hotelOffer-item">
               <div class="hotelOffer-image">
                 <img :src="s.images[0]" alt="" />
               </div>
@@ -153,8 +153,24 @@ export default {
       return this.$store.state.districts;
     },
 
-    hotelSuggestion() {
-      return this.fetchHotel.slice(0, 4);
+    getHotelSuggestion() {
+      let randomList = [];
+
+      if(this.fetchHotel.length <= 4)
+        return this.fetchHotel;
+
+      while(randomList.length < 4){
+        let rand = Math.floor(Math.random()*this.fetchHotel.length);
+        if(randomList.includes(rand)){
+          continue;
+        }
+        randomList.push(rand);
+      }
+      
+      let hotelSuggestion = [];
+      randomList.forEach((idx) => hotelSuggestion
+      .push(this.fetchHotel[idx]) );
+      return hotelSuggestion
     },
   },
 };
