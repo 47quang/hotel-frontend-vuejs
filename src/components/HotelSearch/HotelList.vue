@@ -34,7 +34,7 @@
           </el-col>
           <el-col class="hotel-detail" style="padding: 0 5px" :span="17">
             <div
-              v-for="hotel in filterHotel"
+              v-for="hotel in hotelPagination"
               :key="hotel.id"
               class="hotelList-item"
               @click="detailHotel(hotel.id)"
@@ -74,22 +74,34 @@
                     <p style="color: sivler">Giá mỗi đêm rẻ nhất từ</p>
                     {{ hotel.minPrice | formatCurrency }}
                   </div>
+                  
                 </el-col>
               </div>
             </div>
+            <el-row>
+          <el-pagination
+          background
+          layout="pager"
+          :total="filterHotel.length"
+          @current-change="handleChangePage">
+          </el-pagination>
+        </el-row>
           </el-col>
         </el-row>
+        
       </el-main>
     </el-container>
   </div>
 </template>
 
 <script>
+import _ from 'lodash'
 export default {
   props: ['star', 'range'],
   data() {
     return {
       hotelList: this.fetchHotel,
+      currentPage: 1,
     };
   },
   async created() {
@@ -97,6 +109,9 @@ export default {
     this.$store.dispatch('fetchDistrict', this.$route.params.id);
   },
   methods: {
+    handleChangePage(number) {
+      this.currentPage = number;
+    },
     async detailHotel(id) {
       await this.$store.dispatch('fetchHotelById', id);
       this.$router.push(`/details/${id}`);
@@ -172,6 +187,9 @@ export default {
       .push(this.fetchHotel[idx]) );
       return hotelSuggestion
     },
+    hotelPagination() {
+      return _.chunk(this.filterHotel, 10)[this.currentPage-1];
+    }
   },
 };
 </script>
