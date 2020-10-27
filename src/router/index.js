@@ -31,6 +31,10 @@ import AdminAttribute from '../components/Admin/AdminAttribute'
 import DashboardAddHotelStep1 from '../components/Dashboard/DashboardAddHotelStep1'
 import DashboardAddHotelStep2 from '../components/Dashboard/DashboardAddHotelStep2'
 import DashboardAddHotelStep3 from '../components/Dashboard/DashboardAddHotelStep3'
+import DashboardUpdateHotelStep1 from '../components/Dashboard/DashboardUpdateHotelStep1'
+import DashboardUpdateHotelStep2 from '../components/Dashboard/DashboardUpdateHotelStep2'
+import DashboardUpdateHotelStep3 from '../components/Dashboard/DashboardUpdateHotelStep3'
+
 
 
 Vue.use(VueRouter)
@@ -92,11 +96,11 @@ const routes = [
             component: DashboardAddHotelStep1
           },
           {
-            path: 'location',
+            path: '/location',
             component: DashboardAddHotelStep2
           },
           {
-            path: 'photos',
+            path: '/photos',
             component: DashboardAddHotelStep3
           }
         ]
@@ -156,7 +160,21 @@ const routes = [
     children: [
       {
         path: 'update',
-        component: DashboardUpdateHotel
+        component: DashboardUpdateHotel,
+        children: [
+          {
+            path: '',
+            component: DashboardUpdateHotelStep1
+          },
+          {
+            path: 'location',
+            component: DashboardUpdateHotelStep2
+          },
+          {
+            path: 'photos',
+            component: DashboardUpdateHotelStep3
+          }
+        ]
       },
       {
         path: 'orders',
