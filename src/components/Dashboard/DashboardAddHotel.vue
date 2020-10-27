@@ -5,139 +5,24 @@
         <i class="el-icon-back add-hotel__back" @click="backListing"></i>
         <el-divider><h2 class="add-hotel__title">Đăng Ký Khách Sạn</h2></el-divider>
       </div>
-      <el-form ref="form" :model="hotel">
-        <!-- Name -->
-        <el-form-item>
-          <h4 class="form__description-title">Đặt tên cho Khách Sạn</h4>
-          <el-card shadow="hover">
-            <el-input v-model="hotel.name" maxlength="100" show-word-limit></el-input>
-          </el-card>
-        </el-form-item>
-        <!-- Address -->
-        <el-form-item>
-          <h4 class="form__description-title">Địa Chỉ</h4>
-          <el-card shadow="hover">
-            <el-input v-model="hotel.address" maxlength="100" show-word-limit></el-input>
-          </el-card>
-        </el-form-item>
-        <el-row :gutter="24">
-          <!-- City -->
-          <el-col :span="8">
-            <el-form-item>
-              <h4 class="form__description-title">Thành Phố</h4>
-              <el-card shadow="hover">
-                <el-select
-                  class="add-hotel__select-info"
-                  v-model="hotel.provinceId"
-                  clearable
-                  @change="handleSelectProvince"
-                  placeholder="Vui Lòng Chọn Tỉnh Thành"
-                  filterable 
-                >
-                  <el-option
-                    v-for="province in provinces"
-                    :key="province.id"
-                    :label="province.name"
-                    :value="province.id"
-                  ></el-option>
-                </el-select>
-              </el-card>
-            </el-form-item>
-          </el-col>
-          <!-- District -->
-          <el-col :span="8">
-            <el-form-item>
-              <h4 class="form__description-title">Quận/Huyện</h4>
-              <el-card shadow="hover">
-                <el-select
-                  class="add-hotel__select-info"
-                  v-model="hotel.districtId"
-                  clearable
-                  @change="handleSelectDistrict"
-                  placeholder="Vui Lòng Chọn Quận Huyện"
-                  filterable 
-                >
-                  <el-option
-                    v-for="district in districts"
-                    :key="district.id"
-                    :label="district.name"
-                    :value="district.id"
-                  ></el-option>
-                </el-select>
-              </el-card>
-            </el-form-item>
-          </el-col>
-          <!-- Ward -->
-          <el-col :span="8">
-            <el-form-item>
-              <h4 class="form__description-title">Phường/Xã</h4>
-              <el-card shadow="hover">
-                <el-select
-                  class="add-hotel__select-info"
-                  v-model="hotel.wardId"
-                  clearable
-                  placeholder="Vui Lòng Chọn Phường Xã"
-                  filterable 
-                >
-                  <el-option
-                    v-for="ward in wards"
-                    :key="ward.id"
-                    :label="ward.name"
-                    :value="ward.id"
-                  >
-                  </el-option>
-                </el-select>
-              </el-card>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <!-- Hotel Des. -->
-        <el-form-item>
-          <h4 class="form__description-title">Mô tả</h4>
-          <el-card shadow="hover">
-            <el-input
-              type="textarea"
-              :rows="4"
-              maxlength="5000"
-              show-word-limit
-              v-model="hotel.description"
-            ></el-input>
-          </el-card>
-        </el-form-item>
-        <!-- Photos -->
-        <el-form-item>
-          <h4 class="form__description-title">Hình ảnh</h4>
-          <el-upload
-            accept="image/png, image/jpeg, image/jpg"
-            action="#"
-            list-type="picture-card"
-            :auto-upload="false"
-            ref="upload"
-            :on-change="handleOnChange"
-            multiple
-          >
-            <i slot="default" class="el-icon-plus"></i>
-            <div slot="file" slot-scope="{ file }">
-              <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
-              <span class="el-upload-list__item-actions">
-                <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
-                  <i class="el-icon-zoom-in"></i>
-                </span>
-                <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove(file)">
-                  <i class="el-icon-delete"></i>
-                </span>
-              </span>
-            </div>
-            <div slot="tip" class="el-upload__tip">
-              định dạng jpg/png và kích thước ảnh nhỏ hơn 5MB
-            </div>
-          </el-upload>
-          <el-dialog :visible.sync="dialogVisible">
-            <img width="100%" :src="dialogImageUrl" alt="" />
-          </el-dialog>
-          <el-button plain class="form__submit" @click="handleUpload">Đăng Ký</el-button>
-        </el-form-item>
-      </el-form>
+      <el-row :gutter="24">
+        <el-col :span="12">
+          <el-image :src="url" :fit="'contain'"></el-image>
+        </el-col>
+        <el-col :span="12">
+          <el-steps class="step" :active="active" finish-status="success">
+            <el-step title="Tên Khách Sạn" icon="el-icon-edit"></el-step>
+            <el-step title="Địa Chỉ" icon="el-icon-location"></el-step>
+            <el-step title="Hình Ảnh" icon="el-icon-picture"></el-step>
+          </el-steps>
+          <el-form ref="form" :model="hotel">
+            <router-view :hotel="hotel" :active="active" @on-back="onBack"></router-view>
+          </el-form>
+          <el-button v-if="!isStep3()" class="continue-btn btn" @click="next" type="primary">Tiếp Tục</el-button>
+          <el-button v-if="!isStep1and3()" class="goback-btn btn" @click="back">Quay Lại</el-button>
+        </el-col>
+      </el-row>
+      
     </div>
   </div>
 </template>
@@ -159,64 +44,11 @@ export default {
       dialogVisible: false,
       disabled: false,
       fileList: [],
+      active: 0,
+      url: "https://cdn.dribbble.com/users/129991/screenshots/6008315/hotel.png"
     };
   },
   methods: {
-    handleSelectProvince(provinceId) {
-      if (provinceId == undefined) return;
-      this.$store.dispatch('fetchDistrict', provinceId);
-    },
-    handleSelectDistrict(districtId) {
-      this.$store.dispatch('fetchWards', districtId);
-    },
-    handleRemove(file) {
-      const index = this.fileList.findIndex((f) => f.url == file.url);
-      this.fileList.splice(index, 1);
-    },
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
-    },
-    handleOnChange(file, fileList) {
-      this.fileList = fileList;
-    },
-    parseFormData(files) {
-      let formData = new FormData();
-      for (const file of files) {
-        formData.append('image', file);
-      }
-      return formData;
-    },
-    async handleUpload(e) {
-      e.preventDefault();
-      const files = this.$refs.upload.uploadFiles.map((f) => f.raw);
-      const formData = this.parseFormData(files);
-      const { data } = await this.$store.dispatch('uploadImage', formData);
-      this.hotel.images = data;
-
-      try {
-        this.$store.dispatch('registerHotel', this.hotel);
-        this.alertSuccess();
-        this.$store.dispatch('fetchHotels', this.curOwner.id);
-        this.$router.push(`/dashboard/${this.curOwner.id}/listing`);
-      } catch (err) {
-        this.alertErr();
-      }
-    },
-    alertSuccess() {
-      this.$message({
-        showClose: true,
-        message: 'Đã thêm khách sạn thành công.',
-        type: 'success',
-      });
-    },
-    alertErr() {
-      this.$message({
-        showClose: true,
-        message: 'Đã có lỗi xảy ra, vui lòng thử lại.',
-        type: 'error',
-      });
-    },
     backListing() {
       this.$confirm('Bài đăng vẫn chưa hoàn tất. Tiếp tục?', 'Cảnh Báo', {
         confirmButtonText: 'OK',
@@ -230,6 +62,37 @@ export default {
           return;
         });
     },
+    next() {
+      if (this.active++ > 2) this.active = 0;
+      if (this.active === 1) {
+        this.$router.push(`/dashboard/${this.curOwner.id}/hotels/location`)
+      }
+      if (this.active === 2) {
+        this.$router.push(`/dashboard/${this.curOwner.id}/hotels/photos`)
+      }
+    },
+    isStep3() {
+      return this.$route.path === `/dashboard/${this.curOwner.id}/hotels/photos`
+    },
+    isStep1and3() {
+      return this.$route.path === `/dashboard/${this.curOwner.id}/hotels` || this.$route.path === `/dashboard/${this.curOwner.id}/hotels/photos`;
+    },
+    back() {
+      if (this.active === 2) {
+        this.active -= 1;
+        this.$router.push(`/dashboard/${this.curOwner.id}/hotels/location`)
+      }
+      else {
+        this.active -= 1;
+        this.$router.push(`/dashboard/${this.curOwner.id}/hotels`)
+      }
+    },
+    onBack(active) {
+      this.active = active;
+      if (active == 1) {
+        this.$router.push(`/dashboard/${this.curOwner.id}/hotels/location`)
+      }
+    }
   },
   computed: {
     provinces() {
@@ -259,27 +122,56 @@ export default {
   font-size: 24px;
   margin: 8px 0;
 }
-.add-hotel__select-info {
-  width: 100%;
-}
 .add-hotel__back {
   font-size: 25px;
   padding-top: 20px;
 }
-.form__description-title {
-  font-size: 20px;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  font-family: inherit;
-  font-weight: 700;
-  line-height: 1.1;
-}
-.form__submit {
-  margin-top: 10px;
+.continue-btn {
   text-transform: uppercase;
   font-weight: 700;
+  color: #fff;
+  background-color: #1174a6;
+  border-color: #1174a6;
+  margin-top: 12px;
+}
+.continue-btn:hover {
+  text-decoration: none;
+  color: #fff;
+  background-color: #0c5478;
+  border-color: #0b4d6e;
+}
+.goback-btn{
   color: #1174a6;
   background-color: #fff;
   border-color: #1174a6;
+}
+.btn {
+  margin-left: 5px;
+  margin-top: 10px;
+  float: right;
+  min-height: 42px;
+  min-width: 180px;
+  text-transform: uppercase;
+  margin-bottom: 0;
+  font-weight: 600;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 10px 15px;
+  font-size: 14px;
+  line-height: 1.42857;
+  border-radius: 3px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.step {
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 </style>
