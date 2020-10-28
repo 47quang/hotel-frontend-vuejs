@@ -152,7 +152,6 @@ export default {
   touch-action: manipulation;
   cursor: pointer;
   background-image: none;
-  border: 1px solid transparent;
   white-space: nowrap;
   padding: 10px 15px;
   font-size: 14px;

@@ -5,7 +5,7 @@
         <i class="el-icon-back add-hotel__back" @click="backListing"></i>
         <el-divider><h2 class="add-hotel__title">Đăng Ký Khách Sạn</h2></el-divider>
       </div>
-      <el-row :gutter="24">
+      <el-row :gutter="24" class="hotel__image--center hidden-xs-only">
         <el-col :span="12">
           <el-image :src="url" :fit="'contain'"></el-image>
         </el-col>
@@ -22,7 +22,21 @@
           <el-button v-if="!isStep1and3()" class="goback-btn btn" @click="back">Quay Lại</el-button>
         </el-col>
       </el-row>
-      
+      <!-- For small screens -->
+       <el-row :gutter="24" class="hotel__image--center hidden-sm-and-up">
+        <el-col :span="24">
+          <el-steps class="step" :active="active" finish-status="success">
+            <el-step title="Tên Khách Sạn" icon="el-icon-edit"></el-step>
+            <el-step title="Địa Chỉ" icon="el-icon-location"></el-step>
+            <el-step title="Hình Ảnh" icon="el-icon-picture"></el-step>
+          </el-steps>
+          <el-form ref="form" :model="hotel">
+            <router-view :hotel="hotel" :active="active" @on-back="onBack"></router-view>
+          </el-form>
+          <el-button v-if="!isStep3()" class="continue-btn btn" @click="next" type="primary">Tiếp Tục</el-button>
+          <el-button v-if="!isStep1and3()" class="goback-btn btn" @click="back">Quay Lại</el-button>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
@@ -159,7 +173,6 @@ export default {
   touch-action: manipulation;
   cursor: pointer;
   background-image: none;
-  border: 1px solid transparent;
   white-space: nowrap;
   padding: 10px 15px;
   font-size: 14px;
@@ -173,5 +186,10 @@ export default {
 .step {
   margin-top: 30px;
   margin-bottom: 30px;
+}
+.hotel__image--center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
