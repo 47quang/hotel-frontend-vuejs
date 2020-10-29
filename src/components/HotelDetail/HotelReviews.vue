@@ -34,12 +34,13 @@
                   :preview-src-list="review.images">
               </el-image>
             </div>
-            <div v-if="review.subImages.length !=0" style ="padding-bottom: 120px" class="sub-images">
+            <div v-if="review.subImages.length >1" :style="{paddingBottom: '520'/review.subImages.length + 'px'}" class="sub-images">
               <div v-for="sub of review.subImages" :key="sub">
-                <el-col style="padding: 0 1px" class="sub-image" :span="6">
+                <el-col style="padding: 0 1px" class="sub-image" :span="24/review.subImages.length">
                   <el-image
                   :src="sub"
                   :preview-src-list="review.images"
+                  :style="{width: '100%', height : '520'/review.subImages.length +'px'}"
                   ></el-image>
                 </el-col>
               </div>
@@ -126,15 +127,10 @@ export default {
 </script>
 
 <style scoped>
-.sub-image .el-image {
-  width: 100%;
-  height: 130px;
-  
-}
+
 .main-image .el-image {
   width: 100%;
   height: 450px;
-  
 }
 
 .review-tag {
