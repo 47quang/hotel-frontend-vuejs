@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="dashboard">
     <!-- Profile of The Owner -->
     <el-row :gutter="24" class="profile hidden-md-and-down">
       <el-col :span="16">
@@ -200,7 +200,9 @@ export default {
   margin-left: 0px !important;
   margin-right: 0px !important;
 }
-
+.dashboard {
+  height: 80vh;
+}
 /* Responsive */
 @media (max-width: 768px){
   .dashboard {

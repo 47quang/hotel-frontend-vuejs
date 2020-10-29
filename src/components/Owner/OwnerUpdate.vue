@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-container>
+    <el-container class="update-profile">
       <el-main>
         <el-row>
           <el-col :span="24">
@@ -193,6 +193,9 @@
 .avatar__img {
   height: 80px;
   width: 140px;
+}
+.update-profile{
+  height: 80vh;
 }
 /* Responsive */
 @media(max-width: 767px) {

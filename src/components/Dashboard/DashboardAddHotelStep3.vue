@@ -11,6 +11,8 @@
         ref="upload"
         :on-change="handleOnChange"
         multiple
+        :limit="9"
+        :on-exceed="handleExceed"
       >
         <i slot="default" class="el-icon-plus"></i>
         <div slot="file" slot-scope="{ file }">
@@ -106,7 +108,10 @@ export default {
     back() {
       this.newActive = this.active - 1;
       this.$emit('on-back', this.newActive);
-    }
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(`Tối đa chỉ 9 ảnh, bạn đã chọn ${files.length} ảnh, tổng cộng ảnh đang có là ${files.length + fileList.length}`);
+    },
   }
 }
 </script>

@@ -15,7 +15,7 @@
       </el-col>
       <el-col :span="12">
         <el-form ref="form-room" :model="room">
-          <router-view :room="room" :active="active"/>
+          <router-view :room="room" :active="active" @on-back="onBack"/>
         </el-form>
         <el-button v-if="!isStep5()" class="form__btn--submit form__btn" @click="next" type="primary">Tiếp Tục</el-button>
         <el-button v-if="!isStep1and5()" class="form__btn--goback form__btn" @click="back">Quay Lại</el-button>
@@ -125,7 +125,7 @@ export default {
 .room-form {
   border-left: 1px solid #dddfe2;
   padding: 30px 10%;
-  height: 75vh;
+  height: 80vh;
 }
 .form__title {
   font-size: 24px;
@@ -186,9 +186,7 @@ export default {
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
-.attribute-select__selector {
-  width: 70%;
-}
+
 .form__add-attribute-btn {
   cursor: pointer;
   color: #999;

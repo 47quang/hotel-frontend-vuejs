@@ -125,6 +125,7 @@ export default {
 <style scoped>
 .add-hotel {
   padding: 0 10%;
+  height: 80vh;
 }
 .add-hotel__title {
   text-align: center;

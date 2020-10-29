@@ -64,3 +64,21 @@ export default {
   },
 }
 </script>
+<style scoped>
+.form__description-title {
+  font-size: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-family: inherit;
+  font-weight: 700;
+  line-height: 1.1;
+}
+.form__description-content {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+}
+.attribute-select__selector {
+  width: 70%;
+}
+</style>
