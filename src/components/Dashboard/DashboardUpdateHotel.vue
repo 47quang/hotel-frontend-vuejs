@@ -163,4 +163,15 @@ export default {
   justify-content: center;
   align-items: center;
 }
+/* Responsive */
+@media (min-width: 1480px) {
+  .add-hotel {
+    height: 85vh;
+  }
+}
+@media (max-width: 767px) {
+  .add-hotel {
+    height: 90vh;
+  }
+}
 </style>
