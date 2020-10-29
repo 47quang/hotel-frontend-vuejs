@@ -13,6 +13,7 @@ export const mutations = {
   },
   SEARCH_HOTEL(state, payload) {
     state.hotel = payload;
+    state.searchKey = [];
   },
   OWNER_UPDATE(state, payload) {
     state.curOwner = payload;
@@ -104,7 +105,7 @@ export const mutations = {
     state.allAttributeOptions = payload;
   },
   UPDATE_FILTER_HOTEL(state, payload) {
-    state.filterHotel = payload;
+    state.searchKey = payload;
   },
   FETCH_ROOM_QUANTITY(state, payload) {
     state.roomQuantity = payload;
