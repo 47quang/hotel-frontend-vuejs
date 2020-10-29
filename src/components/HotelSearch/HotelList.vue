@@ -156,7 +156,9 @@ export default {
       return this.$store.state.provinceById;
     },
     filterHotel() {
-      let checkSearch = (this.searchKey.length == 0) ? this.fetchHotel : this.searchKey;
+      let checkSearch = (this.searchKey.length == 0) ? 
+      this.fetchHotel.filter(h => h.minPrice != 0) : 
+      this.searchKey.filter(s => s.minPrice != 0);
       console.log('checkSearch' ,checkSearch)
       for (let i = 1; i <= 5; i++) {
         if (this.star === i) {
@@ -180,12 +182,12 @@ export default {
 
     getHotelSuggestion() {
       let randomList = [];
-
-      if(this.fetchHotel.length <= 4)
-        return this.fetchHotel;
+      let fetchHotel = this.fetchHotel.filter(h => h.minPrice != 0)
+      if(fetchHotel.length <= 4)
+        return fetchHotel
 
       while(randomList.length < 4){
-        let rand = Math.floor(Math.random()*this.fetchHotel.length);
+        let rand = Math.floor(Math.random()*fetchHotel.length);
         if(randomList.includes(rand)){
           continue;
         }
@@ -194,7 +196,7 @@ export default {
       
       let hotelSuggestion = [];
       randomList.forEach((idx) => hotelSuggestion
-      .push(this.fetchHotel[idx]) );
+      .push(fetchHotel[idx]) );
       return hotelSuggestion
     },
     hotelPagination() {
