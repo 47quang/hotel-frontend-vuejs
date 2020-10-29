@@ -18,10 +18,28 @@
               Khách: {{ (review.customer && review.customer.fullname) || 'Người dùng vô danh' }}
             </div>
           </el-col>
-          <el-col :span="18" class="review-content">
+          <el-col :span="13" class="review-content">
             <div class="review-content-tag">"{{ review.tag.name }}"</div>
             <div class="review-content-body">
               {{ review.content }}
+            </div>
+          </el-col>
+          <el-col :span="5" style="text-align:center; " class="image-content">
+            <div style="font-size: 14px" v-if="!review.images.length">
+              Chưa có hình ảnh
+            </div>
+            <div v-else>
+              <el-image
+              style="width: 110px; height: 110px"
+              :src="review.images[0]" 
+              :preview-src-list="review.images">
+            </el-image>
+            <!-- <div style="    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    font-weight: 600;
+    font-size: 12px;">Xem chi tiết</div> -->
             </div>
           </el-col>
         </div>
