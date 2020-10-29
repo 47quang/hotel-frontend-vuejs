@@ -2,186 +2,36 @@
   <div class="room-form">
     <i class="el-icon-back add-room__back" @click="backRoomListing"></i>
     <el-divider><h3 class="form__title">Thông tin cơ bản</h3></el-divider>
-    <el-form ref="form-room" :model="room">
-      <!-- Room Name -->
-      <el-form-item>
-        <div>
-          <h4 class="form__description-title">Đặt tên cho phòng</h4>
-          <h4 class="form__description-content">
-            Hãy tận dụng, và làm cho nó nghe có vẻ hấp dẫn. Đừng lo lắng, chúng tôi sẽ tạo các ngôn
-            ngữ khác bằng mẫu dịch chuẩn.
-          </h4>
-        </div>
-        <el-card shadow="hover">
-          <el-input v-model="room.name" maxlength="100" show-word-limit></el-input>
-        </el-card>
-      </el-form-item>
-      <!-- Room Description -->
-      <el-form-item>
-        <div>
-          <h4 class="form__description-title">Mô tả phòng của bạn</h4>
-          <h4 class="form__description-content">
-            Những đặc điểm nổi bật của khách sạn để thu hút du khách.
-          </h4>
-        </div>
-        <el-card shadow="hover">
-          <el-input
-            v-model="room.description"
-            type="textarea"
-            rows="4"
-            maxlength="5000"
-            show-word-limit
-          ></el-input>
-        </el-card>
-      </el-form-item>
-      <!-- Room Capacity -->
-      <el-form-item>
-        <div>
-          <h4 class="form__description-title">Sức chứa</h4>
-          <h4 class="form__description-content">
-            Số lượng người tối đa có thể ngủ thoải mái theo số lượng giường và sofa cung cấp.
-          </h4>
-        </div>
-        <el-card shadow="hover">
-          <el-input-number v-model="room.capacity" :min="0" autosize></el-input-number>
-        </el-card>
-      </el-form-item>
-      <!-- Room Stock -->
-      <el-form-item>
-        <div>
-          <h4 class="form__description-title">Số lượng phòng</h4>
-          <h4 class="form__description-content">
-            Nếu chỗ ở của bạn là phòng gác mái hoặc studio, số lượng phòng ngủ là 0.
-          </h4>
-        </div>
-        <el-card shadow="hover">
-          <el-input-number v-model="room.stock" :min="0"></el-input-number>
-        </el-card>
-      </el-form-item>
-      <!-- Room Pricing -->
-      <el-form-item
-        prop="regularPrice"
-        :rules="[
-          { required: true, message: 'Price is required' },
-          { type: 'number', message: 'Money must be a number' },
-        ]"
-      >
-        <div>
-          <h4 class="form__description-title">Giá thông thường</h4>
-          <h4 class="form__description-content">
-            Vui lòng nhập giá mỗi đêm của quý đối tác cho chỗ nghỉ này. Nếu quý đối tác đang dùng
-            người quản lý kênh thì chúng tôi sẽ đồng bộ các giá này giữa các nền tảng một khi đã
-            khớp giá.
-          </h4>
-        </div>
-        <el-card shadow="hover">
-          <el-input type="regularPrice" v-model.number="room.regularPrice" clearable>
-            <template slot="append">VND</template>
-          </el-input>
-        </el-card>
-      </el-form-item>
-      <!-- Room Sale Price -->
-      <el-form-item
-        prop="regularPrice"
-        :rules="[
-          { required: true, message: 'Price is required' },
-          { type: 'number', message: 'Money must be a number' },
-        ]"
-      >
-        <div>
-          <h4 class="form__description-title">Giá giảm</h4>
-          <h4 class="form__description-content">
-            Vui lòng nhập giá giảm mỗi đêm của quý đối tác cho chỗ nghỉ này. Nếu quý đối tác đang
-            dùng người quản lý kênh thì chúng tôi sẽ đồng bộ các giá này giữa các nền tảng một khi
-            đã khớp giá.
-          </h4>
-        </div>
-        <el-card shadow="hover">
-          <el-input type="regularPrice" v-model.number="room.salePrice" clearable>
-            <template slot="append">VND</template>
-          </el-input>
-        </el-card>
-      </el-form-item>
-      <!-- Add Attributes -->
-      <el-form-item>
-        <h4 class="form__description-title">Các Tiện Nghi của Phòng</h4>
-        <el-row :gutter="24">
-          <el-col :span="12" v-for="(attribute, index) in attributes" :key="index">
-            <h4 class="form__description-content" @click="handleSelectAttribute(attribute.id)">
-              {{ attribute.name }}
-            </h4>
-            <el-select
-              class="attribute-select__selector"
-              v-model="attribute.attributeOptionId"
-              clearable
-              placeholder="Vui Lòng Chọn Tùy Chọn"
-              filterable 
-            >
-              <el-option
-                v-for="option in filterAttributeOption(attribute.id)"
-                :key="option.id"
-                :label="option.name"
-                :value="option.id"
-              ></el-option>
-            </el-select>
-          </el-col>
-        </el-row>
-      </el-form-item>
-      <!-- Upload images -->
-      <el-form-item>
-        <div>
-          <h4 class="form__description-title">Hình ảnh</h4>
-          <h4 class="form__description-content">
-            Hình ảnh rất quan trọng đối với du khách. Hãy đăng càng nhiều ảnh chất lượng cao càng
-            tốt. Bạn có thể thêm ảnh về sau. Agoda có sẵn những bí kíp đăng tải ảnh chất lượng để
-            thu hút nhiều đặt phòng hơn
-          </h4>
-          <h5 class="form__description-helper">
-            * Mẹo: tối thiểu 800x600 px — lý tưởng 2048x1536 px
-          </h5>
-        </div>
-        <el-upload
-          accept="image/png, image/jpeg, image/jpg"
-          action="#"
-          list-type="picture-card"
-          :auto-upload="false"
-          ref="upload"
-          :on-change="handleOnChange"
-          multiple
-        >
-          <i slot="default" class="el-icon-plus"></i>
-          <div slot="file" slot-scope="{ file }">
-            <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
-            <span class="el-upload-list__item-actions">
-              <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
-                <i class="el-icon-zoom-in"></i>
-              </span>
-              <span v-if="!disabled" class="el-upload-list__item-delete" @click="handleRemove(file)">
-                <i class="el-icon-delete"></i>
-              </span>
-            </span>
-          </div>
-          <div slot="tip" class="el-upload__tip">
-            định dạng jpg/png và kích thước ảnh nhỏ hơn 5MB
-          </div>
-        </el-upload>
-        <el-dialog :visible.sync="dialogVisible">
-          <img width="100%" :src="dialogImageUrl" alt="" />
-        </el-dialog>
-      </el-form-item>
-      <!-- Form Submission -->
-      <el-form-item>
-        <el-button
-          type="primary"
-          @click="submitForm('form-room')"
-          class="form__btn--submit form__btn"
-          >Đăng Bài</el-button
-        >
-        <el-button @click="resetForm('form-room')" class="form__btn--goback form__btn"
-          >Quay Lại</el-button
-        >
-      </el-form-item>
-    </el-form>
+    <el-steps class="step" :active="active" finish-status="success" align-center>
+      <el-step title="Tên Phòng" icon="el-icon-edit"></el-step>
+      <el-step title="Số Lượng" icon="el-icon-s-order"></el-step>
+      <el-step title="Giá Cả" icon="el-icon-bank-card"></el-step>
+      <el-step title="Đặc Trưng Phòng" icon="el-icon-edit-outline"></el-step>
+      <el-step title="Hình Ảnh" icon="el-icon-picture"></el-step>
+    </el-steps>
+    <el-row :gutter="24" class="hidden-md-and-down form__align--center">
+      <el-col :span="12">
+        <el-image :src="url" :fit="'contain'"></el-image>
+      </el-col>
+      <el-col :span="12">
+        <el-form ref="form-room" :model="room">
+          <router-view :room="room" :active="active"/>
+        </el-form>
+        <el-button v-if="!isStep5()" class="form__btn--submit form__btn" @click="next" type="primary">Tiếp Tục</el-button>
+        <el-button v-if="!isStep1and5()" class="form__btn--goback form__btn" @click="back">Quay Lại</el-button>
+      </el-col>
+    </el-row>
+    <!-- For small screens -->
+    <el-row :gutter="20" class="hidden-lg-and-up">
+      <el-col :span="24">
+        <el-form ref="form-room" :model="room">
+          <router-view :room="room" :active="active" @on-back="onBack"/>
+        </el-form>
+        <!-- Form Submission -->
+        <el-button v-if="!isStep5()" class="form__btn--submit form__btn" @click="next" type="primary">Tiếp Tục</el-button>
+        <el-button v-if="!isStep1and5()" class="form__btn--goback form__btn" @click="back">Quay Lại</el-button>
+      </el-col>
+    </el-row>
   </div>
 </template>
 <script>
@@ -205,108 +55,69 @@ export default {
         ],
         images: [],
       },
-      amount: 1,
-      dialogImageUrl: '',
-      dialogVisible: false,
-      disabled: false,
-      attributes: [],
+      url: "https://cdn.dribbble.com/users/1365253/screenshots/7895099/media/4347106b9ba52ad4dcdd2fdabbc465f7.png",
+      active: 0
     };
   },
-  computed: {
-    allAttributeOptions() {
-      return this.$store.state.allAttributeOptions;
-    },
-  },
   methods: {
-    filterAttributeOption(id) {
-      return this.$store.state.allAttributeOptions.filter((o) => o.attributeId === id);
-    },
-    async submitForm(formName) {
-      const files = this.$refs.upload.uploadFiles.map((f) => f.raw);
-      const formData = this.parseFormData(files);
-      const { data } = await this.$store.dispatch('uploadImage', formData);
-      this.room.images = data;
-      this.room.attributes = this.attributes.map((a) => ({
-        attributeId: a.id,
-        ...a,
-      }));
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.$store.dispatch('createRoom', this.room);
-          this.$message({
-            showClose: true,
-            message: 'Đã cập nhật phòng thành công.',
-            type: 'success',
-          });
-          this.$store.dispatch('fetchRoomsByHotelId', this.$route.params.id);
-          this.$router.push(`/hotel/${this.$route.params.id}/room`);
-        } else {
-          this.$message({
-            showClose: true,
-            message: 'Đã có lỗi xảy ra, vui lòng thử lại.',
-            type: 'error',
-          });
-          return false;
-        }
-      });
-    },
-    handleAddAttribute() {
-      this.room.attributes.push({
-        attributeId: '',
-        attributeOptionId: '',
-      });
-    },
-    handleRemoveAttribute(attribute) {
-      const { attributeId, attributeOptionId } = attribute;
-      const index = this.room.attributes.findIndex(
-        (a) => a.attributeId === attributeId && a.attributeOptionId === attributeOptionId
-      );
-      if (index === undefined) return;
-      this.room.attributes.splice(index, 1);
-    },
-    resetForm(formName) {
+    backRoomListing() {
       this.$confirm('Bài viết chưa được lưu. Tiếp tục?', 'Cảnh Báo', {
         confirmButtonText: 'OK',
         cancelButtonText: 'Hủy bỏ',
         type: 'warning',
       })
-        .then(() => {
-          this.$refs[formName].resetFields();
-          this.$router.push(`/hotel/${this.$route.params.id}/room`);
-        })
-        .catch(() => {
-          return;
-        });
+      .then(() => {
+        this.$router.push(`/hotel/${this.$route.params.id}/room`);
+      })
+      .catch(() => {
+        return;
+      });
     },
-    handleRemove(file) {
-      const index = this.fileList.findIndex((f) => f.url == file.url);
-      this.fileList.splice(index, 1);
-    },
-    handleOnChange(file, fileList) {
-      this.fileList = fileList;
-    },
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
-    },
-    parseFormData(files) {
-      let formData = new FormData();
-      for (const file of files) {
-        formData.append('image', file);
+    next() {
+      if (this.active++ > 4) this.active = 0;
+      if (this.active === 1) {
+        this.$router.push(`/hotel/${this.$route.params.id}/room/new/quantity`)
       }
-      return formData;
+      if (this.active === 2) {
+        this.$router.push(`/hotel/${this.$route.params.id}/room/new/pricing`)
+      }
+      if (this.active === 3) {
+        this.$router.push(`/hotel/${this.$route.params.id}/room/new/attributes`)
+      }
+      if (this.active === 4) {
+        this.$router.push(`/hotel/${this.$route.params.id}/room/new/photos`)
+      }
     },
-    async handleSelectAttribute(index) {
-      this.attributeOptions = await this.$store.dispatch('fetchAttributeOptionById', index);
+    isStep5() {
+      return this.$route.path === `/hotel/${this.$route.params.id}/room/new/photos`
     },
-    backRoomListing() {
-      this.$router.push(`/hotel/${this.$route.params.id}/room`);
+    isStep1and5() {
+      return this.$route.path === `/hotel/${this.$route.params.id}/room/new` || this.$route.path === `/hotel/${this.$route.params.id}/room/new/photos`;
     },
-  },
-  async mounted() {
-    await this.$store.dispatch('fetchAttributes');
-    this.attributes = this.$store.state.attributes.map((a) => ({ ...a, attributeOptionId: '' }));
-    await this.$store.dispatch('fetchAllAttributeOptions');
+    back() {
+      if (this.active === 1) {
+        this.active -= 1;
+        this.$router.push(`/hotel/${this.$route.params.id}/room/new`)
+      }
+      if (this.active === 2) {
+        this.active -= 1;
+        this.$router.push(`/hotel/${this.$route.params.id}/room/new/quantity`)
+      }
+      if (this.active === 3) {
+        this.active -= 1;
+        this.$router.push(`/hotel/${this.$route.params.id}/room/new/pricing`)
+      }
+      if (this.active === 4) {
+        this.active -= 1;
+        this.$router.push(`/hotel/${this.$route.params.id}/room/new/attributes`)
+      }
+    },
+    onBack(active) {
+      this.active = active;
+      if (active == 3) {
+        this.$router.push(`/hotel/${this.$route.params.id}/room/new/attributes`)
+      }
+    }
   },
 };
 </script>
@@ -314,19 +125,7 @@ export default {
 .room-form {
   border-left: 1px solid #dddfe2;
   padding: 30px 10%;
-}
-.form__description-title {
-  font-size: 20px;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  font-family: inherit;
-  font-weight: 700;
-  line-height: 1.1;
-}
-.form__description-content {
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: 400;
+  height: 75vh;
 }
 .form__title {
   font-size: 24px;
@@ -367,17 +166,18 @@ export default {
   background-color: #fff;
   border-color: #1174a6;
 }
-.form__submit:hover {
+.form__btn--submit:active {
+  color: #fff;
+  background-color: #1174a6;
+  border-color: #1174a6;
+}
+.form__btn--submit:hover {
   text-decoration: none;
   color: #fff;
   background-color: #0c5478;
   border-color: #0b4d6e;
 }
-.form__description-helper {
-  color: #999;
-  font-size: 12px;
-  margin: 0 0 10px;
-}
+
 .form__add-attribute {
   margin-left: 0 !important;
   margin-right: 0 !important;
@@ -398,5 +198,10 @@ export default {
 .add-room__back {
   font-size: 25px;
   cursor: pointer;
+}
+.form__align--center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

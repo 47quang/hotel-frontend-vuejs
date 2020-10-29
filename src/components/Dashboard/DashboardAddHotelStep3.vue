@@ -81,7 +81,7 @@ export default {
       this.hotel.images = data;
 
       try {
-        this.$store.dispatch('registerHotel', this.hotel);
+        await this.$store.dispatch('registerHotel', this.hotel);
         this.alertSuccess();
         this.$store.dispatch('fetchHotels', this.curOwner.id);
         this.$router.push(`/dashboard/${this.curOwner.id}/listing`);

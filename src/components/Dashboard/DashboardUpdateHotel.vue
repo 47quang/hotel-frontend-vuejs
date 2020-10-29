@@ -4,17 +4,17 @@
       <div>
         <i class="el-icon-back add-hotel__back" @click="backRoomListing"></i>
         <el-divider><h2 class="add-hotel__title">Cập Nhật Khách Sạn</h2></el-divider>
+        <el-steps class="step" :active="active" finish-status="success">
+          <el-step title="Tên Khách Sạn" icon="el-icon-edit"></el-step>
+          <el-step title="Địa Chỉ" icon="el-icon-location"></el-step>
+          <el-step title="Hình Ảnh" icon="el-icon-picture"></el-step>
+        </el-steps>
       </div>
-      <el-row :gutter="24" class="hotel__image--center hidden-xs-only">
+      <el-row :gutter="24" class="hidden-xs-only hotel__image--center">
         <el-col :span="12">
           <el-image :src="url" :fit="'contain'"></el-image>
         </el-col>
         <el-col :span="12" >
-          <el-steps class="step" :active="active" finish-status="success">
-            <el-step title="Tên Khách Sạn" icon="el-icon-edit"></el-step>
-            <el-step title="Địa Chỉ" icon="el-icon-location"></el-step>
-            <el-step title="Hình Ảnh" icon="el-icon-picture"></el-step>
-          </el-steps>
           <el-form ref="form" :model="hotel">
             <router-view :hotel="hotel" :active="active" @on-back="onBack"></router-view>
           </el-form>
@@ -23,13 +23,8 @@
         </el-col>
       </el-row>
       <!-- For small screens -->
-      <el-row :gutter="24" class="hotel__image--center hidden-sm-and-up">
+      <el-row :gutter="24" class="hidden-sm-and-up">
         <el-col :span="24" >
-          <el-steps class="step" :active="active" finish-status="success">
-            <el-step title="Tên Khách Sạn" icon="el-icon-edit"></el-step>
-            <el-step title="Địa Chỉ" icon="el-icon-location"></el-step>
-            <el-step title="Hình Ảnh" icon="el-icon-picture"></el-step>
-          </el-steps>
           <el-form ref="form" :model="hotel">
             <router-view :hotel="hotel" :active="active" @on-back="onBack"></router-view>
           </el-form>
