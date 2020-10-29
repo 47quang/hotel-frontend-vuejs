@@ -20,7 +20,6 @@ import DashboardUpdateRoom from '../components/Dashboard/DashboardUpdateRoom'
 import DashboardUpdateHotel from '../components/Dashboard/DashboardUpdateHotel'
 import AddToCart from '../views/AddToCart'
 import CustomerReviews from '../components/CustomerReviews'
-
 import DashboardManageOrder from '../components/Dashboard/DashboardManageOrder'
 import DashboardHotelOrder from '../components/Dashboard/DashboardHotelOrder'
 import AdminSignIn from '../components/Admin/AdminSignIn'
@@ -34,8 +33,11 @@ import DashboardAddHotelStep3 from '../components/Dashboard/DashboardAddHotelSte
 import DashboardUpdateHotelStep1 from '../components/Dashboard/DashboardUpdateHotelStep1'
 import DashboardUpdateHotelStep2 from '../components/Dashboard/DashboardUpdateHotelStep2'
 import DashboardUpdateHotelStep3 from '../components/Dashboard/DashboardUpdateHotelStep3'
-
-
+import DashboardAddRoomStep1 from '../components/Dashboard/DashboardAddRoomStep1'
+import DashboardAddRoomStep2 from '../components/Dashboard/DashboardAddRoomStep2'
+import DashboardAddRoomStep3 from '../components/Dashboard/DashboardAddRoomStep3'
+import DashboardAddRoomStep4 from '../components/Dashboard/DashboardAddRoomStep4'
+import DashboardAddRoomStep5 from '../components/Dashboard/DashboardAddRoomStep5'
 
 Vue.use(VueRouter)
 
@@ -146,7 +148,29 @@ const routes = [
       },
       {
         path: 'new',
-        component: DashboardAddRoom
+        component: DashboardAddRoom,
+        children: [
+          {
+            path: '',
+            component: DashboardAddRoomStep1
+          },
+          {
+            path: 'quantity',
+            component: DashboardAddRoomStep2
+          },
+          {
+            path: 'pricing',
+            component: DashboardAddRoomStep3
+          },
+          {
+            path: 'attributes',
+            component: DashboardAddRoomStep4
+          },
+          {
+            path: 'photos',
+            component: DashboardAddRoomStep5
+          },
+        ]
       },
       {
         path: ':roomId',

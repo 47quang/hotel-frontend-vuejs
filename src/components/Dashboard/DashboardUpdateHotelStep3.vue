@@ -67,7 +67,6 @@ export default {
     },
     handleOnChange(file, fileList){
       this.fileList = fileList;
-      // this.fileList = this.$refs.upload.fileList.push(fileList)
     },
     async handleUpload(e) {
       e.preventDefault();
@@ -77,10 +76,10 @@ export default {
       this.hotel.images = this.$refs.upload.uploadFiles.filter(f => !f.raw).map(f => f.url).concat(data);
 
       try {
-        // this.$store.dispatch('updateHotel', { hotelId: this.$route.params.id, hotel: this.hotel });
+        this.$store.dispatch('updateHotel', { hotelId: this.$route.params.id, hotel: this.hotel });
         this.alertSuccess();
-        // await this.$store.dispatch('fetchRoomsByHotelId', this.$route.params.id);
-        // this.$router.push(`/hotel/${this.$route.params.id}/room`);
+        await this.$store.dispatch('fetchRoomsByHotelId', this.$route.params.id);
+        this.$router.push(`/hotel/${this.$route.params.id}/room`);
       } catch (err) {
         this.alertErr();
       }
