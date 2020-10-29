@@ -190,6 +190,20 @@ export const actions = {
         })
     })
   },
+  updateFilterHotel(ctx, payload){
+    return new Promise((resolve, reject) => {
+      client
+        .get(`${BASE_URL}/api.hotel?provinceId=${payload.provinceId}&name=${payload.hotelName}`)  
+        .then(resp => resp.data)
+        .then(body => {
+          ctx.commit('UPDATE_FILTER_HOTEL', body.data)
+          resolve(body);
+        })
+        .catch(err => {
+          reject(err);
+        })
+    })
+  },
   // fetchWardsByProvinceId(ctx,payload) {
   //   return new Promise((resolve, reject) => {
   //     client

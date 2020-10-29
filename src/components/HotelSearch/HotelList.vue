@@ -43,7 +43,7 @@
                 <div class="main-image">
                   <img :src="hotel.images[0]" alt="" />
                 </div>
-                <div class="thumbnail-image" :style="{'grid-template-columns': 'repeat('+hotel.thumbnailImage.length / 2+', 1fr)'}">
+                <div class="thumbnail-image" >
                   <div class="img-wrapper" v-for="(thumbnail, index) in hotel.thumbnailImage" :key="index" :style="{'background-image': 'url('+ thumbnail +')'}">
                   </div>
                   <!-- <el-row>
@@ -88,7 +88,6 @@
         </el-row>
           </el-col>
         </el-row>
-        
       </el-main>
     </el-container>
   </div>
@@ -100,7 +99,6 @@ export default {
   props: ['star', 'range'],
   data() {
     return {
-      hotelList: this.fetchHotel,
       currentPage: 1,
     };
   },
@@ -116,27 +114,37 @@ export default {
       await this.$store.dispatch('fetchHotelById', id);
       this.$router.push(`/details/${id}`);
     },
-    convertViToEn(str, toUpperCase = false) {
-    str = str.toLowerCase();
-    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
-    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
-    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
-    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
-    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-    str = str.replace(/đ/g, "d");
+    // convertViToEn(str, toUpperCase = false) {
+    // str = str.toLowerCase();
+    // str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+    // str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+    // str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+    // str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+    // str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+    // str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+    // str = str.replace(/đ/g, "d");
   
-    str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // Huyền sắc hỏi ngã nặng
-    str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // Â, Ê, Ă, Ơ, Ư
+    // str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // Huyền sắc hỏi ngã nặng
+    // str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // Â, Ê, Ă, Ơ, Ư
 
-    return toUpperCase ? str.toUpperCase() : str;
-    }
+    // return toUpperCase ? str.toUpperCase() : str;
+    // }
     
   },
   computed: {
+    searchKey() {
+      return this.$store.state.searchKey.map((h) => {
+        // h.nameToEn = this.convertViToEn(h.name)
+        h.districtInfo = this.fetchDistrict.find((d) => d.id == h.districtId);
+        h.thumbnailImage = h.images.filter(
+          (i) => h.images.indexOf(i) > 0 && h.images.indexOf(i) <= 8
+        );
+        return h;
+      });
+    },
     fetchHotel() {
       return this.$store.state.hotel.map((h) => {
-        h.nameToEn = this.convertViToEn(h.name)
+        // h.nameToEn = this.convertViToEn(h.name)
         h.districtInfo = this.fetchDistrict.find((d) => d.id == h.districtId);
         h.thumbnailImage = h.images.filter(
           (i) => h.images.indexOf(i) > 0 && h.images.indexOf(i) <= 8
@@ -148,9 +156,11 @@ export default {
       return this.$store.state.provinceById;
     },
     filterHotel() {
+      let checkSearch = (this.searchKey.length == 0) ? this.fetchHotel : this.searchKey;
+      console.log('checkSearch' ,checkSearch)
       for (let i = 1; i <= 5; i++) {
         if (this.star === i) {
-          return this.fetchHotel.filter(
+          return checkSearch.filter(
             (h) =>
               h.rating >= i &&
               h.rating < i + 1 &&
@@ -159,9 +169,9 @@ export default {
           );
         }
       }
-      return this.fetchHotel
+      return checkSearch
         .filter((h) => this.range[0] * 200000 <= h.minPrice && h.minPrice <= this.range[1] * 200000)
-        .filter((h) => h.nameToEn.includes(this.$store.state.filterHotel));
+        // .filter((h) => h.nameToEn.includes(this.$store.state.filterHotel));
     },
 
     fetchDistrict() {
@@ -191,6 +201,9 @@ export default {
       return _.chunk(this.filterHotel, 10)[this.currentPage-1];
     }
   },
+  
+    
+  
 };
 </script>
 
