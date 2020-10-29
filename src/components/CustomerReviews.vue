@@ -14,7 +14,7 @@
                 <div class="review-hotel">{{ review.hotel.name }}</div>
                 <div class="review-rating">{{ review.rating }}.0</div>
               </el-col>
-              <el-col :span="18" class="review-content">
+              <el-col :span="18" class="myreview-content">
                 <div class="review-content-tag">"{{ review.tag.name }}"</div>
                 <div class="review-content-body">
                   {{ review.content }}
@@ -233,7 +233,7 @@ export default {
   padding-top: 20px;
   color: #4e4e4e;
 }
-.review-content {
+.myreview-content {
   background-color: #f5f5f5;
   padding: 30px;
   border-radius: 15px;

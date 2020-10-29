@@ -12,36 +12,40 @@
           </div>
         </div>
         <div v-for="review of reviewPagination" :key="review.id" class="review-body">
-          <el-col :span="6" class="review-detail">
-            <div class="review-rating">{{ review.rating }}.0</div>
-            <div class="review-customer">
-              Khách: {{ (review.customer && review.customer.fullname) || 'Người dùng vô danh' }}
+         
+
+          <div class="review-title">
+            <div>
+              <div class="review-name">{{(review.customer && review.customer.fullname) || 'Người dùng vô danh'}} </div>
+              <div class="review-date">{{review.createdAt | formatDate}}</div>
             </div>
-          </el-col>
-          <el-col :span="13" class="review-content">
-            <div class="review-content-tag">"{{ review.tag.name }}"</div>
-            <div class="review-content-body">
-              {{ review.content }}
-            </div>
-          </el-col>
-          <el-col :span="5" style="text-align:center; " class="image-content">
-            <div style="font-size: 14px" v-if="!review.images.length">
-              Chưa có hình ảnh
-            </div>
-            <div v-else>
+            <div class="review-rating">{{review.rating+'.0'}}</div>
+          </div>
+          
+          <div class="review-content">
+            <div class="review-tag">{{review.tag.name}}</div>
+            <div class="review-description">{{review.content}}</div>
+          </div>
+
+          <div v-if="review.images.length != 0" class="review-image" style="padding: 10px 0">
+            <div class="main-image">
               <el-image
-              style="width: 110px; height: 110px"
-              :src="review.images[0]" 
-              :preview-src-list="review.images">
-            </el-image>
-            <!-- <div style="    position: absolute;
-    top: 50%;
-    right: 50%;
-    transform: translate(50%, -50%);
-    font-weight: 600;
-    font-size: 12px;">Xem chi tiết</div> -->
+                  :src="review.images[0]"
+                  :preview-src-list="review.images">
+              </el-image>
             </div>
-          </el-col>
+            <div v-if="review.subImages.length !=0" style ="padding-bottom: 120px" class="sub-images">
+              <div v-for="sub of review.subImages" :key="sub">
+                <el-col style="padding: 0 1px" class="sub-image" :span="6">
+                  <el-image
+                  :src="sub"
+                  :preview-src-list="review.images"
+                  ></el-image>
+                </el-col>
+              </div>
+            </div>    
+          </div>
+          
         </div>
       </el-row>
       <el-row>
@@ -111,7 +115,10 @@ export default {
     await this.$store.dispatch('fetchTags');
     this.tags = this.$store.state.tags;
     this.reviews = this.$store.state.reviews.map((r) => {
-      r.tag = this.tags.find((t) => t.id == r.tagId);
+      r.tag = this.tags.find((t) => t.id == r.tagId)
+      r.subImages = r.images.filter(
+        (i) => r.images.indexOf(i) > 0 && r.images.indexOf(i) <= 4
+      );
       return r;
     });
   },
@@ -119,9 +126,38 @@ export default {
 </script>
 
 <style scoped>
-.review-title {
+.sub-image .el-image {
+  width: 100%;
+  height: 130px;
+  
+}
+.main-image .el-image {
+  width: 100%;
+  height: 450px;
+  
+}
+
+.review-tag {
   font-weight: 600;
-  font-size: 24px;
+}
+.review-name {
+  font-weight: 600;
+  font-size: 16px;
+}
+.review-date {
+  color: silver;
+  font-size: 12px;
+}
+.review-header .review-title {
+   font-size: 24px;
+   font-weight: 600;
+   
+}
+.review-body .review-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0 20px 0;
 }
 .review-content-tag {
   font-weight: 600;
@@ -133,32 +169,49 @@ export default {
   color: #4e4e4e;
 }
 .review-content {
+  padding: 15px 20px;
   background-color: #f5f5f5;
-  padding: 30px;
-  border-radius: 15px;
+  border-radius: 5px
 }
 .review-customer {
   font-size: 14px;
   font-weight: 600;
   padding: 10px 0;
 }
+.review-description {
+  padding: 10px 0;
+}
 .review-rating {
-  font-size: 36px;
-  color: #488bf8;
+  font-size: 15px;
+  color: white;
+  background-color: #488bf8 ;
+  border-radius: 50%;
+  padding: 6px;
+  font-weight: 600;
+
 }
 .review-body {
-  display: flex;
-  align-items: center;
-  padding: 30px 10px;
+  padding: 10px 10px 30px 10px;
+  border-bottom: 1px solid rgb(221,223,226);
 }
 .review-row {
-  width: 100%;
-  padding-top: 40px;
+  width: 90%;
+  padding: 40px;
   border-top: 1px solid rgb(221, 223, 226);
 }
 .review-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 10px;
+}
+</style>
+
+<style>
+.main-image .el-image img {
+  object-fit: cover;
+}
+.sub-image .el-image img {
+  object-fit: cover;
 }
 </style>
