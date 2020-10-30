@@ -44,18 +44,30 @@
                   <img :src="hotel.images[0]" alt="" />
                 </div>
                 <div class="thumbnail-image" >
-                  <div class="img-wrapper" v-for="(thumbnail, index) in hotel.thumbnailImage" :key="index" :style="{'background-image': 'url('+ thumbnail +')'}">
-                  </div>
-                  <!-- <el-row>
-                    <el-col
-                      v-for="(thumbnail, index) in hotel.thumbnailImage"
-                      :key="index"
-                      class="thumbnail-col"
-                      :span="6"
-                    >
-                      <img :src="thumbnail" alt="" />
-                    </el-col>
-                  </el-row> -->
+                  <!-- <div class="img-wrapper" v-for="(thumbnail, index) in hotel.thumbnailImage" :key="index" :style="{'background-image': 'url('+ thumbnail +')'}"> -->
+                  <!-- </div> -->
+                  <el-row>
+                    <div v-if="hotel.thumbnailImage.length > 1 && hotel.thumbnailImage < 4">
+                      <div v-for="(thumbnail, index) in hotel.thumbnailImage"
+                      :key="index">
+                        <el-col
+                        class="thumbnail-col"
+                        :span="24/hotel.thumbnailImage.length">
+                        <img :src="thumbnail" alt="" />
+                        </el-col>
+                      </div>
+                    </div>
+                    <div v-if="hotel.thumbnailImage.length >= 4 ">
+                      <div v-for="(thumbnail, index) in hotel.thumbnailImage"
+                      :key="index">
+                        <el-col
+                        class="thumbnail-col"
+                        :span="24/Math.floor(hotel.thumbnailImage.length/2)">
+                        <img :src="thumbnail" alt="" />
+                        </el-col>
+                      </div>
+                    </div>
+                  </el-row>
                 </div>
               </div>
               <div class="hotelList-content">
