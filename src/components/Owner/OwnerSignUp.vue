@@ -2,97 +2,59 @@
   <div>
     <!-- Popup Sign Up -->
     <el-dialog class="signin-dialog signup-dialog " title="Tạo Tài Khoản" :visible.sync="dialogSignUpVisible">
-      <el-form ref="formSignUp" class="signin-dialog-content" :label-position="labelPosition" label-width="100px" :model="formSignUp" @submit.native.prevent>
+      <el-form ref="formSignUp" class="signin-dialog-content" :label-position="labelPosition" label-width="100px" :model="formSignUp" :rules="rules" @submit.native.prevent>
         <el-row :gutter="24" class="hidden-xs-only">
           <el-col :span="12">
-            <el-form-item prop="firstname" class="form-item" label="Tên"
-            :rules="[
-              { required: true, message: 'First name is required'},
-            ]">
+            <el-form-item prop="firstname" class="form-item" label="Tên">
               <el-input v-model="formSignUp.firstname" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item prop="lastname" class="form-item" label="Họ"
-            :rules="[
-              { required: true, message: 'Last name is required'},
-            ]">
+            <el-form-item prop="lastname" class="form-item" label="Họ">
               <el-input v-model="formSignUp.lastname" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item prop="username" class="form-item" label="Username"
-            :rules="[
-              { required: true, message: 'Username is required'},
-            ]">
+            <el-form-item prop="username" class="form-item" label="Username">
               <el-input v-model="formSignUp.username" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item prop="phone" class="form-item" label="Số Điện Thoại"
-            :rules="[
-              { required: true, message: 'Phone is required'},
-            ]">
-              <el-input v-model="formSignUp.phone" autocomplete="off"></el-input>
+            <el-form-item prop="phone" class="form-item" label="Số Điện Thoại">
+              <el-input v-model.number="formSignUp.phone" autocomplete="off">
+                <template slot="prepend">+84</template>
+              </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item prop="email" class="form-item" label="Email"
-            :rules="[
-              { required: true, message: 'Email is required'},
-            ]">
+            <el-form-item prop="email" class="form-item" label="Email">
               <el-input type="email" v-model="formSignUp.email" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item prop="password" class="form-item" label="Mật Khẩu"
-            :rules="[
-              { required: true, message: 'Password is required'},
-            ]">
+            <el-form-item prop="password" class="form-item" label="Mật Khẩu">
               <el-input type="password" v-model="formSignUp.password" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item prop="address" class="form-item" label="Địa Chỉ"
-            :rules="[
-              { required: true, message: 'Address is required'},
-            ]">
+            <el-form-item prop="address" class="form-item" label="Địa Chỉ">
               <el-input v-model="formSignUp.address" autocomplete="off" @keyup.enter.native="signup('formSignUp')"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <!-- For small screen -->
         <el-row class="hidden-sm-and-up">
-          <el-form-item prop="firstname" class="form-item" label="Tên"
-            :rules="[
-              { required: true, message: 'First name is required'},
-            ]">
+          <el-form-item prop="firstname" class="form-item" label="Tên">
             <el-input v-model="formSignUp.firstname" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item prop="lastname" class="form-item" label="Họ"
-          :rules="[
-            { required: true, message: 'Last name is required'},
-          ]">
+          <el-form-item prop="lastname" class="form-item" label="Họ">
             <el-input v-model="formSignUp.lastname" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item prop="username" class="form-item" label="Username"
-          :rules="[
-            { required: true, message: 'Username is required'},
-          ]">
+          <el-form-item prop="username" class="form-item" label="Username">
             <el-input v-model="formSignUp.username" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item prop="phone" class="form-item" label="Số Điện Thoại"
-          :rules="[
-            { required: true, message: 'Phone is required'},
-          ]">
-            <el-input v-model="formSignUp.phone" autocomplete="off"></el-input>
+          <el-form-item prop="phone" class="form-item" label="Số Điện Thoại">
+            <el-input v-model.number="formSignUp.phone" autocomplete="off">
+              <template slot="prepend">+84</template>
+            </el-input>
           </el-form-item>
-          <el-form-item prop="email" class="form-item" label="Email"
-          :rules="[
-            { required: true, message: 'Email is required'},
-          ]">
+          <el-form-item prop="email" class="form-item" label="Email">
             <el-input type="email" v-model="formSignUp.email" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item prop="password" class="form-item" label="Mật Khẩu"
-          :rules="[
-            { required: true, message: 'Password is required'},
-          ]">
+          <el-form-item prop="password" class="form-item" label="Mật Khẩu">
             <el-input type="password" v-model="formSignUp.password" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item prop="address" class="form-item" label="Địa Chỉ"
-          :rules="[
-            { required: true, message: 'Address is required'},
-          ]">
+          <el-form-item prop="address" class="form-item" label="Địa Chỉ">
             <el-input v-model="formSignUp.address" autocomplete="off" @keyup.enter.native="signup('formSignUp')"></el-input>
           </el-form-item>
         </el-row>
@@ -109,6 +71,16 @@
 <script>
 export default {
   data() {
+    var checkPhoneNumber = (rule, value, callback) => {
+      console.log('value:', value)
+      if (!value) {
+        return callback(new Error('Please input the phone number!'));
+      }
+      if (typeof(value) === "string") {
+        return callback(new Error('Please input numbers!'));
+      }
+      callback();
+    };
     return {
       labelPosition: 'top',
       formSignUp: {
@@ -120,6 +92,29 @@ export default {
         address: '',
         phone: '', 
         role: 'owner'
+      },
+      rules: {
+        firstname: [
+          { required: true, min: 4, trigger: 'blur'},
+        ],
+        lastname: [
+          { required: true, min: 4, trigger: 'blur'},
+        ],
+        username: [
+          { required: true, min: 4, trigger: 'blur'},
+        ],
+        email: [
+          { type:'email', required: true, trigger:'blur'},
+        ],
+        password: [
+          { required: true, min: 4, trigger: 'blur'},
+        ],
+        address: [
+          { required: true, message: 'Address is required', trigger: 'blur'},
+        ],
+        phone: [
+          { validator: checkPhoneNumber, required: true, trigger: 'blur' }
+        ]
       }
     }
   },
@@ -142,6 +137,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           try {
+            this.formSignUp.phone = '0' + this.formSignUp.phone.toString()
             this.$store.dispatch('ownerSignUp', this.formSignUp);
             this.alertSignUpSuccess();
             this.$refs[formName].resetFields();
