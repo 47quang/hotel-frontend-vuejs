@@ -2,7 +2,7 @@
   <div>
     <CusNavbar></CusNavbar>
     <SearchBar></SearchBar>
-    <el-row>
+    <el-row :style="{position: 'relative'}">
       <el-col :span="17">
         <Info :hotel="hotel"></Info>
         <Room v-for="room in hotel.rooms" :key="room.id" :room="room"></Room>
@@ -36,7 +36,6 @@
             <el-button class="booking__btn" @click="jumpBooking">Thanh toán</el-button>
           </div>
         </el-card>
-        <div></div>
       </el-col>
       <el-dialog title="Thông báo" :visible.sync="centerDialogVisible" width="20%" center>
         <span
@@ -173,18 +172,6 @@ export default {
     await this.$store.dispatch('fetchDistrictById', this.hotel.districtId);
     await this.$store.dispatch('fetchProvinceById', this.hotel.provinceId);
   },
-  beforeUpdate() {
-    window.document.onscroll = () => {
-      let sticky = document.getElementById('add-to-cart');
-      if (sticky) {
-        if (window.pageYOffset > sticky.offsetTop) {
-          sticky.classList.add('sticky');
-        } else {
-          sticky.classList.remove('sticky');
-        }
-      }
-    };
-  },
 };
 </script>
 
@@ -199,8 +186,9 @@ export default {
   color: grey;
 }
 .sticky {
-  position: fixed;
-  top: 10px;
+  position: sticky;
+  padding: 30px 0;
+  top: 0px;
   z-index: 10;
   right: 15px;
 }

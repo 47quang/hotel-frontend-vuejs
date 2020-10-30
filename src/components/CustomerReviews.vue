@@ -267,4 +267,6 @@ export default {
 .myreview-header .el-divider__text {
   font-size: 24px;
 }
+.el-upload-list--picture-card .el-upload-list__item-thumbnail {
+}
 </style>
