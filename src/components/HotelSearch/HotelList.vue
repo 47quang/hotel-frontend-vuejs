@@ -176,7 +176,6 @@ export default {
       let checkSearch = (this.searchKey.length == 0) ? 
       this.fetchHotel.filter(h => h.minPrice != 0) : 
       this.searchKey.filter(s => s.minPrice != 0);
-      console.log('checkSearch' ,checkSearch)
       for (let i = 1; i <= 5; i++) {
         if (this.star === i) {
           return checkSearch.filter(
