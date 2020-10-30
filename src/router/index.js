@@ -38,6 +38,10 @@ import DashboardAddRoomStep2 from '../components/Dashboard/DashboardAddRoomStep2
 import DashboardAddRoomStep3 from '../components/Dashboard/DashboardAddRoomStep3'
 import DashboardAddRoomStep4 from '../components/Dashboard/DashboardAddRoomStep4'
 import DashboardAddRoomStep5 from '../components/Dashboard/DashboardAddRoomStep5'
+import DashboardUpdateRoomStep1 from '../components/Dashboard/DashboardUpdateRoomStep1'
+import DashboardUpdateRoomStep2 from '../components/Dashboard/DashboardUpdateRoomStep2'
+import DashboardUpdateRoomStep3 from '../components/Dashboard/DashboardUpdateRoomStep3'
+import DashboardUpdateRoomStep4 from '../components/Dashboard/DashboardUpdateRoomStep4'
 
 Vue.use(VueRouter)
 
@@ -174,7 +178,25 @@ const routes = [
       },
       {
         path: ':roomId',
-        component: DashboardUpdateRoom
+        component: DashboardUpdateRoom,
+        children: [
+          {
+            path: '',
+            component: DashboardUpdateRoomStep1
+          },
+          {
+            path: 'quantity',
+            component: DashboardUpdateRoomStep2
+          },
+          {
+            path: 'pricing',
+            component: DashboardUpdateRoomStep3
+          },
+          {
+            path: 'photos',
+            component: DashboardUpdateRoomStep4
+          },
+        ]
       }
     ]
   },
