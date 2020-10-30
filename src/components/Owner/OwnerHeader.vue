@@ -71,14 +71,12 @@ export default {
 <style scoped>
 /* Sign In */
 #signin {
-  min-height: 40px;
+  min-height: 42px;
   min-width: 120px;
   padding: 10px;
-  font-size: 12px;
   color: #ff567d !important;
   background-color: #fff !important;
   border-color: #ff567d !important;
-  margin-top: -5px;
   margin-left: 10px;
   margin-right: 10px;
   border-radius: 3px;
