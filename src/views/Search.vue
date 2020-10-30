@@ -8,15 +8,9 @@
           <el-col class="filter" :span="24">
             <div class="filter-wrapper">
               <h4>Lọc chỗ nghỉ theo</h4>
-              <el-select class="filter" v-model="value" clearable placeholder="Giá">
-                <el-option :value="price">
-                  <el-row>
-                    <el-col :span="24">
-                      <el-slider v-model="range" range show-stops :max="20"> </el-slider>
-                    </el-col>
-                    <el-col class="price" :span="12"> TỐI THIỂU : {{ minPrice }} </el-col>
-                    <el-col class="price" :span="12"> TỐI ĐA: {{ maxPrice }} </el-col>
-                  </el-row>
+              <el-select class="filter" v-model="priceFilter" placeholder="Giá">
+                <el-option v-for="(price, index) in prices" :key="index" :value="price.label">
+                  {{ price.label }}
                 </el-option>
               </el-select>
               <el-select class="filter" v-model="star" clearable placeholder="Xếp hạng">
@@ -45,8 +39,6 @@ export default {
     return {
       search: '',
       star: '',
-      value: '',
-      range: [0, 30],
       ratings: [
         {
           rating: 1,
@@ -64,18 +56,41 @@ export default {
           rating: 5,
         },
       ],
+      prices: [
+        {
+          label: 'Tất cả',
+          value: [0, Infinity],
+        },
+        {
+          label: 'Dưới 1 triệu',
+          value: [0, 500000],
+        },
+        {
+          label: 'Từ 1 triệu đến 3 triệu',
+          value: [500000, 3000000],
+        },
+        {
+          label: 'Từ 3 triệu đến 5 triệu',
+          value: [3000000, 5000000],
+        },
+        {
+          label: 'Từ 5 triệu đến 7 triệu',
+          value: [5000000, 7000000],
+        },
+        {
+          label: 'Trên 7 triệu',
+          value: [7000000, Infinity],
+        },
+      ],
+      priceFilter: 'Tất cả',
     };
   },
   computed: {
-    price() {
-      return this.minPrice + ' - ' + this.maxPrice;
-    },
-    minPrice() {
-      return this.range[0] * 200000;
-    },
-    maxPrice() {
-      return this.range[1] * 200000;
-    },
+    range(){
+      const option = this.prices.find(p => p.label == this.priceFilter);
+      console.log(option);
+      return option && option.value;
+    }
   },
   components: {
     CusNavbar,

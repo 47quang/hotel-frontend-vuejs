@@ -15,16 +15,13 @@
               </div>
               <div class="hotelOffer-content">
                 <div class="hotelOffer-name">{{ s.name }}</div>
-                <div v-if="s.rating < 1" style="color: rgb(247, 186, 42); font-size: 12px;">Chưa xếp hạng</div>
-                <div v-else>
-                  <el-rate
-                  v-model="s.rating"
-                  disabled
-                  text-color="#ff9900"
-                >
-                </el-rate>
+                <div v-if="s.rating < 1" style="color: rgb(247, 186, 42); font-size: 12px;">
+                  Chưa xếp hạng
                 </div>
-                
+                <div v-else>
+                  <el-rate v-model="s.rating" disabled text-color="#ff9900"> </el-rate>
+                </div>
+
                 <div class="minPrice">
                   Giá mỗi đêm rẻ nhất từ
                   <h3>{{ s.minPrice | formatCurrency }}</h3>
@@ -40,35 +37,37 @@
               @click="detailHotel(hotel.id)"
             >
               <div class="hotelList-image">
-                <div v-if = "hotel.thumbnailImage.length <= 1 " class="main-image" :style="{height: '300' +'px'}">
-                  <img :style="{height: '300' +'px'}" :src="hotel.images[0]" alt="" />
+                <div
+                  v-if="hotel.thumbnailImage.length <= 1"
+                  class="main-image"
+                  :style="{ height: '300' + 'px' }"
+                >
+                  <img :style="{ height: '300' + 'px' }" :src="hotel.images[0]" alt="" />
                 </div>
-                <div v-else class="main-image" :style="{height: '180' +'px'}">
-                   <img :style="{height: '180' +'px'}" :src="hotel.images[0]" alt="" />
+                <div v-else class="main-image" :style="{ height: '180' + 'px' }">
+                  <img :style="{ height: '180' + 'px' }" :src="hotel.images[0]" alt="" />
                 </div>
-                <div class="thumbnail-image" >
-                  <!-- <div class="img-wrapper" v-for="(thumbnail, index) in hotel.thumbnailImage" :key="index" :style="{'background-image': 'url('+ thumbnail +')'}"> -->
-                  <!-- </div> -->
+                <div class="thumbnail-image">
                   <el-row>
                     <div v-if="hotel.thumbnailImage.length > 1 && hotel.thumbnailImage.length < 4">
-                      <div v-for="(thumbnail, index) in hotel.thumbnailImage"
-                      :key="index">
+                      <div v-for="(thumbnail, index) in hotel.thumbnailImage" :key="index">
                         <el-col
-                        class="thumbnail-col"
-                        :span="24/hotel.thumbnailImage.length"
-                        :style="{height: '120' +'px'}">
-                        <img :style="{height: '120' +'px'}" :src="thumbnail" alt="" />
+                          class="thumbnail-col"
+                          :span="24 / hotel.thumbnailImage.length"
+                          :style="{ height: '120' + 'px' }"
+                        >
+                          <img :style="{ height: '120' + 'px' }" :src="thumbnail" alt="" />
                         </el-col>
                       </div>
                     </div>
-                    <div v-if="hotel.thumbnailImage.length >= 4 ">
-                      <div v-for="(thumbnail, index) in hotel.thumbnailImage"
-                      :key="index">
+                    <div v-if="hotel.thumbnailImage.length >= 4">
+                      <div v-for="(thumbnail, index) in hotel.thumbnailImage" :key="index">
                         <el-col
-                        class="thumbnail-col"
-                        :span="24/Math.floor(hotel.thumbnailImage.length/2)"
-                        :style="{height: '60' +'px'}">
-                        <img :style="{height: '60' +'px'}" :src="thumbnail" alt="" />
+                          class="thumbnail-col"
+                          :span="24 / Math.floor(hotel.thumbnailImage.length / 2)"
+                          :style="{ height: '60' + 'px' }"
+                        >
+                          <img :style="{ height: '60' + 'px' }" :src="thumbnail" alt="" />
                         </el-col>
                       </div>
                     </div>
@@ -78,7 +77,9 @@
               <div class="hotelList-content">
                 <el-col :span="24" class="content1">
                   <div class="hotelList-name">{{ hotel.name }}</div>
-                  <div v-if="hotel.rating < 1" style="color: rgb(247, 186, 42); font-weight: 600"> Chưa xếp hạng</div>
+                  <div v-if="hotel.rating < 1" style="color: rgb(247, 186, 42); font-weight: 600">
+                    Chưa xếp hạng
+                  </div>
                   <div v-else>
                     <el-rate v-model="hotel.rating" disabled text-color="#ff9900"> </el-rate>
                   </div>
@@ -91,18 +92,19 @@
                     <p style="color: sivler">Giá mỗi đêm rẻ nhất từ</p>
                     {{ hotel.minPrice | formatCurrency }}
                   </div>
-                  
                 </el-col>
               </div>
             </div>
-            <el-row>
-          <el-pagination
-          background
-          layout="pager"
-          :total="filterHotel.length"
-          @current-change="handleChangePage">
-          </el-pagination>
-        </el-row>
+            <el-row v-if="filterHotel.length">
+              <el-pagination
+                background
+                layout="prev, pager, next"
+                :total="filterHotel.length"
+                @current-change="handleChangePage"
+              >
+              </el-pagination>
+            </el-row>
+            <el-row v-else>Không có bài khách sạn</el-row>
           </el-col>
         </el-row>
       </el-main>
@@ -111,7 +113,7 @@
 </template>
 
 <script>
-import _ from 'lodash'
+import _ from 'lodash';
 export default {
   props: ['star', 'range'],
   data() {
@@ -120,7 +122,6 @@ export default {
     };
   },
   async created() {
-    // this.$store.dispatch('fetchProvinceById', this.$route.params.id);
     this.$store.dispatch('fetchDistrict', this.$route.params.id);
   },
   methods: {
@@ -131,27 +132,10 @@ export default {
       await this.$store.dispatch('fetchHotelById', id);
       this.$router.push(`/details/${id}`);
     },
-    // convertViToEn(str, toUpperCase = false) {
-    // str = str.toLowerCase();
-    // str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
-    // str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
-    // str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-    // str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
-    // str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
-    // str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-    // str = str.replace(/đ/g, "d");
-  
-    // str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // Huyền sắc hỏi ngã nặng
-    // str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // Â, Ê, Ă, Ơ, Ư
-
-    // return toUpperCase ? str.toUpperCase() : str;
-    // }
-    
   },
   computed: {
     searchKey() {
       return this.$store.state.searchKey.map((h) => {
-        // h.nameToEn = this.convertViToEn(h.name)
         h.districtInfo = this.fetchDistrict.find((d) => d.id == h.districtId);
         h.thumbnailImage = h.images.filter(
           (i) => h.images.indexOf(i) > 0 && h.images.indexOf(i) <= 8
@@ -161,7 +145,6 @@ export default {
     },
     fetchHotel() {
       return this.$store.state.hotel.map((h) => {
-        // h.nameToEn = this.convertViToEn(h.name)
         h.districtInfo = this.fetchDistrict.find((d) => d.id == h.districtId);
         h.thumbnailImage = h.images.filter(
           (i) => h.images.indexOf(i) > 0 && h.images.indexOf(i) <= 8
@@ -173,23 +156,22 @@ export default {
       return this.$store.state.provinceById;
     },
     filterHotel() {
-      let checkSearch = (this.searchKey.length == 0) ? 
-      this.fetchHotel.filter(h => h.minPrice != 0) : 
-      this.searchKey.filter(s => s.minPrice != 0);
+      let checkSearch =
+        this.searchKey.length == 0
+          ? this.fetchHotel.filter((h) => h.minPrice != 0)
+          : this.searchKey.filter((s) => s.minPrice != 0);
       for (let i = 1; i <= 5; i++) {
         if (this.star === i) {
           return checkSearch.filter(
             (h) =>
               h.rating >= i &&
               h.rating < i + 1 &&
-              this.range[0] * 200000 <= h.minPrice &&
-              h.minPrice <= this.range[1] * 200000
+              this.range[0] <= h.minPrice &&
+              h.minPrice < this.range[1]
           );
         }
       }
-      return checkSearch
-        .filter((h) => this.range[0] * 200000 <= h.minPrice && h.minPrice <= this.range[1] * 200000)
-        // .filter((h) => h.nameToEn.includes(this.$store.state.filterHotel));
+      return checkSearch.filter((h) => this.range[0] <= h.minPrice && h.minPrice < this.range[1]);
     },
 
     fetchDistrict() {
@@ -198,30 +180,25 @@ export default {
 
     getHotelSuggestion() {
       let randomList = [];
-      let fetchHotel = this.fetchHotel.filter(h => h.minPrice != 0)
-      if(fetchHotel.length <= 4)
-        return fetchHotel
+      let fetchHotel = this.fetchHotel.filter((h) => h.minPrice != 0);
+      if (fetchHotel.length <= 4) return fetchHotel;
 
-      while(randomList.length < 4){
-        let rand = Math.floor(Math.random()*fetchHotel.length);
-        if(randomList.includes(rand)){
+      while (randomList.length < 4) {
+        let rand = Math.floor(Math.random() * fetchHotel.length);
+        if (randomList.includes(rand)) {
           continue;
         }
         randomList.push(rand);
       }
-      
+
       let hotelSuggestion = [];
-      randomList.forEach((idx) => hotelSuggestion
-      .push(fetchHotel[idx]) );
-      return hotelSuggestion
+      randomList.forEach((idx) => hotelSuggestion.push(fetchHotel[idx]));
+      return hotelSuggestion;
     },
     hotelPagination() {
-      return _.chunk(this.filterHotel, 10)[this.currentPage-1];
-    }
+      return _.chunk(this.filterHotel, 10)[this.currentPage - 1];
+    },
   },
-  
-    
-  
 };
 </script>
 
@@ -245,13 +222,12 @@ export default {
 }
 
 .thumbnail-col {
-  
   padding: 1px;
-  margin: 1px 0;;
+  margin: 1px 0;
 }
 .thumbnail-col img {
   width: 100%;
-  
+
   object-fit: cover;
 }
 /* .main-image {
@@ -299,7 +275,7 @@ export default {
   display: grid;
   flex: 1;
   /* grid-template-columns: repeat(4, 1fr); */
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr))
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 }
 .thumbnail-image .img-wrapper {
   background-size: cover;

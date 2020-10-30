@@ -8,7 +8,7 @@
               <el-input 
                 @keyup.enter.native="handleSearch"
                 class="cus-input"
-                placeholder="Tìm theo tên khách sạn"
+                placeholder="Tìm theo tên khách sạn, địa chỉ"
                 suffix-icon="el-icon-search"
                 v-model="hotelName"
               >

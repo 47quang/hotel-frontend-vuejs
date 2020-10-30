@@ -71,6 +71,7 @@
                       :style="{ marginBottom: '20px' }"
                       type="primary"
                       @click="handleDatePicker()"
+                      :disabled="button1"
                       >Xem</el-button
                     >
                   </el-dialog>
@@ -143,9 +144,10 @@
                         ></el-input-number>
                       </el-col>
                     </el-row>
+                    <el-row :style="{color: 'red', fontWeight: 'lighter', fontStyle: 'italic'}" v-if="button2">* Ngày đặt phòng không nằm trong quá khứ</el-row>
                     <span slot="footer" class="dialog-footer">
                       <el-button type="danger" @click="handleCancel">Thoát</el-button>
-                      <el-button type="primary" @click="handlePickRoom"
+                      <el-button type="primary" @click="handlePickRoom" :disabled="button2"
                         >Thêm vào giỏ hàng</el-button
                       >
                     </span>
@@ -173,6 +175,8 @@ export default {
       roomDetail: {},
       hotel: {},
       quantity: 0,
+      button1: false,
+      button2: false,
     };
   },
   computed: {
@@ -277,6 +281,22 @@ export default {
   mounted() {
     this.hotel = this.$store.state.hotelById;
   },
+  watch: {
+    'datePicker1': function (nVal) {
+      if (nVal[1] < Date.now()) {
+        this.button1 = true;
+      } else {
+        this.button1 = false;
+      }
+    },
+    'datePicker2': function (nVal) {
+      if (nVal[0] < Date.now()) {
+        this.button2 = true;
+      } else {
+        this.button2 = false;
+      }
+    },
+  }
 };
 </script>
 

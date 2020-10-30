@@ -49,15 +49,16 @@
           
         </div>
       </el-row>
-      <el-row>
+      <el-row v-if="reviews.length">
         <el-pagination
           background
-          layout="pager"
+          layout="prev, pager, next"
           :total="reviews.length"
           @current-change="handleChangePage"
         >
         </el-pagination>
       </el-row>
+      <el-row v-else>Không có bài review</el-row>
     </el-main>
   </el-container>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <el-form-item>
+  <el-form-item class="container-step3">
     <h4 class="form__description-title">Hình ảnh</h4>
     <el-upload
       accept="image/png, image/jpeg, image/jpg"
@@ -176,5 +176,12 @@ export default {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+</style>
+
+<style>
+.container-step3 .el-image .el-image__inner {
+  height: 150px;
+  width: auto;
 }
 </style>
