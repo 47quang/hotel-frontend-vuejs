@@ -4,24 +4,38 @@
       <el-main>
         <el-row class="Info-row">
           <el-col class="Info1">
-            <div class="Info-image">
-              <div class="Main-image">
+            
+              <div class="Info-image" v-if="hotel.images.length == 1">
+                <img style="width: 100%; height:500px; object-fit:cover" :src="hotel.images[0]" alt="" />
+              </div>
+              <div class="Info-image" v-if="hotel.images.length >=2 && hotel.images.length <=3 ">
+                <div class="Main-image">
+                  <img :src="hotel.images[0]" alt="" />
+                </div>
+                <div class="Sub-image">
+                  <img :src="hotel.images[1]" style="width: 100%; height: 360px; object-fit:cover" alt="" />
+                </div>
+              </div>
+              <div class="Info-image" v-if="hotel.images.length >= 4 ">
+                 <div class="Main-image">
                 <img :src="hotel.images[0]" alt="" />
-              </div>
-              <div class="Sub-image">
-                <div class="Sub-image1">
-                  <img :src="hotel.images[1]" alt="" />
                 </div>
-                <div class="Sub-image2">
-                  <div style="padding-right:3px" class="thumbnail">
-                    <img :src="hotel.images[2]" alt="" />
+                <div class="Sub-image">
+                  <div class="Sub-image1">
+                    <img :src="hotel.images[1]" alt="" />
                   </div>
-                  <div class="thumbnail">
-                    <img :src="hotel.images[3]" alt="" />
+                  <div class="Sub-image2">
+                    <div style="padding-right:3px" class="thumbnail">
+                      <img :src="hotel.images[2]" alt="" />
+                    </div>
+                    <div class="thumbnail">
+                      <img :src="hotel.images[3]" alt="" />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+             
+            
             <div class="InfoDetail">
               <div class="HeaderCerebrum">
                 <div class="HeaderCerebrum_Name" style="text-transform:capitalize">
