@@ -40,20 +40,24 @@
               @click="detailHotel(hotel.id)"
             >
               <div class="hotelList-image">
-                <div class="main-image">
-                  <img :src="hotel.images[0]" alt="" />
+                <div v-if = "hotel.thumbnailImage.length <= 1 " class="main-image" :style="{height: '300' +'px'}">
+                  <img :style="{height: '300' +'px'}" :src="hotel.images[0]" alt="" />
+                </div>
+                <div v-else class="main-image" :style="{height: '180' +'px'}">
+                   <img :style="{height: '180' +'px'}" :src="hotel.images[0]" alt="" />
                 </div>
                 <div class="thumbnail-image" >
                   <!-- <div class="img-wrapper" v-for="(thumbnail, index) in hotel.thumbnailImage" :key="index" :style="{'background-image': 'url('+ thumbnail +')'}"> -->
                   <!-- </div> -->
                   <el-row>
-                    <div v-if="hotel.thumbnailImage.length > 1 && hotel.thumbnailImage < 4">
+                    <div v-if="hotel.thumbnailImage.length > 1 && hotel.thumbnailImage.length < 4">
                       <div v-for="(thumbnail, index) in hotel.thumbnailImage"
                       :key="index">
                         <el-col
                         class="thumbnail-col"
-                        :span="24/hotel.thumbnailImage.length">
-                        <img :src="thumbnail" alt="" />
+                        :span="24/hotel.thumbnailImage.length"
+                        :style="{height: '120' +'px'}">
+                        <img :style="{height: '120' +'px'}" :src="thumbnail" alt="" />
                         </el-col>
                       </div>
                     </div>
@@ -62,8 +66,9 @@
                       :key="index">
                         <el-col
                         class="thumbnail-col"
-                        :span="24/Math.floor(hotel.thumbnailImage.length/2)">
-                        <img :src="thumbnail" alt="" />
+                        :span="24/Math.floor(hotel.thumbnailImage.length/2)"
+                        :style="{height: '60' +'px'}">
+                        <img :style="{height: '60' +'px'}" :src="thumbnail" alt="" />
                         </el-col>
                       </div>
                     </div>
@@ -241,18 +246,18 @@ export default {
 }
 
 .thumbnail-col {
-  height: 60px;
+  
   padding: 1px;
   margin: 1px 0;;
 }
 .thumbnail-col img {
   width: 100%;
-  height: 60px;
+  
   object-fit: cover;
 }
-.main-image {
+/* .main-image {
   height: 180px;
-}
+} */
 .hotelList-address {
   padding: 10px 0;
   font-size: 14px;
@@ -389,7 +394,6 @@ a {
 }
 .main-image img {
   width: 100%;
-  height: 180px;
   object-fit: cover;
 }
 .hotelList-item {
