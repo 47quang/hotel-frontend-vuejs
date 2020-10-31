@@ -6,30 +6,64 @@
           <el-col class="Info1">
             
               <div class="Info-image" v-if="hotel.images.length == 1">
-                <img style="width: 100%; height:500px; object-fit:cover" :src="hotel.images[0]" alt="" />
+                <el-image
+                    style="height: 500px; object-fit: cover; width: 100%"
+                    :src="hotel.images[0]" 
+                    alt=""
+                    :preview-src-list="hotel.images">
+                </el-image>
               </div>
               <div class="Info-image" v-if="hotel.images.length >=2 && hotel.images.length <=3 ">
                 <div class="Main-image">
-                  <img :src="hotel.images[0]" alt="" />
+                  <el-image
+                    style="height: 360px;  width: 100%"
+                    :src="hotel.images[0]" 
+                    alt=""
+                    :preview-src-list="hotel.images">
+                  </el-image>
                 </div>
                 <div class="Sub-image">
-                  <img :src="hotel.images[1]" style="width: 100%; height: 360px; object-fit:cover" alt="" />
+                  <el-image
+                    style="height: 360px; width: 100%"
+                    :src="hotel.images[1]" 
+                    alt=""
+                    :preview-src-list="hotel.images">
+                  </el-image>
                 </div>
               </div>
               <div class="Info-image" v-if="hotel.images.length >= 4 ">
                  <div class="Main-image">
-                <img :src="hotel.images[0]" alt="" />
+                <el-image
+                style="height: 360px; width: 100%"
+                :src="hotel.images[0]" 
+                alt=""
+                :preview-src-list="hotel.images"></el-image>
                 </div>
                 <div class="Sub-image">
                   <div class="Sub-image1">
-                    <img :src="hotel.images[1]" alt="" />
+                    <el-image
+                      style="height: 225px;  width: 100%"
+                      :src="hotel.images[1]" 
+                      alt=""
+                      :preview-src-list="hotel.images">
+                    </el-image>
                   </div>
                   <div class="Sub-image2">
                     <div style="padding-right:3px" class="thumbnail">
-                      <img :src="hotel.images[2]" alt="" />
+                      <el-image
+                        style="height: 132px;  width: 100%"
+                        :src="hotel.images[2]" 
+                        alt=""
+                        :preview-src-list="hotel.images">
+                      </el-image>
                     </div>
                     <div class="thumbnail">
-                      <img :src="hotel.images[3]" alt="" />
+                      <el-image
+                        style="height: 132px; width: 100%"
+                        :src="hotel.images[3]" 
+                        alt=""
+                        :preview-src-list="hotel.images">
+                      </el-image>
                     </div>
                   </div>
                 </div>
@@ -41,8 +75,9 @@
                 <div class="HeaderCerebrum_Name" style="text-transform:capitalize">
                   {{ hotel.name }}
                 </div>
-                <div></div>
-                <el-rate :value="round" disabled show-score text-color="#ff9900"> </el-rate>
+              
+                <div style="color:#f7ba2a; font-weight: 600" v-if="round == 0">Chưa xếp hạng</div>
+                <el-rate v-else :value="round" disabled show-score text-color="#ff9900"> </el-rate>
               </div>
               <div class="Header_Location"><strong>Địa chỉ</strong>: {{ hotel.address }}</div>
               <div class="Header_Location">
@@ -356,6 +391,9 @@ export default {
   height: 225px;
   object-fit: cover;
 }
+.Info-image img {
+  object-fit: cover;
+}
 .Sub-image .thumbnail {
   width: 50%;
 }
@@ -389,5 +427,8 @@ export default {
 <style>
 .BadgeHolder .el-button {
   padding: 5px 10px;
+}
+.Info-image .el-image img {
+  object-fit: cover;
 }
 </style>

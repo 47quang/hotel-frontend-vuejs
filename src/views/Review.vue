@@ -39,8 +39,11 @@
                   accept="image/png, image/jpeg, image/jpg"
                   action="#"
                   list-type="picture-card"
+                  :file-list ="fileList"
                   :auto-upload="false"
-                  ref="upload"
+                  :ref="`upload_${review.id}`"
+                  :on-change="handleOnChange"
+                  multiple
                 >
                   <i slot="default" class="el-icon-plus"></i>
                   <div slot="file" slot-scope="{ file }">
@@ -55,7 +58,7 @@
                       <span
                         v-if="!disabled"
                         class="el-upload-list__item-delete"
-                        :on-remove="handleRemove(file, review.images)"
+                        @click="handleRemove(file)"
                       >
                         <i class="el-icon-delete"></i>
                       </span>
@@ -96,6 +99,7 @@ export default {
       dialogImageUrl: '',
       dialogVisible: false,
       disabled: false,
+      fileList: [],
     };
   },
   created() {
@@ -122,15 +126,16 @@ export default {
       }
       return formData;
     },
-    async handleUpload(e) {
-      e.preventDefault();
-      const files = this.$refs.upload.uploadFiles.map((f) => f.raw);
+    async handleUpload() {
+      const files = this.$refs[`upload_${this.reviewById.id}`][0].uploadFiles.filter(f => f.raw).map((f) => f.raw)
       const formData = this.parseFormData(files);
       const { data } = await this.$store.dispatch('uploadImage', formData);
-      this.review.images = data;
-
+      this.review.images = this.$refs[`upload_${this.review.id}`][0].uploadFiles
+        .filter(f => !f.raw)
+        .map(f => f.url)
+        .concat(data)
       try {
-        this.$store.dispatch('postReview', {
+        await this.$store.dispatch('postReview', {
           review: this.review,
           idHotel: this.idHotel,
         });
@@ -143,10 +148,12 @@ export default {
     goBack() {
       this.$router.push(`/details/${this.idHotel}`);
     },
-    handleRemove(file, fileList) {
-      console.log(file);
-      console.log(fileList);
-      console.log(this.review.images);
+    handleRemove(file) {
+      const index = this.fileList.findIndex((f) => f.url == file.url);
+      this.fileList.splice(index, 1);
+    },
+    handleOnChange(file, fileList) {
+      this.fileList = fileList;
     },
     alertSuccess() {
       this.$message({

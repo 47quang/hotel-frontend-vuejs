@@ -6,8 +6,8 @@
         <el-row class="myreview">
           <el-divider>My Reviews</el-divider>
         </el-row>
-
-        <div>
+        <el-row class="myreview">
+          <div v-if="reviews.length != 0">
           <div v-for="review of reviews" :key="review.id" class="myreview-wrapper">
             <div style="display: flex; align-items:center">
               <el-col :span="6" class="review-detail">
@@ -89,17 +89,32 @@
             </div>
           </div>
         </div>
+        <div style="text-align: center" v-else>
+          <div>
+            <img src="../assets/illustration-globe.png" alt ="" />
+          </div>
+          <div>
+            <h3>Chưa có gì để cho bạn nhận xét</h3>
+            <h4 style="color: #5a5b5b">Thế giới rộng lớn đang chờ bạn khám phá. Xách balo lên và đi nào!</h4>
+          </div>
+          <el-button @click="backToHotelDetail" type="primary">Quay lại</el-button>
+          
+        </div>
+        </el-row>
+        
       </el-main>
     </el-container>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import CusNavbar from '../components/CusNavbar';
+import Footer from '../components/Footer'
 
 export default {
   components: {
-    CusNavbar,
+    CusNavbar, Footer
   },
   data() {
     return {
@@ -207,6 +222,9 @@ export default {
         type: 'success',
       });
     },
+    backToHotelDetail() {
+      this.$router.back()
+    }
   },
 };
 </script>
