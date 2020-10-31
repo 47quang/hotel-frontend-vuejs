@@ -58,7 +58,7 @@
         >
         </el-pagination>
       </el-row>
-      <el-row v-else>Không có bài review</el-row>
+      <el-row class="review-row" v-else>Chưa có nhận xét nào</el-row>
     </el-main>
   </el-container>
 </template>
