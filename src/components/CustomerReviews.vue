@@ -91,7 +91,7 @@
         </div>
         <div style="text-align: center" v-else>
           <div>
-            <img src="../assets/illustration-globe.png" alt ="" />
+            <!-- <img src="../assets/illustration-globe.png" alt ="" /> -->
           </div>
           <div>
             <h3>Chưa có gì để cho bạn nhận xét</h3>
