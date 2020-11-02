@@ -21,7 +21,7 @@
       <div v-else class="hotel-card" v-for="hotel in filteredHotels" :key="hotel.id">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span class="hotel-card__title">[{{hotel.id}}] {{hotel.name}}</span>
+            <span class="hotel-card__title">{{hotel.name}}</span>
             <el-button style="float: right; padding: 3px 0" @click="deleteHotel(hotel.id)" class="hotel-card__button" icon="el-icon-close"></el-button>
           </div>
           <div class="hotel-card__body">
