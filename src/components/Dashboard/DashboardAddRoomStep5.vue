@@ -25,8 +25,8 @@
         :on-exceed="handleExceed"
       >
         <i slot="default" class="el-icon-plus"></i>
-        <div slot="file" slot-scope="{ file }">
-          <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
+        <div slot="file" slot-scope="{ file }" class="image--full-height">
+          <el-image class="el-upload-list__item-thumbnail" :fit="'cover'" :src="file.url" alt="" />
           <span class="el-upload-list__item-actions">
             <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
               <i class="el-icon-zoom-in"></i>
@@ -182,5 +182,9 @@ export default {
   color: #fff;
   background-color: #0c5478;
   border-color: #0b4d6e;
+}
+.image--full-height {
+  height: 100%;
+  width: 100%;
 }
 </style>

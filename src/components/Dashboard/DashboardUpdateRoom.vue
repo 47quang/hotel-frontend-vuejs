@@ -97,7 +97,7 @@ export default {
 .room-form {
   border-left: 1px solid #dddfe2;
   padding: 30px 10%;
-  height: 80vh;
+  height: 100vh;
 }
 .form__title {
   font-size: 24px;
@@ -149,7 +149,7 @@ export default {
   cursor: pointer;
 }
 .step {
-  padding-bottom: 50px;
+  padding-bottom: 30px;
 }
 .hotel__image--border {
   border-radius: 25px;

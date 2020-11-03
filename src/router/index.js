@@ -42,6 +42,7 @@ import DashboardUpdateRoomStep1 from '../components/Dashboard/DashboardUpdateRoo
 import DashboardUpdateRoomStep2 from '../components/Dashboard/DashboardUpdateRoomStep2'
 import DashboardUpdateRoomStep3 from '../components/Dashboard/DashboardUpdateRoomStep3'
 import DashboardUpdateRoomStep4 from '../components/Dashboard/DashboardUpdateRoomStep4'
+import DashboardCurrentRoomDetail from '../components/Dashboard/DashboardCurrentRoomDetail'
 
 Vue.use(VueRouter)
 
@@ -148,7 +149,13 @@ const routes = [
     children: [
       {
         path: '',
-        component: DashboardRoomListing
+        component: DashboardRoomListing,
+        children: [
+          {
+            path: ':roomId/detail',
+            component: DashboardCurrentRoomDetail
+          }
+        ]
       },
       {
         path: 'new',
