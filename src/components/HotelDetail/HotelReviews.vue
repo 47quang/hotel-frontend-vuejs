@@ -4,11 +4,11 @@
       <el-row class="review-row">
         <div class="review-header">
           <div class="review-title" style="font-size:24px, font-weight:600">
-            Bài đánh giá Khách sạn từ du khách
+            Bài đánh giá Khách Sạn 
           </div>
           <div class="review-button">
-            <el-button @click="updateReview" type="success">Bài review của tôi</el-button>
-            <el-button @click="postReview(idHotel)" type="primary">Đăng bài review</el-button>
+            <!-- <el-button @click="updateReview" type="success">Bài review của tôi</el-button> -->
+            <el-button style="font-weight: 600" @click="postReview(idHotel)" type="primary">Đăng bài review</el-button>
           </div>
         </div>
         <div v-for="review of reviewPagination" :key="review.id" class="review-body">
@@ -34,13 +34,13 @@
                   :preview-src-list="review.images">
               </el-image>
             </div>
-            <div v-if="review.subImages.length >1" :style="{paddingBottom: '520'/review.subImages.length + 'px'}" class="sub-images">
+            <div v-if="review.subImages.length >1" :style="{paddingBottom: height/review.subImages.length + 'px'}" class="sub-images">
               <div v-for="sub of review.subImages" :key="sub">
                 <el-col style="padding: 0 1px" class="sub-image" :span="24/review.subImages.length">
                   <el-image
                   :src="sub"
                   :preview-src-list="review.images"
-                  :style="{width: '100%', height : '520'/review.subImages.length +'px'}"
+                  :style="{width: '100%', height : height/review.subImages.length + 'px' }"
                   ></el-image>
                 </el-col>
               </div>
@@ -77,6 +77,14 @@ export default {
   computed: {
     reviewPagination(){
       return _.chunk(this.reviews, 10)[this.currentPage-1];
+    },
+    height() {
+      let mq = window.matchMedia( "(max-width: 768px)" );
+      if (mq.matches) {
+        return 300
+      }else{
+         return 520;
+      }
     }
   },
   methods: {
@@ -124,11 +132,16 @@ export default {
       return r;
     });
   },
+
 };
 </script>
 
 <style scoped>
-
+@media (max-width: 768px){
+  .main-image .el-image {
+    height: 220px !important;
+  }
+}
 .main-image .el-image {
   width: 100%;
   height: 450px;

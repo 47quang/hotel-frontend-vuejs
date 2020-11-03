@@ -150,6 +150,8 @@
                     <div>8,7 điểm cho sự sạch sẽ</div>
                   </div>
                 </el-col>
+              </el-row>
+              <el-row class="Feature_Detail">
                 <el-col :span="12" class="Feature-item">
                   <svg
                     width="1em"
@@ -230,6 +232,41 @@ export default {
 </script>
 
 <style scoped>
+@media (max-width: 768px) {
+  .Feature_Detail {
+    font-size: 14px;
+  }
+  .Info-image .Main-image {
+    height: 190px !important;
+  }
+  .Main-image img {
+    height: 190px !important;
+  }
+  .Main-image .el-image {
+    height: 190px !important;
+  }
+  .Info-image .Sub-image {
+    height: 190px !important;
+  }
+  .Info-image .Sub-image1 {
+    height: 117px !important;
+  }
+  .Info-image .Sub-image1 .el-image {
+    height: 117px !important;
+  }
+  .Info-image .Sub-image1 img {
+    height: 117px !important;
+  }
+  .Info-image .Sub-image2 {
+    height: 70px !important;
+  }
+  .Info-image .Sub-image2 .el-image {
+    height: 70px !important;
+  }
+  .Sub-image2 .thumbnail img {
+    height: 70px !important;
+  }
+}
 .LocationBadge {
   padding: 15px 0;
 }
@@ -345,7 +382,7 @@ export default {
   padding: 0 10px;
 }
 .Header_Location {
-  padding-bottom: 10px;
+  padding: 10px 0;
 }
 .WellnessBadge__Wrapper {
   display: flex;
@@ -414,10 +451,7 @@ export default {
   border: 1px solid rgb(221, 223, 226);
   border-radius: 5px;
 }
-.HeaderCerebrum {
-  display: flex;
-  align-items: center;
-}
+
 .HeaderCerebrum_Name {
   padding: 10px 10px 10px 0;
   font-weight: 600;
