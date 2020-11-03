@@ -39,9 +39,8 @@
                   accept="image/png, image/jpeg, image/jpg"
                   action="#"
                   list-type="picture-card"
-                  :file-list ="fileList"
                   :auto-upload="false"
-                  :ref="`upload_${review.id}`"
+                  ref="upload"
                   :on-change="handleOnChange"
                   multiple
                 >
@@ -126,21 +125,19 @@ export default {
       }
       return formData;
     },
-    async handleUpload() {
-      const files = this.$refs[`upload_${this.reviewById.id}`][0].uploadFiles.filter(f => f.raw).map((f) => f.raw)
+    async handleUpload(e) {
+      e.preventDefault();
+      const files = this.$refs.upload.uploadFiles.map((f) => f.raw)
       const formData = this.parseFormData(files);
       const { data } = await this.$store.dispatch('uploadImage', formData);
-      this.review.images = this.$refs[`upload_${this.review.id}`][0].uploadFiles
-        .filter(f => !f.raw)
-        .map(f => f.url)
-        .concat(data)
+      this.review.images = data
       try {
         await this.$store.dispatch('postReview', {
           review: this.review,
           idHotel: this.idHotel,
         });
-        await this.$router.push(`/details/${this.idHotel}`)
         this.alertSuccess();
+        this.$router.push(`/details/${this.idHotel}`)
       } catch (err) {
         this.alertErr();
       }
