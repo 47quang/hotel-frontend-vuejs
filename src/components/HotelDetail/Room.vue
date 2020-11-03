@@ -20,10 +20,10 @@
             </el-col>
             <el-col :span="19" class="MasterRoom-roomList">
               <el-row class="roomList_wrapper">
-                <el-col :span="11" class="ChildRoom-include">
+                <el-col :span="10" class="ChildRoom-include">
                   <div class="include-header">Mô tả phòng</div>
                 </el-col>
-                <el-col :span="2" class="ChildRoom-capacity">
+                <el-col :span="3" class="ChildRoom-capacity">
                   <div class="capacity-header">Sức chứa</div>
                 </el-col>
                 <el-col :span="5" class="ChildRoom-price">
@@ -34,14 +34,14 @@
                 </el-col>
               </el-row>
               <el-row class="ChildRoomsList-room-contents">
-                <el-col :span="11" class="ChildRoom-include-content">
+                <el-col :span="10" class="ChildRoom-include-content">
                   <div class="include-content-badge">{{ room.name }}</div>
                   <div class="include-content-bucket">
                     <div style="padding: 10px"><strong>Mô tả:</strong> {{ room.description }}</div>
                   </div>
                 </el-col>
-                <el-col :span="2" class="ChildRoom-capacity-content">
-                  <div style="padding: 15px 10px; text-align:center">
+                <el-col :span="3" class="ChildRoom-capacity-content">
+                  <div style="padding: 15px 0; text-align:center">
                     <i class="el-icon-user-solid"></i> x {{ room.capacity }}
                   </div>
                 </el-col>
@@ -55,7 +55,7 @@
                     type="primary"
                     class="reverseNow"
                     @click="dialogDatePickerVisible = true"
-                    >Lịch đặt phòng</el-button
+                    >Đặt phòng</el-button
                   >
                   <el-dialog title="Chọn ngày" :visible.sync="dialogDatePickerVisible" width="20%">
                     <el-date-picker
@@ -301,6 +301,11 @@ export default {
 </script>
 
 <style scoped>
+.reverseNow {
+  white-space: normal;
+  padding: 12px 2px;
+  font-size: 12px;
+}
 .ChildRoomsList-room-contents {
   display: flex;
 }
@@ -329,10 +334,10 @@ export default {
   text-align: center;
 }
 .finalPrice {
-  padding: 10px;
+  padding: 15px 0;
   text-align: center;
   color: #ed5c59;
-  font-size: 18px;
+  font-size: 14px;
 }
 .include-content-badge {
   background-color: #f79911;
