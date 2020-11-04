@@ -51,7 +51,7 @@ export default {
         type: 'warning',
       })
         .then(() => {
-          this.$router.push(`/hotel/${this.$route.params.id}/room`);
+          this.$router.push(`/dashboard/${this.$route.params.id}/listing/hotel/${this.hotel.id}`);
         })
         .catch(() => {
           return;
