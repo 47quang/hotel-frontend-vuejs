@@ -2,7 +2,7 @@
   <div class="info">
     <div class="room__name">
       <span class="name__title">{{room.name}}</span>
-      <div>
+      <div class="room__actions">
         <el-button type="primary" icon="el-icon-edit" class="name__edit" circle plain @click="editRoom"></el-button>
         <el-button type="danger" icon="el-icon-delete" class="name__edit" circle plain @click="deleteRoom(room.id)"></el-button>
       </div>
@@ -173,6 +173,11 @@ export default {
 }
 .info__room{
   padding-top: 10px;
+}
+.room__actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 /* Responsive */
 @media (max-width: 767px) {

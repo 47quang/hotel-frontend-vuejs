@@ -43,6 +43,7 @@ import DashboardUpdateRoomStep2 from '../components/Dashboard/DashboardUpdateRoo
 import DashboardUpdateRoomStep3 from '../components/Dashboard/DashboardUpdateRoomStep3'
 import DashboardUpdateRoomStep4 from '../components/Dashboard/DashboardUpdateRoomStep4'
 import DashboardCurrentRoomDetail from '../components/Dashboard/DashboardCurrentRoomDetail'
+import DashboardCurrentHotelDetail from '../components/Dashboard/DashboardCurrentHotelDetail'
 
 Vue.use(VueRouter)
 
@@ -92,7 +93,13 @@ const routes = [
       },
       {
         path: 'listing',
-        component: DashboardHotelListing
+        component: DashboardHotelListing,
+        children: [
+          {
+            path: 'hotel/:hotelId',
+            component: DashboardCurrentHotelDetail
+          }
+        ]
       },
       {
         path: 'hotels',

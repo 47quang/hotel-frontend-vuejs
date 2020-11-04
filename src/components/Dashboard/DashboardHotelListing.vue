@@ -2,11 +2,7 @@
   <div>
     <el-row :gutter="12" class="hotel-listing">
       <el-col :span="6">
-        <el-input
-          placeholder="Tìm Theo Tên Khách Sạn"
-          suffix-icon="el-icon-search"
-          v-model="search">
-        </el-input>
+        <i class="el-icon-back add-hotel__back" @click="backDashboard"></i>
       </el-col>
       <el-col :span="6" class="add-hotel">
         <span class="add-hotel-btn hidden-sm-and-down" @click="addHotel"><i class="el-icon-plus"></i> Thêm Khách Sạn</span>
@@ -14,43 +10,35 @@
       </el-col>
     </el-row>
     <div class="manage-listings">
-      <span class="horizontal-line-text-middle m-b-4"><strong>Khách Sạn</strong></span>
       <div v-if="isHotelEmpty()" class="handle-empty-hotel">
-        <el-image style="width: 50%; height: 50%" :src="'https://cdn.dribbble.com/users/992274/screenshots/7392790/media/95483df50a0a3324c4cf9ccb1094b825.jpg'"></el-image>
+        <el-image style="width: 50%; height: 50%" :src="'https://cdn.dribbble.com/users/129991/screenshots/7332543/media/d956bb4bcd209e4fc6dc2b82573a38f6.png'" :fit="'contain'"></el-image>
+        <h1 class="room-card__title">Wow...Thật Trống Trải.</h1>
+        <el-button type="primary" class="continue-btn btn" icon="el-icon-plus" @click="addHotel">Đăng Ký Khách Sạn Mới</el-button>
       </div>
-      <div v-else class="hotel-card" v-for="hotel in filteredHotels" :key="hotel.id">
-        <el-card class="box-card">
-          <div slot="header" class="clearfix">
-            <span class="hotel-card__title">{{hotel.name}}</span>
-            <el-button style="float: right; padding: 3px 0" @click="deleteHotel(hotel.id)" class="hotel-card__button" icon="el-icon-close"></el-button>
-          </div>
-          <div class="hotel-card__body">
-            <div>
-              <el-tag class="hotel-card__tag" :type="'success'" effect="dark"><span class="hotel-card__content-title">Địa chỉ</span></el-tag>
-              <span class="text-justify">{{hotel.address}}</span>
-            </div>
-            <div class="hotel-card__content-description">
-              <el-tag class="hotel-card__tag" effect="dark"><span class="hotel-card__content-title">Mô tả</span></el-tag>
-              <p class="text-justify">{{hotel.description}}</p>
-            </div>
-            <div class="hotel-card__content-description">
-              <el-tag class="hotel-card__tag--rating hotel-card__tag" :type="'warning'" effect="dark"><span class="hotel-card__content-title">Đánh giá</span></el-tag>
-              <span class="text-justify">{{hotel.rating | formatRating}}</span>
-            </div>
-            <div class="hotel-card__content-description">
-              <el-tag class="hotel-card__tag" :type="'danger'" effect="dark"><span class="hotel-card__content-title">Hình ảnh</span></el-tag>
-              <div class="image__description-helper">
-                <h4>* Mẹo: Click vào từng hình để phòng to.</h4>
-              </div>
-              <div class="hotel-card__content-images">
-                <el-image class="hotel-card__image" v-for="image in hotel.images" :key="image" :src="image"  :preview-src-list="hotel.images" :fit="'contain'"></el-image>
-              </div>
+      <el-row v-else :gutter="24">
+        <el-col :span="6" class="room-listing">
+          <span class="horizontal-line-text-middle m-b-4"><strong>Khách Sạn</strong></span>
+          <el-input
+            placeholder="Tìm Theo Tên Khách Sạn"
+            suffix-icon="el-icon-search"
+            class="search-room"
+            v-model="search">
+          </el-input>
+          <div class="hotel-card" v-for="hotel in filteredHotels" :key="hotel.id">
+            <div slot="header" class="clearfix">
+              <i class="el-icon-s-home hotel__icon"></i>
+              <span class="room-card__title" @click="openDetail(hotel.id)">{{hotel.name}}</span>
             </div>
           </div>
-          <router-link v-if="checkPath()" :to="`/hotel/${hotel.id}/room`" class="edit-hotel">Chỉnh Sửa Thông Tin</router-link>
-          <router-link v-else :to="`/hotel/${hotel.id}/orders`" class="edit-hotel">Danh Sách Đơn Hàng</router-link>
-        </el-card>
-      </div>
+        </el-col>
+        <el-col :span="18">
+          <div v-if="loading()" class="loading">
+            <el-image class="loading__image" :src="'https://cdn.dribbble.com/users/4392899/screenshots/8518195/media/a868cf49b2ee6ea60efdc3d3e89a0df0.jpg'" :fit="'contain'"></el-image>
+            <span class="hotel-card__content-title hotel-card__content-description">Chọn Khách Sạn Để Xem Chi Tiêt</span>
+          </div>
+          <router-view v-else :key="$route.fullPath"/>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
@@ -119,6 +107,15 @@ export default {
     },
     checkPath() {
       return this.$route.path == `/dashboard/${this.curOwner.id}/listing`
+    },
+    loading() {
+      return this.$route.path === `/dashboard/${this.$route.params.id}/listing`
+    },
+    openDetail(hotelId) {
+      this.$router.push(`/dashboard/${this.$route.params.id}/listing/hotel/${hotelId}`);
+    },
+    backDashboard() {
+      this.$router.push(`/dashboard/${this.$route.params.id}`);
     }
   },
   created() {
@@ -200,44 +197,26 @@ export default {
   font-size: 16px;
   float: right;
 }
-.hotel-card__title {
-  font-family: inherit;
-  font-weight: 700;
-  line-height: 1.1;
-  color: inherit;
-  word-break: break-all;
-  margin-top: 0;
-  font-size: 24px;
-}
-.hotel-card__tag {
-  display: inline;
-  padding: .2em .6em .3em;
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 1;
-  color: #fff;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
-  border-radius: .25em;
-}
-.hotel-card__tag--rating {
-  background-color: #ffa726 !important;
-}
-.hotel-card__button {
-  border: none;
-}
-.hotel-card__body {
-  padding: 20px 20px 0;
-}
-.text-justify {
-  text-align: justify;
-  line-height: 1.2;
-  margin: 10px;
-}
 .hotel-card__content {
   padding-left: 0px !important;
   padding-right: 20px !important;
+}
+.handle-empty-hotel {
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+}
+.el-row {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+.search-room {
+  margin-bottom: 30px;
+}
+.hotel__icon {
+  font-size: 20px;
+  margin-right: 10px;
+  font-weight: 700;
 }
 .hotel-card__content-title {
   font-weight: 700;
@@ -245,33 +224,33 @@ export default {
 .hotel-card__content-description {
   padding-top: 20px;
 }
-.hotel-card__content-images{
+.loading {
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
-}
-.hotel-card__image {
-  padding: 1%;
-  width: 30%;
-  height: 30%;
-}
-.handle-empty-hotel {
-  display: flex; 
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 30px;
+  margin-top: 30px;
 }
-.el-row {
-  margin-left: 0px !important;
-  margin-right: 0px !important;
+.loading__image {
+  width: 70%; 
+  height: 70%;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.image__description-helper {
-  color: #999;
-  font-size: 12px;
-  margin: 0 0 10px;
+.room-card__title {
+  font-size: 20px;
+  font-weight: 700;
 }
 @media (max-width: 992px) {
   .hotel-card__content {
     padding-left: 20px !important;
     padding-right: 20px !important;
   }
+  .hotel-card__content-title {
+    font-size: 20px;
+  } 
 }
 </style>
