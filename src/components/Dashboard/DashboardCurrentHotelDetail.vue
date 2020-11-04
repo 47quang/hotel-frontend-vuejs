@@ -46,16 +46,23 @@
             <el-image class="hotel-card__image" v-for="image in hotel.images" :key="image" :src="image" :preview-src-list="hotel.images" :fit="'contain'"></el-image>
           </div>
         </el-tab-pane>
+        <el-tab-pane label="Đơn Hàng" name="third">
+          <dashboard-hotel-order/>
+        </el-tab-pane>
       </el-tabs>
     </template>
   </div>
 </template>
 <script>
+import DashboardHotelOrder from './DashboardHotelOrder' 
 export default {
   data() {
     return {
       activeName: 'first'
     }
+  },
+  components: {
+    DashboardHotelOrder
   },
   computed: {
     hotel() {

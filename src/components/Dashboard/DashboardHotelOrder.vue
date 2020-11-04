@@ -1,139 +1,151 @@
 <template>
-  <div class="manage-order">
-    <el-row class="order-search" :gutter="24">
-      <el-col :span="6">
-        <el-input
-          placeholder="Tìm Theo Tên Khách Hàng"
-          suffix-icon="el-icon-search"
-          v-model="search"
-        >
-        </el-input>
-      </el-col>
-      <el-col :span="6" />
-      <el-col :span="12" class="order-filter">
-        <el-select v-model="value" filterable placeholder="Select">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+  <div>
+    <div v-if="orders.length == 0" class="handle-empty-order">
+      <el-image style="width: 50%; height: 50%" :src="'https://cdn.dribbble.com/users/1083427/screenshots/2630650/ordini-vidra-.jpg'" :fit="'contain'"></el-image>
+      <h1 class="room-card__title">Wow...Thật Trống Trải. Chưa Có Đơn Hàng Mới!</h1>
+    </div>
+    <div v-else class="manage-order">
+      <el-row class="order-search" :gutter="24">
+        <el-col :span="6">
+          <el-input
+            placeholder="Tìm Theo Tên Khách Hàng"
+            suffix-icon="el-icon-search"
+            v-model="search"
           >
-          </el-option>
-        </el-select>
-      </el-col>
-    </el-row>
-    <el-divider class="order-title"><h2>Danh Sách Đơn Hàng</h2></el-divider>
-    <div class="order-list" v-for="order in filterOrderByStatus" :key="order.id">
-      <el-card class="order-card">
-        <div slot="header" class="clearfix">
-          <span class="order-card__title">[{{ order.id }}] {{ order.fullname }}</span>
-        </div>
-        <div class="order-card__body">
-          <div>
-            <span class="order-card__content">Đơn tạo:</span>
-            <span>{{ order.createdAt | formatTime }},</span>
-            <span> {{ order.createdAt | formatDate }}</span>
-          </div>
-          <div class="order-card__content-description">
-            <span class="order-card__content">Lần cập nhật mới nhất:</span>
-            <span>{{ order.updatedAt | formatTime }},</span>
-            <span> {{ order.updatedAt | formatDate }}</span>
-          </div>
-          <div class="order-card__content-description">
-            <span class="order-card__content">Trạng Thái:</span>
-            <el-tag
-              v-if="order.status === 'new'"
-              class="hotel-card__tag"
-              :type="'success'"
-              effect="dark"
-              ><span class="order-card__content-title">Mới</span></el-tag
+          </el-input>
+        </el-col>
+        <el-col :span="6" />
+        <el-col :span="12" class="order-filter">
+          <el-select v-model="value" filterable placeholder="Select">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
             >
-            <el-tag
-              v-else-if="order.status === 'done'"
-              class="hotel-card__tag"
-              :type="'warning'"
-              effect="dark"
-              ><span class="order-card__content-title">Hoàn thành</span></el-tag
-            >
-            <el-tag v-else class="hotel-card__tag" :type="'danger'" effect="dark"
-              ><span class="order-card__content-title">Hủy</span></el-tag
-            >
+            </el-option>
+          </el-select>
+        </el-col>
+      </el-row>
+      <el-divider class="order-title"><h2>Danh Sách Đơn Hàng</h2></el-divider>
+      <div class="order-list" v-for="order in filterOrderByStatus" :key="order.id">
+        <el-card class="order-card">
+          <div slot="header" class="clearfix">
+            <span class="order-card__title">[{{ order.id }}] {{ order.fullname }}</span>
           </div>
-          <el-button class="order-detail" type="text" @click="fetchOrder(order.id)"
-            >Chi Tiết Đơn Hàng</el-button
-          >
-
-          <el-dialog
-            title="Chi Tiết Đơn Hàng"
-            class="order-card__content-title"
-            :visible.sync="dialogVisible"
-          >
-            <div class="order__modal">
-              <div class="order-card__content-description">
-                <span class="order-card__content order-card__content-title-des">Email:</span>
-                <span> {{ order.email }}</span>
-              </div>
-              <div class="order-card__content-description">
-                <span class="order-card__content order-card__content-title-des">Phone:</span>
-                <span> {{ order.phone }}</span>
-              </div>
-              <el-table
-                :data="orderById.orderLines"
-                stripe
-                style="width: 100%"
-                class="order-card__content-description"
-              >
-                <el-table-column prop="id" label="ID" width="60"> </el-table-column>
-                <el-table-column prop="start" label="Date" width="240">
-                  <template slot-scope="scope">
-                    <i class="el-icon-time"></i>
-                    <span style="margin-left: 10px">{{ scope.row.start | formatDate }}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="end" label="Date" width="240">
-                  <template slot-scope="scope">
-                    <i class="el-icon-time"></i>
-                    <span style="margin-left: 10px">{{ scope.row.end | formatDate }}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="quantity" label="Số lượng" width="100"></el-table-column>
-                <el-table-column prop="price" label="Giá" width="180"> 
-                  <template slot-scope="scope">
-                    <span style="margin-left: 10px">{{ scope.row.price | formatCurrency }}</span>
-                  </template>
-                </el-table-column>
-              </el-table>
-              <!-- Get Total -->
-              <h4 class="booking__form-title">
-                Tổng Hóa Đơn:
-                <span class="booking__pricing-footer">{{getTotal(orderById.orderLines || [])}}</span>
-              </h4>
+          <div class="order-card__body">
+            <div>
+              <span class="order-card__content">Đơn tạo:</span>
+              <span>{{ order.createdAt | formatTime }},</span>
+              <span> {{ order.createdAt | formatDate }}</span>
             </div>
+            <div class="order-card__content-description">
+              <span class="order-card__content">Lần cập nhật mới nhất:</span>
+              <span>{{ order.updatedAt | formatTime }},</span>
+              <span> {{ order.updatedAt | formatDate }}</span>
+            </div>
+            <div class="order-card__content-description">
+              <span class="order-card__content">Trạng Thái:</span>
+              <el-tag
+                v-if="order.status === 'new'"
+                class="hotel-card__tag"
+                :type="'success'"
+                effect="dark"
+                ><span class="order-card__content-title">Mới</span></el-tag
+              >
+              <el-tag
+                v-else-if="order.status === 'done'"
+                class="hotel-card__tag"
+                :type="'warning'"
+                effect="dark"
+                ><span class="order-card__content-title">Hoàn thành</span></el-tag
+              >
+              <el-tag v-else class="hotel-card__tag" :type="'danger'" effect="dark"
+                ><span class="order-card__content-title">Hủy</span></el-tag
+              >
+            </div>
+            <el-button class="order-detail" type="text" @click="fetchOrder(order.id)"
+              >Chi Tiết Đơn Hàng</el-button
+            >
 
-            <span v-if="checkOrderDone(orderById.status)" slot="footer" class="dialog-footer">
-              <el-button
-                class="order-detail__btn--cancel order-detail__btn"
-                @click="cancelOrder(orderById)"
-                >Huỷ Đơn</el-button
-              >
-              <el-button
-                class="order-detail__btn--confirm order-detail__btn"
-                type="primary"
-                @click="confirmOrder(orderById)"
-                >Xác Nhận Đơn Hàng</el-button
-              >
-            </span>
-            <span v-else slot="footer" class="dialog-footer">
-              <el-button
-                class="order-detail order-detail__btn--dialog"
-                type="text"
-                @click="dialogVisible = false"
-                >Đơn Hàng Đã Xác Nhận</el-button
-              >
-            </span>
-          </el-dialog>
-        </div>
-      </el-card>
+            <el-dialog
+              title="Chi Tiết Đơn Hàng"
+              class="order-card__content-title"
+              :visible.sync="dialogVisible"
+            >
+              <div class="order__modal">
+                <div class="order-card__content-description">
+                  <span class="order-card__content order-card__content-title-des">Email:</span>
+                  <span> {{ order.email }}</span>
+                </div>
+                <div class="order-card__content-description">
+                  <span class="order-card__content order-card__content-title-des">Phone:</span>
+                  <span> {{ order.phone }}</span>
+                </div>
+                <el-table
+                  :data="orderById.orderLines"
+                  stripe
+                  style="width: 100%"
+                  class="order-card__content-description"
+                >
+                  <el-table-column prop="id" label="ID" width="60"> </el-table-column>
+                  <el-table-column prop="start" label="Date" width="240">
+                    <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span style="margin-left: 10px">{{ scope.row.start | formatDate }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="end" label="Date" width="240">
+                    <template slot-scope="scope">
+                      <i class="el-icon-time"></i>
+                      <span style="margin-left: 10px">{{ scope.row.end | formatDate }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="quantity" label="Số lượng" width="100"></el-table-column>
+                  <el-table-column prop="price" label="Giá" width="180"> 
+                    <template slot-scope="scope">
+                      <span style="margin-left: 10px">{{ scope.row.price | formatCurrency }}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+                <!-- Get Total -->
+                <h4 class="booking__form-title">
+                  Tổng Hóa Đơn:
+                  <span class="booking__pricing-footer">{{getTotal(orderById.orderLines || [])}}</span>
+                </h4>
+              </div>
+
+              <span v-if="checkOrderDone(orderById.status)" slot="footer" class="dialog-footer">
+                <el-button
+                  class="order-detail__btn--cancel order-detail__btn"
+                  @click="cancelOrder(orderById)"
+                  >Huỷ Đơn</el-button
+                >
+                <el-button
+                  class="order-detail__btn--confirm order-detail__btn"
+                  type="primary"
+                  @click="confirmOrder(orderById)"
+                  >Xác Nhận Đơn Hàng</el-button
+                >
+              </span>
+              <span v-else slot="footer" class="dialog-footer">
+                <el-button
+                  class="order-detail order-detail__btn--dialog"
+                  type="text"
+                  @click="dialogVisible = false"
+                  >Đơn Hàng Đã Xác Nhận</el-button
+                >
+              </span>
+            </el-dialog>
+          </div>
+        </el-card>
+      </div>
+      <el-pagination 
+        background
+        layout="prev, pager, next"
+        :total="filterOrderByStatus.length"
+        :page-size="2">
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -162,7 +174,8 @@ export default {
         },
       ],
       value: 'all',
-      total: 0
+      total: 0,
+      currentPage: 1,
     };
   },
   computed: {
@@ -180,7 +193,7 @@ export default {
     filterOrderByStatus(){
       if (this.value == 'all') return (Array.from(this.orders) || []);
       return (Array.from(this.orders) || []).filter(o => o.status == this.value);
-    }
+    },
   },
   methods: {
     async fetchOrder(orderId) {
@@ -246,16 +259,19 @@ export default {
       }, 0);
       return this.$options.filters.formatCurrency(this.total);
     },
+    handleChangePage(number) {
+      this.currentPage = number;
+    },
   },
   async mounted() {
-    this.$store.dispatch('fetchRoomOrdersByHotelId', this.$route.params.id);
+    this.$store.dispatch('fetchRoomOrdersByHotelId', this.$route.params.hotelId);
   },
 };
 </script>
 <style scoped>
-.manage-order {
+/* .manage-order {
   padding: 0 10%;
-}
+} */
 .order-title {
   margin: 30px 0;
 }
@@ -371,5 +387,11 @@ export default {
 }
 .order-card__content-title-des {
   color: #2a2a2a;
+}
+.handle-empty-order {
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 </style>

@@ -31,11 +31,11 @@
                   ><i class="el-icon-s-home"></i> Chỗ Ở</router-link
                 >
               </el-dropdown-item>
-              <el-dropdown-item>
+              <!-- <el-dropdown-item>
                 <router-link class="dashboard__operations-icon--black" :to="`/dashboard/${curOwner.id}/orders`"
                   ><i class="el-icon-s-order"></i> Đơn Hàng</router-link
                 >
-              </el-dropdown-item>
+              </el-dropdown-item> -->
               <el-dropdown-item>
                 <router-link class="dashboard__operations-icon--black" :to="`/dashboard/${curOwner.id}/profile`"
                   ><i class="el-icon-s-custom"></i> Hồ Sơ</router-link
@@ -60,11 +60,11 @@
             ><i class="el-icon-s-home"></i> Chỗ Ở</router-link
           >
         </div>
-        <div class="dashboard__operations-icon  hidden-xs-only ">
+        <!-- <div class="dashboard__operations-icon  hidden-xs-only ">
           <router-link :to="`/dashboard/${curOwner.id}/orders`"
             ><i class="el-icon-s-order"></i> Đơn Hàng</router-link
           >
-        </div>
+        </div> -->
         <div class="dashboard__operations-icon  hidden-xs-only ">
           <router-link :to="`/dashboard/${curOwner.id}/profile`"
             ><i class="el-icon-s-custom"></i> Hồ Sơ</router-link
