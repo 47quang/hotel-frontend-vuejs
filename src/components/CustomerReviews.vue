@@ -7,99 +7,100 @@
           <el-divider>My Reviews</el-divider>
         </el-row>
         <el-row class="myreview">
-          <div v-if="reviews.length != 0">
-          <div v-for="review of reviews" :key="review.id" class="myreview-wrapper">
-            <div style="display: flex; align-items:center">
-              <el-col :span="6" class="review-detail">
-                <div class="review-hotel">{{ review.hotel.name }}</div>
-                <div class="review-rating">{{ review.rating }}.0</div>
-              </el-col>
-              <el-col :span="18" class="myreview-content">
-                <div class="review-content-tag">"{{ review.tag.name }}"</div>
-                <div class="review-content-body">
-                  {{ review.content }}
-                </div>
-              </el-col>
+           <div style="text-align: center" v-if="reviews.length == 0">
+            <div>
+              <img src="../assets/illustration-globe.png" alt ="" />
             </div>
-            <div style="text-align: right; padding: 10px 0">
-              <el-button @click="fixReview(review.id)" type="success">CẬP NHẬT</el-button>
-              <el-button @click="deleteReview(review.id)" type="danger">Xóa</el-button>
-              <el-dialog title="Review" :visible.sync="dialogReviewVisible">
-                <el-form :model="reviewById">
-                  <el-form-item label="Đánh giá" :label-width="formLabelWidth">
-                    <el-rate
-                      v-model="reviewById.rating"
-                      :texts="['Oops!', 'Disappointed!', 'Normal!', 'Good!', 'Excellent!']"
-                      show-text
-                    >
-                    </el-rate>
-                  </el-form-item>
-                  <el-form-item label="Nội dung" :label-width="formLabelWidth">
-                    <el-card shadow="hover">
-                      <el-input
-                        type="textarea"
-                        :rows="4"
-                        maxlength="5000"
-                        show-word-limit
-                        v-model="reviewById.content"
-                      ></el-input>
-                    </el-card>
-                  </el-form-item>
-                  <el-form-item label="Hình ảnh" :label-width="formLabelWidth">
-                    <el-upload
-                      accept="image/png, image/jpeg, image/jpg"
-                      action="#"
-                      list-type="picture-card"
-                      :file-list="fileList"
-                      :auto-upload="false"
-                      :ref="`upload_${review.id}`"
-                      :on-change="handleOnChange"
-                      multiple
-                    >
-                      <i slot="default" class="el-icon-plus"></i>
-                      <div slot="file" slot-scope="{ file }">
-                        <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
-                        <span class="el-upload-list__item-actions">
-                          <span
-                            class="el-upload-list__item-preview"
-                            @click="handlePictureCardPreview(file)"
-                          >
-                            <i class="el-icon-zoom-in"></i>
+            <div>
+              <h3>Chưa có gì để cho bạn nhận xét</h3>
+              <h4 style="color: #5a5b5b">Thế giới rộng lớn đang chờ bạn khám phá. Xách balo lên và đi nào!</h4>
+            </div>
+            <el-button @click="backToHotelDetail" type="primary">Quay lại</el-button>
+            
+          </div>
+          <div v-else>
+            <div v-for="review of reviews" :key="review.id" class="myreview-wrapper">
+              <div style="display: flex; align-items:center">
+                <el-col :span="6" class="review-detail">
+                  <div class="review-hotel">{{ review.hotel.name }}</div>
+                  <div class="review-rating">{{ review.rating }}.0</div>
+                </el-col>
+                <el-col :span="18" class="myreview-content">
+                  <div class="review-content-tag">"{{ review.tag.name }}"</div>
+                  <div class="review-content-body">
+                    {{ review.content }}
+                  </div>
+                </el-col>
+              </div>
+              <div style="text-align: right; padding: 10px 0">
+                <el-button @click="fixReview(review.id)" type="success">CẬP NHẬT</el-button>
+                <el-button @click="deleteReview(review.id)" type="danger">Xóa</el-button>
+                <el-dialog title="Review" :visible.sync="dialogReviewVisible">
+                  <el-form :model="reviewById">
+                    <el-form-item label="Đánh giá" :label-width="formLabelWidth">
+                      <el-rate
+                        v-model="reviewById.rating"
+                        :texts="['Oops!', 'Disappointed!', 'Normal!', 'Good!', 'Excellent!']"
+                        show-text
+                      >
+                      </el-rate>
+                    </el-form-item>
+                    <el-form-item label="Nội dung" :label-width="formLabelWidth">
+                      <el-card shadow="hover">
+                        <el-input
+                          type="textarea"
+                          :rows="4"
+                          maxlength="5000"
+                          show-word-limit
+                          v-model="reviewById.content"
+                        ></el-input>
+                      </el-card>
+                    </el-form-item>
+                    <el-form-item label="Hình ảnh" :label-width="formLabelWidth">
+                      <el-upload
+                        accept="image/png, image/jpeg, image/jpg"
+                        action="#"
+                        list-type="picture-card"
+                        :file-list="fileList"
+                        :auto-upload="false"
+                        :ref="`upload_${review.id}`"
+                        :on-change="handleOnChange"
+                        multiple
+                      >
+                        <i slot="default" class="el-icon-plus"></i>
+                        <div slot="file" slot-scope="{ file }">
+                          <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
+                          <span class="el-upload-list__item-actions">
+                            <span
+                              class="el-upload-list__item-preview"
+                              @click="handlePictureCardPreview(file)"
+                            >
+                              <i class="el-icon-zoom-in"></i>
+                            </span>
+                            <span
+                              v-if="!disabled"
+                              class="el-upload-list__item-delete"
+                              @click="handleRemove(file)"
+                            >
+                              <i class="el-icon-delete"></i>
+                            </span>
                           </span>
-                          <span
-                            v-if="!disabled"
-                            class="el-upload-list__item-delete"
-                            @click="handleRemove(file)"
-                          >
-                            <i class="el-icon-delete"></i>
-                          </span>
-                        </span>
-                      </div>
-                      <div slot="tip" class="el-upload__tip">
-                        định dạng jpg/png và kích thước ảnh nhỏ hơn 5MB
-                      </div>
-                    </el-upload>
-                  </el-form-item>
-                </el-form>
-                <span slot="footer" class="dialog-footer">
-                  <el-button @click="dialogReviewVisible = false">Cancel</el-button>
-                  <el-button type="primary" @click="handleUpdateReview">Confirm</el-button>
-                </span>
-              </el-dialog>
+                        </div>
+                        <div slot="tip" class="el-upload__tip">
+                          định dạng jpg/png và kích thước ảnh nhỏ hơn 5MB
+                        </div>
+                      </el-upload>
+                    </el-form-item>
+                  </el-form>
+                  <span slot="footer" class="dialog-footer">
+                    <el-button @click="dialogReviewVisible = false">Cancel</el-button>
+                    <el-button type="primary" @click="handleUpdateReview">Confirm</el-button>
+                  </span>
+                </el-dialog>
+              </div>
             </div>
           </div>
-        </div>
-        <div style="text-align: center" v-else>
-          <div>
-            <img src="../assets/illustration-globe.png" alt ="" />
-          </div>
-          <div>
-            <h3>Chưa có gì để cho bạn nhận xét</h3>
-            <h4 style="color: #5a5b5b">Thế giới rộng lớn đang chờ bạn khám phá. Xách balo lên và đi nào!</h4>
-          </div>
-          <el-button @click="backToHotelDetail" type="primary">Quay lại</el-button>
-          
-        </div>
+         
         </el-row>
         
       </el-main>

@@ -1,9 +1,11 @@
 <template>
-  <div>
+  <div class="bg-carousel">
     <div class="carousel">
-      <h2>KHÁCH SẠN, KHU NGHỈ DƯỠNG, NHÀ TRỌ & HƠN THẾ NỮA</h2>
-      <p>Nhận giá tốt nhất cho >2.000.000 chỗ nghỉ, trên toàn cầu</p>
+      <!-- <h2>KHÁCH SẠN, KHU NGHỈ DƯỠNG, NHÀ TRỌ & HƠN THẾ NỮA</h2>
+      <p>Nhận giá tốt nhất cho >2.000.000 chỗ nghỉ, trên toàn cầu</p> -->
+      <div style="font-weight: 600; z-index: 10;position: absolute; color: white; font-size: 35px; right:50%;top: 28%; transform:translatex(50%)">Tìm khách sạn</div>
       <div class="table">
+       
         <div class="search">
           <el-select
             class="add-hotel__select-info"
@@ -22,6 +24,9 @@
           </el-select>
         </div>
       </div>
+    </div>
+    <div class="overlay">
+      
     </div>
   </div>
 </template>
@@ -87,12 +92,21 @@ export default {
   } */
  
 }
+.bg-carousel {
+  position: relative;
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  background-color: rgba(0,0,0,0.5);
+  width: 100%;
+  height: 100%;
+}
 .carousel {
-  background-image: url(../assets/carousel.png);
+  background-image: url(../assets/antlr-4.8-complete.jpg);
   background-position: bottom center;
   background-size: contain;
-  background-color: darkcyan;
-  padding-bottom: 45%;
+  padding-bottom: 39%;
   background-repeat: no-repeat;
   position: relative;
 }
@@ -119,6 +133,7 @@ p {
   transform: translate(50%, -50%);
   border-radius: 5px;
   max-width: 680px;
+  z-index: 10;
 }
 .search {
   margin: auto;
