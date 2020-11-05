@@ -1,7 +1,7 @@
 <template>
     <div class="nav">
       <div style="cursor: pointer" @click="backToHomePage"  class="logo">
-        <img src="../assets/logo.png" alt="">
+        <img src="../assets/logo1.svg" alt="">
       </div>
       <div style="display: flex" class=button>
         <router-link class="owner" to="/owner" > Đăng ký cho thuê nhà</router-link>
@@ -25,7 +25,6 @@
             </el-dropdown-menu>
           </el-dropdown>
         </div>
-
       </div>
     </div>
 </template>
@@ -62,7 +61,6 @@
         this.$router.push(`/customer-review`);
       }
     }
-    
   };
 </script>
 
@@ -88,9 +86,9 @@
     padding: 15px !important;
   }
   .owner{
-    color: #ff567d;
+    color: #00af87;
     text-decoration: none;
-    border: 1px solid #ff567d;
+    border: 1px solid #00af87;
     line-height: 40px;
     padding: 0 10px;
     font-weight: 600;
@@ -100,12 +98,16 @@
   }
   .owner:hover{
     color: white;
-    background-color: #ff567d;
-    
+    background-color: #00af87;
   }
- 
+  .logo img{
+    width: 150px;
+  }
+  .logo {
+    display: flex;
+  }
   .nav{
-        padding: 20px 0;
+    padding: 20px 0;
   }
   .el-dropdown-menu {
       width: 170px !important;

@@ -89,7 +89,7 @@ export default {
   padding: 0 15px;
 }
 .searchBar {
-  background-color: #20274d;
+  background-color: black;
 }
 .search-sticky {
   cursor: pointer;
@@ -99,7 +99,7 @@ export default {
 }
 .button-select {
   color: white;
-  background-color: #5392f9;
+  background-color: #00af87;
   text-decoration: none;
   cursor: pointer;
   width: 100%;
@@ -109,7 +109,7 @@ export default {
 }
 .button-select:hover {
   color: white;
-  background-color: rgb(83, 146, 249, 0.7);
+  background-color: #099474;
 }
 </style>
 

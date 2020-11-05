@@ -10,7 +10,7 @@
       </el-col>
       <el-col class="sticky" id="add-to-cart" :span="7">
         <el-card class="booking__card">
-          <h4 class="booking__form-title" style="font-size: 18px; color:#409eff; margin: 0">
+          <h4 class="booking__form-title" style="font-size: 18px; color:#00af78; margin: 0">
             Giỏ hàng
           </h4>
           <div v-for="cart of tableData" :key="cart.id" class="orderline-submit-cart">
