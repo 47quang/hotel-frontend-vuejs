@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="body__listing">
     <el-row :gutter="12" class="hotel-listing">
       <el-col :span="6">
         <i class="el-icon-back add-hotel__back" @click="backDashboard"></i>
@@ -26,7 +26,7 @@
           </el-input>
           <div class="hotel-card" v-for="hotel in filteredHotels" :key="hotel.id">
             <div slot="header" class="clearfix">
-              <i class="el-icon-s-home hotel__icon"></i>
+              <i class="el-icon-location-outline hotel__icon"></i>
               <span class="room-card__title" @click="openDetail(hotel.id)">{{hotel.name}}</span>
             </div>
           </div>
@@ -244,6 +244,10 @@ export default {
   font-size: 20px;
   font-weight: 700;
 }
+.body__listing {
+  height: 80vh;
+}
+/* Responsive */
 @media (max-width: 992px) {
   .hotel-card__content {
     padding-left: 20px !important;
