@@ -9,7 +9,7 @@
             :span="7"
           >
             <h2 style="font-size: 22px;">Đề xuất cho bạn</h2>
-            <div v-for="s of getHotelSuggestion" :key="s.id" class="hotelOffer-item">
+            <div  v-for="s of getHotelSuggestion" :key="s.id" @click="detailHotel(s.id)" class="hotelOffer-item">
               <div class="hotelOffer-image">
                 <img :src="s.images[0]" alt="" />
               </div>
@@ -329,6 +329,7 @@ a {
   font-size: 14px;
   border: 1px solid #d7d7db;
   margin: 10px 0;
+  cursor: pointer;
 }
 .hotelOffer-name {
   letter-spacing: 1px;
