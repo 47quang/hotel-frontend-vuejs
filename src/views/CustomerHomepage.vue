@@ -3,35 +3,45 @@
     <Nav></Nav>
     <Carousel></Carousel>
     <el-container class="extend" style="display: inline-block">
-      <h2>Khám phá thêm nhà thuê du lịch</h2>
+      <h2>Những địa điểm du lịch nổi bật</h2>
       <el-row class="homepage-row" :gutter="20">
-        <el-col :sm="6">
-          <div class="grid-content">
-            <img src="../assets/extend1.jpg" alt="">
-            <div class="content">
-              Căn hộ <div class="number-room">156.786 chỗ nghỉ</div>
+         <el-col  :sm="6" >
+          <div @click="search(44)" class="grid-content">
+            <img src="../assets/dalat.jpg" alt="">
+            <div style="text-align: center" class="content">
+              Đà Lạt
+              <!-- <div class="number-room">156.786 chỗ nghỉ</div> -->
             </div>
-            
           </div>
         </el-col>
-        <el-col :sm="6"><div class="grid-content">
-           <img src="../assets/extend2.jpg" alt="">
-            <div class="content">
-              Nhà cho thuê kỳ nghỉ <div class="number-room">517.703 chỗ nghỉ</div>
+         <el-col  :sm="6" >
+          <div @click="search(37)" class="grid-content">
+            <img src="../assets/nhatrang.jpg" alt="">
+            <div style="text-align: center" class="content">
+              Nha Trang
+              <!-- <div class="number-room">156.786 chỗ nghỉ</div> -->
             </div>
-          </div></el-col>
-        <el-col :sm="6"><div class="grid-content">
-          
-           <img src="../assets/extend3.jpg" alt="">
-            <div class="content">
-              Các biệt thự tư nhân <div class="number-room">181.167 chỗ nghỉ</div>
-            </div></div></el-col>
-        <el-col :sm="6"><div class="grid-content">
-           <img src="../assets/extend4.jpg" alt="">
-            <div class="content">
-              Nhà trệt <div class="number-room">8.801 chỗ nghỉ</div>
+          </div>
+        </el-col>
+         <el-col  :sm="6" >
+          <div @click="search(32)" class="grid-content">
+            <img src="../assets/danang.jpg" alt="">
+            <div style="text-align: center" class="content">
+              Đà Nẵng
+              <!-- <div class="number-room">156.786 chỗ nghỉ</div> -->
             </div>
-          </div></el-col>
+          </div>
+        </el-col>
+         <el-col  :sm="6" >
+          <div @click="search(241)" class="grid-content">
+            <img src="../assets/vhl.jpg" alt="">
+            <div style="text-align: center" class="content">
+              Vịnh Hạ Long 
+              <!-- <div class="number-room">156.786 chỗ nghỉ</div> -->
+            </div>
+          </div>
+        </el-col>
+       
       </el-row>
 
     </el-container>
@@ -47,17 +57,46 @@ import Footer from '../components/Footer'
   export default {
     data() {
       return {
-       
+          
       };
+    },
+    created() {
+    this.$store.dispatch('fetchProvince');
+    console.log(this.getProvinceSuggestion)
     },
     components: {
       Nav,
       Carousel,
       Footer
     },
+    computed: {
+      provinces() {
+        return this.$store.state.provinces
+      },
+      getProvinceSuggestion() {
+        let randomList = [];
+        let fetchProvince = this.provinces;
+        if (fetchProvince.length <= 4) return fetchProvince
+        while(randomList.length < 4) {
+          let rand = ~~(Math.random() * fetchProvince.length);
+          if (randomList.includes(rand)) {
+            continue;
+          }
+          randomList.push(rand);
+        }
+
+        let provinceSuggestion = [];
+        randomList.forEach((idx) => provinceSuggestion.push(fetchProvince[idx]))
+        return provinceSuggestion
+      }
+    },
     methods: {
-     
+        search(id) {
+         this.$store.dispatch('searchHotel',{provinceId: id});
+         this.$router.push(`/search/${id}`)
+      }
     }
+   
   }
 </script>
 
@@ -86,7 +125,9 @@ import Footer from '../components/Footer'
     cursor: pointer
 }
   .grid-content img {
-    width: 100%
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
   }
   .cus-homepage {
     text-align: center;
@@ -103,7 +144,6 @@ import Footer from '../components/Footer'
   .el-col {
     border-radius: 4px;
   }
-
   .grid-content {
     border-radius: 4px;
     min-height: 36px;
@@ -112,12 +152,11 @@ import Footer from '../components/Footer'
     padding: 10px 0;
     background-color: #f9fafc;
   }
-
 </style>
 
 <style>
-  
   .homepage-row {
     margin:0 !important;
+    padding: 0 25px;
   }
 </style>

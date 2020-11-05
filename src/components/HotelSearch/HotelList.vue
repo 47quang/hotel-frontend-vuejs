@@ -190,7 +190,6 @@ export default {
         }
         randomList.push(rand);
       }
-
       let hotelSuggestion = [];
       randomList.forEach((idx) => hotelSuggestion.push(fetchHotel[idx]));
       return hotelSuggestion;

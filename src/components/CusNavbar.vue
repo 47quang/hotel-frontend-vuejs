@@ -20,6 +20,7 @@
               </span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item @click.native="customerUpdate" icon="el-icon-user">Hồ sơ của {{myCustomer.firstname}}</el-dropdown-item>
+                <el-dropdown-item @click.native="moveReview" icon="el-icon-star-off">Bài nhận xét</el-dropdown-item>
                 <el-dropdown-item @click.native="signOut" icon="el-icon-switch-button">Đăng xuất</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -56,6 +57,9 @@
       },
       backToHomePage() {
         this.$router.push('/')
+      },
+      moveReview() {
+        this.$router.push(`/customer-review`);
       }
     }
     
@@ -81,7 +85,7 @@
   .nav{
     display: flex;
     justify-content: space-between;
-    padding: 20px !important;
+    padding: 15px !important;
   }
   .owner{
     color: #ff567d;
