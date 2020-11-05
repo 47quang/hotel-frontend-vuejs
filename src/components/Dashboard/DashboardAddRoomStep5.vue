@@ -47,17 +47,15 @@
     </el-form-item>
     <!-- Form Submission -->
     <el-form-item>
-      <div class="form__btn--reversed">
-        <el-button
-          type="primary"
-          @click="submitForm()"
-          class="form__btn--submit form__btn"
-          >Đăng Bài</el-button
-        >
-        <el-button @click="resetForm()" class="form__btn--goback form__btn"
-          >Quay Lại</el-button
-        >
-      </div>
+      <el-button
+        type="primary"
+        @click="submitForm()"
+        class="form__btn--submit form__btn"
+        >Đăng Bài</el-button
+      >
+      <el-button @click="resetForm()" class="form__btn--goback form__btn"
+        >Quay Lại</el-button
+      >
     </el-form-item>
   </div>
 </template>
@@ -189,11 +187,5 @@ export default {
 .image--full-height {
   height: 100%;
   width: 100%;
-}
-.form__btn--reversed {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row-reverse;
 }
 </style>

@@ -10,11 +10,21 @@
           <el-step title="Hình Ảnh" icon="el-icon-picture"></el-step>
         </el-steps>
       </div>
-      <el-row :gutter="24" class=" hotel__image--center">
-        <el-col :span="10" class="hidden-xs-only">
+      <el-row :gutter="24" class="hidden-xs-only hotel__image--center">
+        <el-col :span="10">
           <el-image :src="url" :fit="'contain'"></el-image>
         </el-col>
         <el-col :span="14">
+          <el-form ref="form" :model="hotel">
+            <router-view :hotel="hotel" :active="active" @on-back="onBack"></router-view>
+          </el-form>
+          <el-button v-if="!isStep3()" class="continue-btn btn" @click="next" type="primary">Tiếp Tục</el-button>
+          <el-button v-if="!isStep1and3()" class="goback-btn btn" @click="back">Quay Lại</el-button>
+        </el-col>
+      </el-row>
+      <!-- For small screens -->
+      <el-row :gutter="24" class="hidden-sm-and-up">
+        <el-col :span="24">
           <el-form ref="form" :model="hotel">
             <router-view :hotel="hotel" :active="active" @on-back="onBack"></router-view>
           </el-form>
