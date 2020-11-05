@@ -9,8 +9,8 @@
       <el-step title="Đặc Trưng Phòng" icon="el-icon-edit-outline"></el-step>
       <el-step title="Hình Ảnh" icon="el-icon-picture"></el-step>
     </el-steps>
-    <el-row :gutter="24" class="form__align--center">
-      <el-col :span="12" class="hidden-md-and-down">
+    <el-row :gutter="24" class="hidden-md-and-down form__align--center">
+      <el-col :span="12">
         <el-image :src="url" :fit="'contain'"></el-image>
       </el-col>
       <el-col :span="12">
@@ -21,6 +21,17 @@
           <el-button v-if="!isStep5()" class="form__btn--submit form__btn" @click="next" type="primary">Tiếp Tục</el-button>
           <el-button v-if="!isStep1and5()" class="form__btn--goback form__btn" @click="back">Quay Lại</el-button>
         </div>
+      </el-col>
+    </el-row>
+    <!-- For small screens -->
+    <el-row :gutter="20" class="hidden-lg-and-up">
+      <el-col :span="24">
+        <el-form ref="form-room" :model="room">
+          <router-view :room="room" :active="active" @on-back="onBack"/>
+        </el-form>
+        <!-- Form Submission -->
+        <el-button v-if="!isStep5()" class="form__btn--submit form__btn" @click="next" type="primary">Tiếp Tục</el-button>
+        <el-button v-if="!isStep1and5()" class="form__btn--goback form__btn" @click="back">Quay Lại</el-button>
       </el-col>
     </el-row>
   </div>
@@ -195,7 +206,6 @@ export default {
 }
 .form__btn--reversed {
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: row-reverse;
 }
