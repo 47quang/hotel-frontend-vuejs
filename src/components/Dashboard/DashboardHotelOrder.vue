@@ -27,8 +27,8 @@
           </el-select>
         </el-col>
       </el-row>
-      <el-divider class="order-title"><h2>Danh Sách Đơn Hàng</h2></el-divider>
-      <div class="order-list" v-for="order in filterOrderByStatus" :key="order.id">
+      <!-- <el-divider class="order-title"><h2>Danh Sách Đơn Hàng</h2></el-divider> -->
+      <div class="order-list" v-for="order in orderPagination" :key="order.id">
         <el-card class="order-card">
           <div slot="header" class="clearfix">
             <span class="order-card__title">[{{ order.id }}] {{ order.fullname }}</span>
@@ -144,12 +144,15 @@
         background
         layout="prev, pager, next"
         :total="filterOrderByStatus.length"
-        :page-size="2">
+        :page-size="5"
+        @current-change="handleChangePage"
+        class="paging">
       </el-pagination>
     </div>
   </div>
 </template>
 <script>
+import _ from 'lodash';
 export default {
   data() {
     return {
@@ -193,6 +196,9 @@ export default {
     filterOrderByStatus(){
       if (this.value == 'all') return (Array.from(this.orders) || []);
       return (Array.from(this.orders) || []).filter(o => o.status == this.value);
+    },
+    orderPagination() {
+      return _.chunk(this.filterOrderByStatus, 5)[this.currentPage - 1];
     },
   },
   methods: {
@@ -393,5 +399,18 @@ export default {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+.paging {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 30px;
+}
+/* Responsive */
+@media (max-width: 767px) {
+  .order-card__content {
+    margin: 0;
+    margin-right: 10px;
+  }
 }
 </style>

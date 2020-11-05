@@ -4,7 +4,7 @@
     <el-form-item>
       <div>
         <h4 class="form__description-title">Hình ảnh</h4>
-        <h4 class="form__description-content">
+        <h4 class="form__description-content hidden-xs-only">
           Hình ảnh rất quan trọng đối với du khách. Hãy đăng càng nhiều ảnh chất lượng cao càng
           tốt. Bạn có thể thêm ảnh về sau. Agoda có sẵn những bí kíp đăng tải ảnh chất lượng để
           thu hút nhiều đặt phòng hơn
@@ -23,6 +23,7 @@
         multiple
         :limit="9"
         :on-exceed="handleExceed"
+        class="image__upload"
       >
         <i slot="default" class="el-icon-plus"></i>
         <div slot="file" slot-scope="{ file }" class="image--full-height">
@@ -46,15 +47,17 @@
     </el-form-item>
     <!-- Form Submission -->
     <el-form-item>
-      <el-button
-        type="primary"
-        @click="submitForm()"
-        class="form__btn--submit form__btn"
-        >Đăng Bài</el-button
-      >
-      <el-button @click="resetForm()" class="form__btn--goback form__btn"
-        >Quay Lại</el-button
-      >
+      <div class="form__btn--reversed">
+        <el-button
+          type="primary"
+          @click="submitForm()"
+          class="form__btn--submit form__btn"
+          >Đăng Bài</el-button
+        >
+        <el-button @click="resetForm()" class="form__btn--goback form__btn"
+          >Quay Lại</el-button
+        >
+      </div>
     </el-form-item>
   </div>
 </template>
@@ -186,5 +189,11 @@ export default {
 .image--full-height {
   height: 100%;
   width: 100%;
+}
+.form__btn--reversed {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row-reverse;
 }
 </style>

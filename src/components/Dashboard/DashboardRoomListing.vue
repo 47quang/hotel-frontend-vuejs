@@ -21,9 +21,9 @@
         </div>
         <el-row v-else :gutter="24">
           <el-col :span="6">
-            <div class="room-listing">
-              <el-image style="width: 35%; height: 35%" :src="'https://cdn.dribbble.com/users/2235251/screenshots/14401198/media/7efbcf94d9270a09a1ec41297ce6df05.jpg'" :fit="'contain'"></el-image>
-              <el-divider><strong>Danh Sách Phòng</strong></el-divider>
+            <div class="room-listing room-listing-title--padding">
+              <el-image class="hidden-xs-only" style="width: 35%; height: 35%" :src="'https://cdn.dribbble.com/users/2235251/screenshots/14401198/media/7efbcf94d9270a09a1ec41297ce6df05.jpg'" :fit="'contain'"></el-image>
+              <el-divider><strong class="room-listing-title">Danh Sách</strong></el-divider>
             </div>
             <el-input
               placeholder="Tìm Theo Tên Phòng"
@@ -33,7 +33,7 @@
             ></el-input>
             <div class="room-card" v-for="room in filteredRooms" :key="room.id">
               <div slot="header" class="clearfix">
-                <i class="el-icon-s-home hotel__icon"></i>
+                <i class="el-icon-school hotel__icon"></i>
                 <span class="room-card__title" @click="openDetail(room.id)">{{room.name}}</span>
               </div>
             </div>
@@ -277,13 +277,28 @@ export default {
 .search-room {
   margin-bottom: 30px;
 }
+.room-listing-title--padding {
+  padding-bottom: 15px;
+}
+.room-listing-title {
+  font-size: 20px;
+}
+/* Responsive */
 @media (max-width: 992px) {
   .room-card__content {
     padding-left: 20px !important;
     padding-right: 20px !important;
   }
   .room-card__title {
-    font-size: 12px;
+    font-size: 14px;
+  }
+  .room-listing-title {
+    font-size: 14px;
+  }
+}
+@media (max-width: 767px) {
+  .room-card__content-title {
+    font-size: 18px;
   }
 }
 </style>
