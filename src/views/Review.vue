@@ -2,29 +2,19 @@
   <div>
     <CusNavBar></CusNavBar>
     <el-container>
-      <el-main>
+      <el-main class="review-main">
         <el-row class="postreview-row">
-          <el-divider><h2 class="Review-title">Đăng Bài Review Khách Sạn</h2></el-divider>
+          <h2 class="Review-title">Đăng bài đánh giá Khách sạn</h2>
           <div class="review-description">
             <el-form ref="form" :model="review">
-              <el-form-item>
-                <h4 class="form__content-title">Chủ đề bài đăng</h4>
+              <div class="el-row">
+                <el-col :span="12">
+                   <el-form-item>
+                <h4 class="form__content-title">Tiêu đề bài đăng</h4>
                 <el-select v-model="review.tagId" placeholder="Select">
                   <el-option v-for="tag in tags" :key="tag.id" :label="tag.name" :value="tag.id">
                   </el-option>
                 </el-select>
-              </el-form-item>
-              <el-form-item>
-                <h4 class="form__content-title">Nội dung bài đăng</h4>
-                <el-card shadow="hover">
-                  <el-input
-                    type="textarea"
-                    :rows="4"
-                    maxlength="5000"
-                    show-word-limit
-                    v-model="review.content"
-                  ></el-input>
-                </el-card>
               </el-form-item>
               <h3 style="margin: 50px 0 30px 0">Đánh giá Khách sạn</h3>
               <el-rate
@@ -70,9 +60,31 @@
                 <el-dialog :visible.sync="dialogVisible">
                   <img width="100%" :src="dialogImageUrl" alt="" />
                 </el-dialog>
-                <el-button type="primary" round @click="handleUpload">Đăng bài</el-button>
-                <el-button type="warning" round @click="goBack">Chi tiết khách sạn</el-button>
+                
               </el-form-item>
+
+                </el-col>
+                <el-col :span="12">
+                  <div class=review-image>
+                    <img src="../assets/alo.jpg" alt="">
+                  </div>
+                </el-col>
+              </div>
+              <el-form-item>
+                <h4 class="form__content-title">Nội dung bài đăng</h4>
+                <el-card shadow="hover">
+                  <el-input
+                    type="textarea"
+                    :rows="4"
+                    maxlength="5000"
+                    show-word-limit
+                    v-model="review.content"
+                  ></el-input>
+                </el-card>
+                
+              </el-form-item>
+              <el-button style="background-color: #00af78; color: white" round @click="handleUpload">Đăng bài</el-button>
+                <el-button type="warning" round @click="goBack">Chi tiết khách sạn</el-button>
             </el-form>
           </div>
         </el-row>
@@ -171,6 +183,19 @@ export default {
 </script>
 
 <style scoped>
+.el-upload-list__item-thumbnail {
+  height: 146px !important;
+  object-fit: cover;
+  ;
+}
+.review-image img {
+  height: 500px;
+  border-radius: 50%;;
+}
+.review-main {
+  background-color: #f2f2f2;
+  border-top: 1px solid rgba(223,226,227)
+}
 .form__description-title {
   font-size: 18px;
 }
@@ -182,7 +207,8 @@ export default {
   width: 80%;
 }
 .Review-title {
-  font-size: 28px;
+  font-size: 32px;
+  text-align: center;
 }
 </style>
 

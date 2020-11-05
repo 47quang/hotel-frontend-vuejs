@@ -157,7 +157,7 @@ h4 {
 }
 .filter .el-input__inner {
   border-radius: 20px;
-  background-color: #20274d;
+  background-color: black;
   color: white;
   font-size: 14px;
   letter-spacing: 1px;

@@ -126,7 +126,7 @@ import Footer from '../components/Footer'
 }
   .grid-content img {
     width: 100%;
-    height: 200px;
+    height: 250px;
     object-fit: cover;
   }
   .cus-homepage {

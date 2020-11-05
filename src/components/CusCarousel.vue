@@ -3,7 +3,7 @@
     <div class="carousel">
       <!-- <h2>KHÁCH SẠN, KHU NGHỈ DƯỠNG, NHÀ TRỌ & HƠN THẾ NỮA</h2>
       <p>Nhận giá tốt nhất cho >2.000.000 chỗ nghỉ, trên toàn cầu</p> -->
-      <div style="font-weight: 600; z-index: 10;position: absolute; color: white; font-size: 35px; right:50%;top: 28%; transform:translatex(50%)">Tìm khách sạn</div>
+      <div style="font-weight: 600; z-index: 10;position: absolute; color: white; font-size: 32px; right:50%;top: 26%; transform:translatex(50%)">Tìm khách sạn</div>
       <div class="table">
        
         <div class="search">
@@ -128,7 +128,7 @@ p {
   background-color: rgba(221, 210, 210, 0.5);
   position: absolute;
   top: 50%;
-  padding: 30px 0;
+  padding: 20px 0;
   right: 50%;
   transform: translate(50%, -50%);
   border-radius: 5px;
